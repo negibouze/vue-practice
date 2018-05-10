@@ -11,7 +11,7 @@
       <button>order</button>
       <ol>
         <li v-for="(v, i) in moves" :key="'move-' + v">
-          <button @click="jumpTo(i)">{{ v }}</button>
+          <button @click="jumpTo(i)" :class="{ emphasis: current === i }">{{ v }}</button>
         </li>
       </ol>
     </div>
