@@ -45,7 +45,10 @@ module.exports = (env) => {
         bail: true,
         mode: prod ? 'production' : 'development',
         devtool: shouldUseSourceMap ? 'source-map' : false,
-        entry: { bundle: './src/index.js' },
+        entry: {
+            bundle: './src/index.js',
+            'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
+        },
         output: {
             path: build,
             filename: 'assets/js/[name].[chunkhash:8].js',
@@ -94,7 +97,7 @@ module.exports = (env) => {
             contentBase: build,
             publicPath: '/',
             watchContentBase: true,
-            port: 3010
+            port: 3012
         },
         optimization: {
             splitChunks: {
