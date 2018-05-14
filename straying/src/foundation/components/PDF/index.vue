@@ -26,7 +26,7 @@ const pdf = new jsPDF()
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.bundle.js';
 
 export default {
-  name: 'Trial',
+  name: 'PDF',
   methods: {
     printPDF: function() {
       pdf.text(this.$refs.test.value, 10, 10)
@@ -64,5 +64,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import './Style'
+@import './style'
 </style>

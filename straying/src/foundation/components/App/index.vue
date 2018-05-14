@@ -1,22 +1,52 @@
 <template>
-  <div id="app" class="App">
-    <header class="App-header">
+  <div id="app">
+    <header class="site-header">
+      ヘッダー
     </header>
-    <Trial />
+    <div class="content-frame flex">
+      <nav class="content-menu">
+        <ul class="no-bullet menu-list">
+          <li v-for="(item, i) in listItems"
+            :key="i"
+            class="menu-list-item">
+            <router-link :to="{ name: item.link, params: {}}">{{ item.label }}</router-link>
+          </li>
+        </ul>
+      </nav>
+      <main class="content-body">
+        <router-view></router-view>
+      </main>
+    </div>
+    <footer class="site-footer">
+      フッター
+    </footer>
   </div>
 </template>
 
 <script>
-import Trial from '../Trial'
-
 export default {
-  name: "App",
-  components: {
-    Trial
+  name: 'App',
+  data: function() {
+    return {
+      listItems: [
+        {
+          label: 'HOME',
+          link: 'home'
+        },
+        {
+          label: 'Canvas',
+          link: 'canvas'
+        },
+        {
+          label: 'PDF',
+          link: 'pdf'
+        },
+      ]
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import './Style'
+@import './style'
 </style>
