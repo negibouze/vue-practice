@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    マップローダー
-    <Map :gMaps="google" v-if="google"></Map>
+    <Map :maps="maps" v-if="google"></Map>
     <Loading v-else></Loading>
   </div>
 </template>
@@ -18,7 +17,8 @@ export default {
   },
   data: function() {
     return {
-      google: null
+      google: null,
+      maps: null
     }
   },
   methods: {
@@ -29,7 +29,10 @@ export default {
     }
   },
   created: function() {
-    this.google = window.google.maps
+    this.google = window.google
+    if (this.google) {
+      this.maps = this.google.maps
+    }
   }
 }
 </script>

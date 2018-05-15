@@ -1,12 +1,12 @@
 <template>
-  <div id="map"></div>
+  <div id="map" class="map"></div>
 </template>
 
 <script>
 export default {
   name: 'Map',
   props: {
-    gMaps: {
+    maps: {
       type: Object
     }
   },
@@ -20,8 +20,8 @@ export default {
       console.log('The map already exists.')
       return
     }
-    const myLatlng = new this.gMaps.LatLng(35.6927224, 139.6926458)
-    this.mapObj = new this.gMaps.Map(document.getElementById('map'), {
+    const myLatlng = new this.maps.LatLng(35.6927224, 139.6926458)
+    this.mapObj = new this.maps.Map(document.getElementById('map'), {
       fullscreenControl: false,
       streetViewControl: false,
       zoom: 15,
