@@ -8,8 +8,14 @@
         <ul class="no-bullet menu-list">
           <li v-for="(item, i) in listItems"
             :key="i"
-            class="menu-list-item">
-            <router-link :to="{ name: item.link, params: {}}">{{ item.label }}</router-link>
+            class="menu-list-item"
+          >
+            <router-link
+              :to="{ name: item.link, params: {}}"
+              exact-active-class="active"
+            >
+              {{ item.label }}
+            </router-link>
           </li>
         </ul>
       </nav>
@@ -29,18 +35,10 @@ export default {
   data: function() {
     return {
       listItems: [
-        {
-          label: 'HOME',
-          link: 'home'
-        },
-        {
-          label: 'Canvas',
-          link: 'canvas'
-        },
-        {
-          label: 'PDF',
-          link: 'pdf'
-        },
+        { label: 'Home', link: 'home' },
+        { label: 'Canvas', link: 'canvas' },
+        { label: 'PDF', link: 'pdf' },
+        { label: 'Map', link: 'map' }
       ]
     }
   }

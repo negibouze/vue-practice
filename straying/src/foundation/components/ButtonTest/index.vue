@@ -1,7 +1,5 @@
 <template>
-  <div class="test">
-    <button class="example" @click="onClick">{{ title }}</button>
-  </div>
+  <button class="btn-normal" @click="onClick">{{ title }}</button>
 </template>
 
 <script>
@@ -20,5 +18,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import './Style'
+@import './style'
 </style>

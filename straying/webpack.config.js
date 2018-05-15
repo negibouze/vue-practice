@@ -46,8 +46,7 @@ module.exports = (env) => {
         mode: prod ? 'production' : 'development',
         devtool: shouldUseSourceMap ? 'source-map' : false,
         entry: {
-            bundle: './src/index.js',
-            'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
+            bundle: './src/index.js'
         },
         output: {
             path: build,
