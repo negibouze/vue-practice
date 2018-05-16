@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="site-frame">
     <header class="site-header">
       ヘッダー
     </header>
@@ -32,7 +32,7 @@
 <script>
 export default {
   name: 'App',
-  data: function() {
+  data() {
     return {
       listItems: [
         { label: 'Home', link: 'home' },

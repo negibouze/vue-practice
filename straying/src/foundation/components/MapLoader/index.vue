@@ -1,34 +1,45 @@
 <template>
-  <div class="container">
-    <Map :maps="maps" v-if="google"></Map>
+  <div class="container flex" :class="{ 'flex-column': isColumn }">
+    <template v-if="google">
+      <div class="map-container">
+        <Map :maps="maps"></Map>
+      </div>
+      <div class="list-container" v-if="hasItems">
+        <ListTest></ListTest>
+      </div>
+    </template>
     <Loading v-else></Loading>
   </div>
 </template>
 
 <script>
 import Map from '../Map'
+import ListTest from '../ListTest'
 import Loading from '../Loading'
 
 export default {
   name: 'MapLoader',
   components: {
     Map,
+    ListTest,
     Loading
   },
-  data: function() {
+  data() {
     return {
       google: null,
-      maps: null
+      maps: null,
+      hasItems: true,
+      isColumn: true
     }
   },
   methods: {
-    initializeMap (){
+    initializeMap() {
       // const mapContainer = this.$el.querySelector('#map')
       // const { Map } = this.google.maps
       // this.map = new Map(mapContainer, this.mapConfig)
     }
   },
-  created: function() {
+  mounted() {
     this.google = window.google
     if (this.google) {
       this.maps = this.google.maps

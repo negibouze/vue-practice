@@ -1,57 +1,19 @@
 <template>
-  <table>
-    <tr>
-      <th>見出しセル</th>
-      <th>見出しセル</th>
-      <th>見出しセル</th>
-      <th>見出しセル</th>
-      <th>見出しセル</th>
-    </tr>
-    <tr>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-    </tr>
-    <tr>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-    </tr>
-    <tr>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-    </tr>
-    <tr>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-    </tr>
-    <tr>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-      <td>データセル</td>
-    </tr>
-  </table>
+  <div>
+    <ListMenu></ListMenu>
+    <ListContent></ListContent>
+  </div>
 </template>
 
 <script>
+import ListMenu from '../ListMenu'
+import ListContent from '../ListContent'
+
 export default {
   name: 'ListTest',
-  props: {
-    items: {
-      type: Array
-    }
+  components: {
+    ListMenu,
+    ListContent
   }
 }
 </script>

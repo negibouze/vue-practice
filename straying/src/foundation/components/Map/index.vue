@@ -10,12 +10,12 @@ export default {
       type: Object
     }
   },
-  data: function() {
+  data() {
     return {
       mapObj: null
     }
   },
-  mounted: function() {
+  mounted() {
     if (this.mapObj) {
       console.log('The map already exists.')
       return

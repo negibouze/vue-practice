@@ -1,5 +1,5 @@
 <template>
-  <div class="example">
+  <div class="container">
     <div class="table-area">
       <list-test
       />
@@ -32,7 +32,7 @@ export default {
     ListTest
   },
   methods: {
-    drawing: function() {
+    drawing() {
       /* canvas要素のノードオブジェクト */
       const canvas = this.$refs.canvas;
       /* canvas要素の存在チェックとCanvas未対応ブラウザの対処 */
@@ -50,7 +50,7 @@ export default {
       ctx.closePath();
       ctx.stroke();
     },
-    download: function() {
+    download() {
       const canvas = this.$refs.canvas;
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
       const pdf = new jsPDF();

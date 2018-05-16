@@ -25,7 +25,7 @@ import ButtonTest from '../ButtonTest'
 export default {
   name: 'PDF',
   methods: {
-    printPDF: function() {
+    printPDF() {
       // pdf.text(this.$refs.test.value, 10, 10)
       // const data = pdf.output('dataurl')
       // pdfjsLib.getDocument(data)
