@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'ListMenu',
+  name: 'MapMenu',
   data() {
     return {
       items: [
