@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex" :class="{ 'flex-column': isColumn }">
+  <div class="container" :class="[{ 'flex': google }, { 'flex-column': google && isColumn }]">
     <template v-if="google">
       <div class="map-container">
         <Map :maps="maps"></Map>

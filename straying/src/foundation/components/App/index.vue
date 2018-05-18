@@ -68,6 +68,10 @@ export default {
 }
 </script>
 
+<style lang="stylus">
+@import './style-global'
+</style>
+
 <style lang="stylus" scoped>
 @import './style'
 </style>

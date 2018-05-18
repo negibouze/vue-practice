@@ -1,15 +1,12 @@
 <template>
-  <div>
-    ローディング
+  <div class="loading-wrapper flex flex-center">
+    <span class="loader"></span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Loading',
-  props: {
-
-  }
+  name: 'Loading'
 }
 </script>
 

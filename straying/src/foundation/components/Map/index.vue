@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <MapMenu class="menu"></MapMenu>
-    <MapContent class="content"></MapContent>
+    <MapContent class="content" :maps="maps"></MapContent>
   </div>
 </template>
 
