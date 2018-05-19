@@ -28,7 +28,7 @@ export default {
     return {
       google: null,
       maps: null,
-      hasItems: true,
+      hasItems: false,
       isColumn: true
     }
   },
