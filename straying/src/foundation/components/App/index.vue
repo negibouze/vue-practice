@@ -31,16 +31,19 @@
     <footer class="site-footer">
       フッター
     </footer>
+    <Overlay v-if="isPrevented"></Overlay>
   </div>
 </template>
 
 <script>
 import Hamburger from '../Hamburger'
+import Overlay from '../Overlay'
 
 export default {
   name: 'App',
   components: {
-    Hamburger
+    Hamburger,
+    Overlay
   },
   data() {
     return {
@@ -51,7 +54,8 @@ export default {
         { label: 'Map', link: 'map' }
       ],
       active: false,
-      isClosed: false
+      isClosed: false,
+      isPrevented: false
     }
   },
   methods: {
