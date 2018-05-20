@@ -31,19 +31,25 @@
     <footer class="site-footer">
       フッター
     </footer>
-    <Overlay v-if="isPrevented"></Overlay>
+    <Overlay v-if="isPrevented">
+      <template slot="inner-content">
+        <MordalContainer></MordalContainer>
+      </template>
+    </Overlay>
   </div>
 </template>
 
 <script>
 import Hamburger from '../Hamburger'
 import Overlay from '../Overlay'
+import MordalContainer from '../MordalContainer'
 
 export default {
   name: 'App',
   components: {
     Hamburger,
-    Overlay
+    Overlay,
+    MordalContainer
   },
   data() {
     return {
@@ -55,7 +61,7 @@ export default {
       ],
       active: false,
       isClosed: false,
-      isPrevented: false
+      isPrevented: true
     }
   },
   methods: {

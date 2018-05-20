@@ -1,5 +1,7 @@
 <template>
-  <div class="overlay dark" @click="handleClick"></div>
+  <div class="overlay dark" @click="handleClick">
+    <slot name="inner-content"></slot>
+  </div>
 </template>
 
 <script>

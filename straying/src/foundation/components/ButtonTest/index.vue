@@ -8,7 +8,7 @@ export default {
   props: {
     title: {
       type: String,
-      require: true
+      required: true
     },
     onClick: {
       type: Function
