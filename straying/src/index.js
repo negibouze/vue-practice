@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from './router'
+import store from './store'
 import App from './foundation/components/App'
 
 Vue.config.productionTip = false
@@ -8,5 +9,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#root',
   router,
+  store,
   render: h => h(App)
 })
