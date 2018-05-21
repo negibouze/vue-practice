@@ -1,6 +1,6 @@
 .toggle-icon
-.toggle-icon:before
-.toggle-icon:after
+.toggle-icon::before
+.toggle-icon::after
   position: relative
   display: block
   top: 50%
@@ -13,17 +13,17 @@
 
 .toggle-icon
   transform: translate3d(-50%, 0, 0)
-  &:before
+  &::before
     transform: translate3d(-50%, -9px, 0)
-  &:after
+  &::after
     transform: translate3d(-50%, 5px, 0)
   &.left
-    &:before
+    &::before
       transform: scaleX(0.6) translate3d(-32px, 2.8px, 0) rotate(20deg)
-    &:after
+    &::after
       transform: scaleX(0.6) translate3d(-32px, -7px, 0) rotate(-20deg)
   &.right
-    &:before
+    &::before
       transform: scaleX(0.6) translate3d(-8px, 2.8px, 0) rotate(-20deg)
-    &:after
+    &::after
       transform: scaleX(0.6) translate3d(-8px, -7px, 0) rotate(20deg)

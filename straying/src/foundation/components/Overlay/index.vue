@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay dark" @click="handleClick">
+  <div class="overlay light" @click="handleClick">
     <slot name="inner-content"></slot>
   </div>
 </template>
@@ -9,8 +9,8 @@ export default {
   name: 'Overlay',
   methods: {
     handleClick(e) {
-      e.stopPropagation();
-      e.preventDefault();
+      e.stopPropagation()
+      // e.preventDefault()
     }
   }
 }

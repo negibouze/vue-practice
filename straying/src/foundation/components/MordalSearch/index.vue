@@ -1,21 +1,21 @@
 <template>
   <div class="mordal-search">
     <ul class="no-bullet radius-list">
-      <li v-for="v in radius"
+      <li v-for="v in preparedRadius"
         :key="'radius-' + v"
         class="radius-list-item"
+        :class="{ active: v === currentValue }"
       >
-        <input type="radio" name="radius" :id=v :value=v>{{ v }}m
+        <input type="radio" name="radius" :id=v :value=v v-model=currentValue>
+        <label :for=v><span class="select-none">{{ v }}m</span></label>
       </li>
-      <!-- <li class="radius-list-item">
-        <label>
-          <input type="radio" name="radius" id="any">
-          <input type="number" name="" id="" value="0">
-        </label>
-      </li> -->
+      <li class="radius-list-item" :class="{ active: anyValue === currentValue }">
+        <input type="radio" name="radius" id="any" :value="foo" v-model=currentValue>
+        <label for="any"><span class="select-none">その他：</span><input type="number" min="10" step="10" class="input--number" @focus="updateValue" @input="updateValue" v-model=anyValue></label>
+      </li>
     </ul>
     <div class="button-container flex flex-between">
-      <ButtonTest title="検索" :onClick="test"></ButtonTest>
+      <ButtonTest title="検索" :onClick="search"></ButtonTest>
       <ButtonTest title="閉じる" :onClick="close"></ButtonTest>
     </div>
   </div>
@@ -31,20 +31,30 @@ export default {
   },
   data() {
     return {
-      radius: [
+      preparedRadius: [
         500,
         750,
         1000,
         2000
-      ]
+      ],
+      currentValue: 500,
+      anyValue: 10
+    }
+  },
+  computed: {
+    foo() {
+      return this.anyValue
     }
   },
   methods: {
-    test() {
-      console.log('test')
+    search() {
+      console.log(this.currentValue)
     },
     close() {
       console.log('close')
+    },
+    updateValue() {
+      this.currentValue = this.anyValue
     }
   }
 }
