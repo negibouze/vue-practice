@@ -10,7 +10,7 @@
         <label :for=v><span class="select-none">{{ v }}m</span></label>
       </li>
       <li class="radius-list-item" :class="{ active: anyValue === currentValue }">
-        <input type="radio" name="radius" id="any" :value="foo" v-model=currentValue>
+        <input type="radio" name="radius" id="any" :value="anyValue" v-model=currentValue>
         <label for="any"><span class="select-none">その他：</span><input type="number" min="10" step="10" class="input--number" @focus="updateValue" @input="updateValue" v-model=anyValue></label>
       </li>
     </ul>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import ButtonTest from '../ButtonTest'
 
 export default {
@@ -42,9 +42,9 @@ export default {
       anyValue: 10
     }
   },
-  computed: {
-    foo() {
-      return this.anyValue
+  watch: {
+    currentValue(newValue, oldValue) {
+      this.updateRadius(newValue)
     }
   },
   methods: {
@@ -56,7 +56,10 @@ export default {
     },
     updateValue() {
       this.currentValue = this.anyValue
-    }
+    },
+    ...mapActions('circle', [
+      'updateRadius'
+    ])
   }
 }
 </script>

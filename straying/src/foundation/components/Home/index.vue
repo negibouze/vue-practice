@@ -1,7 +1,7 @@
 <template>
   <div>
     ホーム
-    <span>{{ count }}</span>{{ message }}
+    <span>{{ count }}</span>
     <div>
       <button @click="up">up</button>
       <button @click="decrement">down</button>
@@ -10,6 +10,8 @@
       <button @click="upAsync">up async</button>
     </div>
     <span>これはローカルのコンピューテッド: {{ localComputed }}</span>
+    <div>{{ radius }}</div>
+    <div>{{ message }}</div>
   </div>
 </template>
 
@@ -29,7 +31,15 @@ export default {
     },
     ...mapState({
       count: state => state.count
+    }),
+    ...mapState('circle', {
+      radius: state => state.radius
     })
+  },
+  watch: {
+    radius(newValue) {
+      this.message = `Radius has changed to ${newValue}`
+    }
   },
   methods: {
     up() {

@@ -61,7 +61,7 @@ export default {
       ],
       active: false,
       isClosed: false,
-      isPrevented: false
+      isPrevented: true
     }
   },
   methods: {

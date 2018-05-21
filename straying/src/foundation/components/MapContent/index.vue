@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'MapContent',
   props: {
@@ -13,6 +15,19 @@ export default {
   data() {
     return {
       mapObj: null
+    }
+  },
+  computed: {
+    localComputed() {
+      return 'localComputed'
+    },
+    ...mapState('circle', {
+      radius: state => state.radius
+    })
+  },
+  watch: {
+    radius(newValue) {
+      console.log(`Radius has changed to ${newValue}`)
     }
   },
   mounted() {
