@@ -31,7 +31,7 @@
     <footer class="site-footer">
       フッター
     </footer>
-    <Overlay v-if="isPrevented">
+    <Overlay v-if="isShow">
       <template slot="inner-content">
         <MordalContainer></MordalContainer>
       </template>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Hamburger from '../Hamburger'
 import Overlay from '../Overlay'
 import MordalContainer from '../MordalContainer'
@@ -63,6 +64,14 @@ export default {
       isClosed: false,
       isPrevented: true
     }
+  },
+  computed: {
+    localComputed() {
+      return 'localComputed'
+    },
+    ...mapState('mordal', {
+      isShow: state => state.isShow
+    })
   },
   methods: {
     mouseOver() {

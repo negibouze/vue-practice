@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 const drawingColor = '#ff0000'
 const baseDrawingOptions = {
@@ -26,7 +26,7 @@ export default {
       timerId: 0,
       waitTime: 500,
       mapObj: null,
-      startingPoint: { lat: 35.6927224, lng: 139.6926458}, //null,
+      startingPoint: null,
       drawingObj: null,
       drawings: []
     }
@@ -37,6 +37,9 @@ export default {
     },
     ...mapState('circle', {
       radius: state => state.radius
+    }),
+    ...mapState('mordal', {
+      isShow: state => state.isShow
     })
   },
   watch: {
@@ -45,6 +48,10 @@ export default {
       if (!!radius) {
         this.drawCircle(radius)
       }
+    },
+    isShow(newValue) {
+      if (newValue) { return }
+      this.removeDrawingObject()
     }
   },
   methods: {
@@ -81,7 +88,16 @@ export default {
         fn(...args)
         this.timerId = null
       }, this.waitTime)
-    }
+    },
+    removeDrawingObject() {
+      if (!(!!this.drawingObj)) { return }
+      this.drawingObj.setMap(null)
+      this.drawingObj = null
+      this.startingPoint = null
+    },
+    ...mapActions('mordal', [
+      'show'
+    ])
   },
   mounted() {
     if (this.mapObj) {
@@ -96,10 +112,20 @@ export default {
       maxZoom: 20,
       center: new this.maps.LatLng(35.6927224, 139.6926458),
       gestureHandling: 'auto',
-      scrollwheel: false
+      scrollwheel: false,
+      styles: [
+        {
+          featureType: "poi",
+          elementType: "labels",
+          stylers: [
+            { visibility: "off" }
+          ]
+        }  
+      ]
     })
     map.addListener('click', (e) => {
       this.startingPoint = e.latLng
+      this.show()
     })
     this.mapObj = map
   }

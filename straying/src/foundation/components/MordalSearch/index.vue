@@ -16,7 +16,7 @@
     </ul>
     <div class="button-container flex flex-between">
       <ButtonTest title="検索" :onClick="search"></ButtonTest>
-      <ButtonTest title="閉じる" :onClick="close"></ButtonTest>
+      <ButtonTest title="閉じる" :onClick="hide"></ButtonTest>
     </div>
   </div>
 </template>
@@ -59,6 +59,9 @@ export default {
     },
     ...mapActions('circle', [
       'updateRadius'
+    ]),
+    ...mapActions('mordal', [
+      'hide'
     ])
   }
 }
