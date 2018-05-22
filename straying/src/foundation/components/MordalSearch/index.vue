@@ -11,7 +11,7 @@
       </li>
       <li class="radius-list-item" :class="{ active: anyValue === currentValue }">
         <input type="radio" name="radius" id="any" :value="anyValue" v-model=currentValue>
-        <label for="any"><span class="select-none">その他：</span><input type="number" min="10" step="10" class="input--number" @focus="updateValue" @input="updateValue" v-model=anyValue></label>
+        <label for="any"><span class="select-none">その他：</span><input type="number" min="10" max="10000" step="10" class="input--number" @focus="updateValue" @input="updateValue" v-model=anyValue></label>
       </li>
     </ul>
     <div class="button-container flex flex-between">
