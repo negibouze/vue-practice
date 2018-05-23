@@ -23,6 +23,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { mordalTypes as types } from '@/foundation/types'
 import ButtonTest from '../ButtonTest'
 
 export default {
@@ -48,20 +49,22 @@ export default {
     }
   },
   methods: {
-    search() {
-      console.log(this.currentValue)
-    },
-    close() {
-      console.log('close')
-    },
     updateValue() {
       this.currentValue = this.anyValue
+    },
+    search() {
+      this.circle()
+      this.show(types.Loading)
     },
     ...mapActions('circle', [
       'updateRadius'
     ]),
     ...mapActions('mordal', [
+      'show',
       'hide'
+    ]),
+    ...mapActions('search', [
+      'circle'
     ])
   }
 }

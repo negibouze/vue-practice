@@ -43,6 +43,9 @@ export default {
       isShow: state => state.isShow
     }),
     ...mapState('search', {
+      circle: state => state.circle,
+      rectangle: state => state.rectangle,
+      projects: state => state.projects
     })
   },
   watch: {
@@ -55,9 +58,30 @@ export default {
     isShow(newValue) {
       if (newValue) { return }
       this.removeDrawingObject()
+    },
+    circle(newValue) {
+      if (!newValue) { return }
+      this.executeCircle()
+    },
+    rectangle(newValue) {
+      if (!newValue) { return }
+      this.executeRectangle()
+    },
+    projects(newValue) {
+      this.drawMarker(newValue)
+      this.hide()
     }
   },
   methods: {
+    drawMarker(projects) {
+      for (const v of projects) {
+        new this.maps.Marker({
+          position: new this.maps.LatLng(v.lat, v.lng),
+          map: this.mapObj,
+          title: v.name
+        })
+      }
+    },
     drawCircle(radius) {
       if (!(!!this.startingPoint)) { return }
       if (this.drawingObj) {
@@ -99,11 +123,12 @@ export default {
       this.startingPoint = null
     },
     ...mapActions('mordal', [
-      'show'
+      'show',
+      'hide'
     ]),
     ...mapActions('search', [
-      'circle',
-      'rectangle'
+      'executeCircle',
+      'executeRectangle'
     ])    
   },
   mounted() {
