@@ -1,13 +1,13 @@
 import list from './list'
-import map from './map'
 import mordal from './mordal'
 import circle from './circle'
 import rectangle from './rectangle'
+import search from './search'
 
 export default {
     list,
-    map,
     mordal,
     circle,
-    rectangle
+    rectangle,
+    search
 }

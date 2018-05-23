@@ -1,7 +1,5 @@
 <template>
-  <div class="loading-wrapper flex flex-center">
-    <span class="loader"></span>
-  </div>
+  <span class="loader"></span>
 </template>
 
 <script>

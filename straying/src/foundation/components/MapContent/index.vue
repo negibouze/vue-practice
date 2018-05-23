@@ -4,6 +4,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { mordalTypes as types } from '@/foundation/types'
 
 const drawingColor = '#ff0000'
 const baseDrawingOptions = {
@@ -40,6 +41,8 @@ export default {
     }),
     ...mapState('mordal', {
       isShow: state => state.isShow
+    }),
+    ...mapState('search', {
     })
   },
   watch: {
@@ -97,7 +100,11 @@ export default {
     },
     ...mapActions('mordal', [
       'show'
-    ])
+    ]),
+    ...mapActions('search', [
+      'circle',
+      'rectangle'
+    ])    
   },
   mounted() {
     if (this.mapObj) {
@@ -125,7 +132,7 @@ export default {
     })
     map.addListener('click', (e) => {
       this.startingPoint = e.latLng
-      this.show()
+      this.show(types.CIRCLE_SEARCH)
     })
     this.mapObj = map
   }

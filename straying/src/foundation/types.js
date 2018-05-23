@@ -1,0 +1,10 @@
+const mordalTypes = {
+  LOADING: 'LOADING',
+  SEARCH_CONDITION: 'SEARCH_CONDITION',
+  CIRCLE_SEARCH: 'CIRCLE_SEARCH',
+  RECTANGLE_SEARCH: 'RECTANGLE_SEARCH'
+}
+
+export {
+  mordalTypes
+}

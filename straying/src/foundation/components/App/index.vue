@@ -61,8 +61,7 @@ export default {
         { label: 'Map', link: 'map' }
       ],
       active: false,
-      isClosed: false,
-      isPrevented: true
+      isClosed: false
     }
   },
   computed: {
