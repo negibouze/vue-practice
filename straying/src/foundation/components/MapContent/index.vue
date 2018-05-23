@@ -74,13 +74,13 @@ export default {
   },
   methods: {
     drawMarker(projects) {
-      for (const v of projects) {
+      projects.forEach(v => {
         new this.maps.Marker({
           position: new this.maps.LatLng(v.lat, v.lng),
           map: this.mapObj,
           title: v.name
         })
-      }
+      })
     },
     drawCircle(radius) {
       if (!(!!this.startingPoint)) { return }
