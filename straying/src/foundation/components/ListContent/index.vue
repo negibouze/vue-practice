@@ -11,9 +11,6 @@
         :key="'items-' + i"
     >
       <td>{{ v.name }}</td>
-      <td>{{ v.age }}</td>
-      <td>{{ v.address }}</td>
-      <td>{{ v.phone }}</td>
     </tr>
   </table>
 </template>
@@ -24,12 +21,14 @@ export default {
   props: {
     columns: {
       type: Array,
+      required: true,
       default() {
         return []
       }
     },
     items: {
       type: Array,
+      required: true,
       default() {
         return []
       }

@@ -39,7 +39,7 @@ export default {
         1000,
         2000
       ],
-      currentValue: 500,
+      currentValue: 0,
       anyValue: 10
     }
   },

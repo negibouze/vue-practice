@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <MapMenu class="menu"></MapMenu>
-    <MapContent class="content" :maps="maps"></MapContent>
+    <MapContent class="content" :maps="maps" :projects="projects"></MapContent>
   </div>
 </template>
 
@@ -18,6 +18,10 @@ export default {
   props: {
     maps: {
       type: Object
+    },
+    projects: {
+      type: Array,
+      required: false
     }
   }
 }

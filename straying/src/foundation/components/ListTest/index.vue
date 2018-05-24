@@ -1,7 +1,7 @@
 <template>
   <div>
     <ListMenu></ListMenu>
-    <ListContent></ListContent>
+    <ListContent :columns="columns" :items="projects"></ListContent>
   </div>
 </template>
 
@@ -14,6 +14,19 @@ export default {
   components: {
     ListMenu,
     ListContent
+  },
+  data() {
+    return {
+      columns: [
+        'baz'
+      ]
+    }
+  },
+  props: {
+    projects: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

@@ -20,6 +20,10 @@ export default {
   props: {
     maps: {
       type: Object
+    },
+    projects: {
+      type: Array,
+      required: false
     }
   },
   data() {
@@ -44,8 +48,7 @@ export default {
     }),
     ...mapState('search', {
       circle: state => state.circle,
-      rectangle: state => state.rectangle,
-      projects: state => state.projects
+      rectangle: state => state.rectangle
     })
   },
   watch: {
@@ -69,7 +72,6 @@ export default {
     },
     projects(newValue) {
       this.drawMarker(newValue)
-      this.hide()
     }
   },
   methods: {
@@ -123,8 +125,7 @@ export default {
       this.startingPoint = null
     },
     ...mapActions('mordal', [
-      'show',
-      'hide'
+      'show'
     ]),
     ...mapActions('search', [
       'executeCircle',
