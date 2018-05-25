@@ -4,6 +4,7 @@
       <li v-for="(v, i) in items"
         :key="i"
         class="menu-item"
+        @click="foo"
       >
         {{ v }}
       </li>
@@ -12,6 +13,9 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { mordalTypes as types } from '@/foundation/types'
+
 export default {
   name: 'MapMenu',
   data() {
@@ -24,6 +28,12 @@ export default {
     }
   },
   methods: {
+    foo() {
+      this.show(types.SEARCH_CONDITION)
+    },
+    ...mapActions('mordal', [
+      'show'
+    ])
   }
 }
 </script>

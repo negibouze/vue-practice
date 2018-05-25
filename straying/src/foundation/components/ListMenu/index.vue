@@ -12,6 +12,9 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { mordalTypes as types } from '@/foundation/types'
+
 export default {
   name: 'ListMenu',
   data() {
