@@ -41,6 +41,11 @@ export default {
       return 'localComputed'
     },
     ...mapState('circle', {
+      foo: state => state.enable,
+      radius: state => state.radius
+    }),
+    ...mapState('rectangle', {
+      bar: state => state.enable,
       radius: state => state.radius
     }),
     ...mapState('mordal', {
@@ -52,6 +57,30 @@ export default {
     })
   },
   watch: {
+    foo(newValue) {
+        console.log('Add Circle')
+      if (newValue) {
+        this.addClickListener((e) => {
+          this.startingPoint = e.latLng
+          this.show(types.CIRCLE_SEARCH)
+        })
+      } else {
+        console.log('Remove Circle')
+        this.removeClickListener()
+      }
+    },
+    bar(newValue) {
+      if (newValue) {
+        console.log('Add Rectangle')
+        this.addClickListener((e) => {
+          this.startingPoint = e.latLng
+          this.show(types.RECTANGLE_SEARCH)
+        })
+      } else {
+        console.log('Remove Rectangle')
+        this.removeClickListener()
+      }
+    },
     radius(newValue) {
       const radius = parseInt(newValue)
       if (!!radius) {
@@ -75,6 +104,14 @@ export default {
     }
   },
   methods: {
+    addClickListener(fn) {
+      if (!(!!this.mapObj)) { return }
+      this.mapObj.addListener('click', fn)
+    },
+    removeClickListener() {
+      if (!(!!this.mapObj)) { return }
+      this.maps.event.clearListeners(this.mapObj, 'click');
+    },
     drawMarker(projects) {
       projects.forEach(v => {
         new this.maps.Marker({
@@ -155,10 +192,6 @@ export default {
           ]
         }  
       ]
-    })
-    map.addListener('click', (e) => {
-      this.startingPoint = e.latLng
-      this.show(types.CIRCLE_SEARCH)
     })
     this.mapObj = map
   }

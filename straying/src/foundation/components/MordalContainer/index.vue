@@ -8,14 +8,16 @@
 import { mapState } from 'vuex'
 import { mordalTypes as types } from '@/foundation/types'
 import Loading from '../Loading'
-import MordalSearch from '../MordalSearch'
+import MordalCircleSearch from '../MordalCircleSearch'
+import MordalRectangleSearch from '../MordalRectangleSearch'
 import MordalSearchCondition from '../MordalSearchCondition'
 
 export default {
   name: 'MordalContainer',
   components: {
     Loading,
-    MordalSearch,
+    MordalCircleSearch,
+    MordalRectangleSearch,
     MordalSearchCondition
   },
   computed: {
@@ -24,7 +26,9 @@ export default {
         case types.SEARCH_CONDITION:
           return MordalSearchCondition
         case types.CIRCLE_SEARCH:
-          return MordalSearch
+          return MordalCircleSearch
+        case types.RECTANGLE_SEARCH:
+          return MordalRectangleSearch
         case types.LOADING:
         default:
           return Loading

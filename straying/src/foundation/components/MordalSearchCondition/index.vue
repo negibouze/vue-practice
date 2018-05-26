@@ -1,7 +1,8 @@
 <template>
   <div class="mordal-search-condition">
     <div class="button-container flex flex-between">
-      <ButtonTest title="円検索" :onClick="search"></ButtonTest>
+      <ButtonTest title="円検索" :onClick="circle"></ButtonTest>
+      <ButtonTest title="四角検索" :onClick="rectangle"></ButtonTest>
       <ButtonTest title="閉じる" :onClick="hide"></ButtonTest>
     </div>
   </div>
@@ -18,6 +19,22 @@ export default {
     ButtonTest
   },
   methods: {
+    circle() {
+      this.endRectangle()
+      this.beginCircle()
+      this.hide()
+    },
+    rectangle() {
+      this.endCircle()
+      this.beginRectangle()
+      this.hide()
+    },
+    ...mapActions({
+      beginCircle: 'circle/begin',
+      endCircle: 'circle/end',
+      beginRectangle: 'rectangle/begin',
+      endRectangle: 'rectangle/end'
+    }),
     ...mapActions('mordal', [
       'hide'
     ]),
