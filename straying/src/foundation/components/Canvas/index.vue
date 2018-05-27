@@ -2,6 +2,8 @@
   <div class="container">
     <div class="table-area">
       <list-test
+        :columns="Object.keys(projects[0])"
+        :projects="projects"
       />
     </div>
     <div class="button-area">
@@ -30,6 +32,37 @@ export default {
   components: {
     ButtonTest,
     ListTest
+  },
+  data() {
+    return {
+      projects: [
+        {
+          name: 'name1',
+          age: 20,
+          address: 'address1'
+        },
+        {
+          name: 'name2',
+          age: 25,
+          address: 'address2'
+        },
+        {
+          name: 'name3',
+          age: 30,
+          address: 'address3'
+        },
+        {
+          name: 'name4',
+          age: 35,
+          address: 'address4'
+        },
+        {
+          name: 'name5',
+          age: 40,
+          address: 'address5'
+        },
+      ]
+    }
   },
   methods: {
     drawing() {

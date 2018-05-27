@@ -10,7 +10,11 @@
     <tr v-for="(v, i) in items"
         :key="'items-' + i"
     >
-      <td>{{ v.name }}</td>
+      <td v-for="key in Object.keys(v)"
+        :key="'item-' + i + '_' + key"
+      >
+        {{ v[key] }}
+      </td>
     </tr>
   </table>
 </template>

@@ -17,12 +17,13 @@ export default {
   },
   data() {
     return {
-      columns: [
-        'baz'
-      ]
     }
   },
   props: {
+    columns: {
+      type: Array,
+      required: true
+    },
     projects: {
       type: Array,
       required: true
