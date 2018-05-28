@@ -1,0 +1,40 @@
+{
+  "name": "vue_vuex_ts",
+  "version": "0.0.1",
+  "description": "Vue.js and Vuex and TypeScript practice",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack --env.production",
+    "build:dev": "webpack",
+    "clean": "rimraf ./build",
+    "rebuild": "npm-run-all -s clean build",
+    "rebuild:dev": "npm-run-all -s clean build:dev"
+  },
+  "author": "Yoshiaki Itakura (https://github.com/negibouze)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "browserslist": [
+    "> 0.25% in JP",
+    "not op_mini all"
+  ],
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "> 0.25% in JP",
+              "not op_mini all"
+            ]
+          }
+        }
+      ]
+    ]
+  }
+}
