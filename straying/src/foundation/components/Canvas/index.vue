@@ -5,6 +5,13 @@
         :columns="Object.keys(projects[0])"
         :projects="projects"
       />
+      <table id="table">
+        <tr>
+          <td>foo</td>
+          <td>bar</td>
+          <td>baz</td>
+        </tr>
+      </table>
     </div>
     <div class="button-area">
       <ButtonTest
@@ -18,6 +25,9 @@
     </div>
     <div class="render-area">
       <canvas id="canvas" ref="canvas"></canvas>
+    </div>
+    <div id="svg-wrapper">
+      <img src="" alt="svg" id="svg">
     </div>
   </div>
 </template>
@@ -82,6 +92,26 @@ export default {
       ctx.lineTo(20, 120);
       ctx.closePath();
       ctx.stroke();
+
+      this.drawSVG()
+    },
+    drawSVG() {
+      const svgString = `
+      <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
+        <style>
+          td {
+            background-color:yellow;
+            padding: 10px;
+          }
+        </style>
+        <foreignObject width='100%' height='100%'>
+          <div xmlns='http://www.w3.org/1999/xhtml' style='font-size:40px'>
+            ${ document.getElementById('table').innerHTML }
+          </div>
+        </foreignObject>
+      </svg>
+      `
+      this.setSVGToSrc('svg', this.svgFromString(svgString));
     },
     download() {
       const canvas = this.$refs.canvas;
@@ -89,6 +119,14 @@ export default {
       const pdf = new jsPDF();
       pdf.addImage(imgData, 'JPEG', 0, 0);
       pdf.save("download.pdf");
+    },
+    svgFromString(svgString) {
+      const parser = new DOMParser()
+      return parser.parseFromString(svgString, "image/svg+xml")
+    },
+    setSVGToSrc(targetId, svgNode){
+      const xml = (new XMLSerializer).serializeToString(svgNode);
+      document.getElementById(targetId).src = "data:image/svg+xml;charset=utf-8,"+xml;
     }
   }
 }
