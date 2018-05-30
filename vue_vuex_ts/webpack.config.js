@@ -55,7 +55,7 @@ module.exports = (env) => {
         mode: prod ? 'production' : 'development',
         devtool: shouldUseSourceMap ? 'source-map' : false,
         entry: {
-            bundle: './src/index.js'
+            bundle: './src/index.ts'
         },
         output: {
             path: build,
@@ -66,7 +66,14 @@ module.exports = (env) => {
             rules: [
                 { test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: {} },
                 { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
-                { test: /\.ts$/, exclude: /node_modules/, loader: 'ts-loader' },
+                {
+                    test: /\.tsx?$/,
+                    exclude: /node_modules/,
+                    loader: 'ts-loader',
+                    options: {
+                        appendTsSuffixTo: [/\.vue$/]
+                    }              
+                },
                 {
                     test: /\.(styl|stylus)$/, exclude: /node_modules/,
                     use: [
@@ -106,7 +113,7 @@ module.exports = (env) => {
             contentBase: build,
             publicPath: '/',
             watchContentBase: true,
-            port: 3012
+            port: 3013
         },
         optimization: {
             splitChunks: {
