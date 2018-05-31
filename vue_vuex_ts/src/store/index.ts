@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import api from '../api'
-// import * as types from './mutation-types'
-// import {ListEntity} from '../entity/list'
+import modules from './modules'
+import * as types from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -19,7 +18,6 @@ export default new Vuex.Store({
     },
     actions: {
     },
-    modules: {
-    },
+    modules,
     strict: debug
 })
