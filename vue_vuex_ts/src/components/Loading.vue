@@ -1,0 +1,29 @@
+<template>
+  <span class="loader"></span>
+</template>
+
+<script>
+export default {
+  name: 'Loading'
+}
+</script>
+
+<style lang="stylus" scoped>
+.loader
+  width: 14rem
+  height: 14rem
+  border-radius: 50%
+  border: 1.1rem solid rgba(255, 255, 255, 0.2)
+  border-left-color:  #ffffff
+  will-change: transform
+  animation: rotation 1.1s infinite linear
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+</style>

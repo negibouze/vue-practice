@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^10.3.0",
-    "autoprefixer": "^8.5.2",
+    "autoprefixer": "^8.6.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
@@ -42,10 +42,10 @@
     "ts-loader": "^4.3.0",
     "typescript": "^2.9.1",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "vue-loader": "^15.2.2",
+    "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.10.2",
-    "webpack-cli": "^2.1.4",
+    "webpack-cli": "^3.0.0",
     "webpack-dev-server": "^3.1.4"
   },
   "browserslist": [
