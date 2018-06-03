@@ -4,14 +4,8 @@
       <list-test
         :columns="Object.keys(projects[0])"
         :projects="projects"
+        id="table"
       />
-      <table id="table">
-        <tr>
-          <td>foo</td>
-          <td>bar</td>
-          <td>baz</td>
-        </tr>
-      </table>
     </div>
     <div class="button-area">
       <ButtonTest
@@ -26,13 +20,12 @@
     <div class="render-area">
       <canvas id="canvas" ref="canvas"></canvas>
     </div>
-    <div id="svg-wrapper">
-      <img src="" alt="svg" id="svg">
-    </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { mordalTypes as types } from '@/foundation/types'
 import jsPDF from 'jsPDF'
 import ButtonTest from '../ButtonTest'
 import ListTest from '../ListTest'
@@ -76,24 +69,26 @@ export default {
   },
   methods: {
     drawing() {
-      /* canvas要素のノードオブジェクト */
-      const canvas = this.$refs.canvas;
-      /* canvas要素の存在チェックとCanvas未対応ブラウザの対処 */
-      if (!canvas || !canvas.getContext) {
-        return false;
-      }
-      /* 2Dコンテキスト */
-      var ctx = canvas.getContext('2d');
-      /* 四角を描く */
-      ctx.beginPath();
-      ctx.moveTo(20, 20);
-      ctx.lineTo(120, 20);
-      ctx.lineTo(120, 120);
-      ctx.lineTo(20, 120);
-      ctx.closePath();
-      ctx.stroke();
-
+      this.show(types.FORM)
       this.drawSVG()
+      // /* canvas要素のノードオブジェクト */
+      // const canvas = this.$refs.canvas;
+      // /* canvas要素の存在チェックとCanvas未対応ブラウザの対処 */
+      // if (!canvas || !canvas.getContext) {
+      //   return false;
+      // }
+      // /* 2Dコンテキスト */
+      // var ctx = canvas.getContext('2d');
+      // /* 四角を描く */
+      // ctx.beginPath();
+      // ctx.moveTo(20, 20);
+      // ctx.lineTo(120, 20);
+      // ctx.lineTo(120, 120);
+      // ctx.lineTo(20, 120);
+      // ctx.closePath();
+      // ctx.stroke();
+
+      // this.drawSVG()
     },
     drawSVG() {
       const svgString = `
@@ -111,7 +106,7 @@ export default {
         </foreignObject>
       </svg>
       `
-      this.setSVGToSrc('svg', this.svgFromString(svgString));
+      this.begin(svgString);
     },
     download() {
       const canvas = this.$refs.canvas;
@@ -120,14 +115,12 @@ export default {
       pdf.addImage(imgData, 'JPEG', 0, 0);
       pdf.save("download.pdf");
     },
-    svgFromString(svgString) {
-      const parser = new DOMParser()
-      return parser.parseFromString(svgString, "image/svg+xml")
-    },
-    setSVGToSrc(targetId, svgNode){
-      const xml = (new XMLSerializer).serializeToString(svgNode);
-      document.getElementById(targetId).src = "data:image/svg+xml;charset=utf-8,"+xml;
-    }
+    ...mapActions('mordal', [
+      'show'
+    ]),
+    ...mapActions('form', [
+      'begin'
+    ])    
   }
 }
 </script>

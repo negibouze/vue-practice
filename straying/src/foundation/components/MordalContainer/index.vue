@@ -11,6 +11,7 @@ import Loading from '../Loading'
 import MordalCircleSearch from '../MordalCircleSearch'
 import MordalRectangleSearch from '../MordalRectangleSearch'
 import MordalSearchCondition from '../MordalSearchCondition'
+import MordalForm from '../MordalForm'
 
 export default {
   name: 'MordalContainer',
@@ -18,7 +19,8 @@ export default {
     Loading,
     MordalCircleSearch,
     MordalRectangleSearch,
-    MordalSearchCondition
+    MordalSearchCondition,
+    MordalForm
   },
   computed: {
     content() {
@@ -29,6 +31,8 @@ export default {
           return MordalCircleSearch
         case types.RECTANGLE_SEARCH:
           return MordalRectangleSearch
+        case types.FORM:
+          return MordalForm
         case types.LOADING:
         default:
           return Loading

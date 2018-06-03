@@ -40,7 +40,7 @@ export default {
     },
     search() {
       this.circle()
-      this.show(types.Loading)
+      this.show(types.LOADING)
     },
     ...mapActions('rectangle', [
       'updateRadius'
