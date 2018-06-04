@@ -91,22 +91,28 @@ export default {
       // this.drawSVG()
     },
     drawSVG() {
-      const svgString = `
-      <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
-        <style>
-          td {
-            background-color:yellow;
-            padding: 10px;
-          }
-        </style>
-        <foreignObject width='100%' height='100%'>
-          <div xmlns='http://www.w3.org/1999/xhtml' style='font-size:40px'>
-            ${ document.getElementById('table').innerHTML }
-          </div>
-        </foreignObject>
-      </svg>
-      `
-      this.begin(svgString);
+      const _this = this
+      var request = new XMLHttpRequest()
+      request.open("GET", "test.svg")
+      request.setRequestHeader("Content-Type", "image/svg+xml")
+      request.addEventListener("load", function(event) {
+        // const svgString = request.responseXML.documentElement
+        const svgString = request.responseText.replace('${dom}', document.getElementById('table').innerHTML)
+        _this.begin(svgString)
+      })
+      request.send()
+      // const svgString = `
+      // <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
+      //   <style>
+      //   </style>
+      //   <foreignObject width='100%' height='100%'>
+      //     <div xmlns='http://www.w3.org/1999/xhtml' style='font-size:40px'>
+      //       ${ document.getElementById('table').innerHTML }
+      //     </div>
+      //   </foreignObject>
+      // </svg>
+      // `
+      // this.begin(svgString);
     },
     download() {
       const canvas = this.$refs.canvas;
