@@ -91,15 +91,6 @@ export default {
       // this.drawSVG()
     },
     drawSVG() {
-      const _this = this
-      var request = new XMLHttpRequest()
-      request.open("GET", "test.svg")
-      request.setRequestHeader("Content-Type", "image/svg+xml")
-      request.addEventListener("load", function(event) {
-        const svgString = request.responseText.replace('${dom}', document.getElementById('table').innerHTML)
-        _this.begin(svgString)
-      })
-      request.send()
       // this.begin(svgString);
     },
     download() {
