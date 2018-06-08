@@ -20,7 +20,6 @@
 
 <script>
 import Board from '../Board'
-import './Game'
 
 function calculateWinner(squares) {
   const lines = [
@@ -105,3 +104,7 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+@import './Game'
+</style>

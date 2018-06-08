@@ -14,7 +14,6 @@
 
 <script>
 import Square from '../Square'
-import './Board'
 
 export default {
   name: "Board",
@@ -35,3 +34,7 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+@import './Board'
+</style>

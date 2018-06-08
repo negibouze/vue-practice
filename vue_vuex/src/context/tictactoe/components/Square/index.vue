@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import './Square'
-
 export default {
   name: "Square",
   props: {
@@ -22,3 +20,7 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+@import './Square'
+</style>

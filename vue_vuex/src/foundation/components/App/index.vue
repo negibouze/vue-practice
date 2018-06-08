@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import Game from '../../../context/tictactoe/components/Game'
-import './App'
+import Game from '@/context/tictactoe/components/Game'
 
 export default {
   name: "App",
@@ -19,3 +18,7 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+@import './App'
+</style>
