@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import Board from '../Board'
 
 function calculateWinner(squares) {
@@ -43,7 +44,10 @@ function calculateWinner(squares) {
 
 export default {
   name: "Game",
-  data: function() {
+  components: {
+    Board
+  },
+  data() {
     return {
       history: [{
         squares: Array(9).fill(null),
@@ -97,10 +101,9 @@ export default {
     jumpTo: function(i) {
       this.current = i
       this.xIsNext = (i % 2) === 0
-    }
-  },
-  components: {
-    Board
+    },
+    ...mapActions([
+    ]),
   }
 }
 </script>

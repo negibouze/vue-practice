@@ -13,10 +13,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Square from '../Square'
 
 export default {
   name: "Board",
+  components: {
+    Square 
+  },
   props: {
     squares: Array,
     onClick: {
@@ -29,8 +33,9 @@ export default {
       return Math.sqrt(this.squares.length)
     }
   },
-  components: {
-    Square 
+  methods: {
+    ...mapActions([
+    ]),
   }
 }
 </script>
