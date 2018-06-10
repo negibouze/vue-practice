@@ -3,7 +3,6 @@
     <div class="game-board">
       <Board
         :squares="squares"
-        :onClick="handleClick"
       />
     </div>
     <div class="game-info">
@@ -81,29 +80,27 @@ export default {
     }
   },
   methods: {
-    handleClick: function(i) {
-      const squares = this.squares.slice();
-      if (calculateWinner(this.squares) || this.squares[i]) {
-        return;
-      }
-      squares[i] = this.player
-      const tap = ((i) => {
-        const v = i === 0 ? [1, 1] : [(i % this.edgeLength) + 1, parseInt(i / this.edgeLength) + 1];
-        return { col: v[0], row: v[1] }
-      })(i);
-      this.history = this.history.slice(0, (this.current + 1)).concat([{
-        squares,
-        tap
-      }])
-      this.current = this.history.length - 1      
-      this.xIsNext = !this.xIsNext
-    },
+    // handleClick: function(i) {
+    //   const squares = this.squares.slice();
+    //   if (calculateWinner(this.squares) || this.squares[i]) {
+    //     return;
+    //   }
+    //   squares[i] = this.player
+    //   const tap = ((i) => {
+    //     const v = i === 0 ? [1, 1] : [(i % this.edgeLength) + 1, parseInt(i / this.edgeLength) + 1];
+    //     return { col: v[0], row: v[1] }
+    //   })(i);
+    //   this.history = this.history.slice(0, (this.current + 1)).concat([{
+    //     squares,
+    //     tap
+    //   }])
+    //   this.current = this.history.length - 1      
+    //   this.xIsNext = !this.xIsNext
+    // },
     jumpTo: function(i) {
       this.current = i
       this.xIsNext = (i % 2) === 0
-    },
-    ...mapActions([
-    ]),
+    }
   }
 }
 </script>

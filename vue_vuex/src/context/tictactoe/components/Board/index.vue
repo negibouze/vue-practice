@@ -5,7 +5,6 @@
         <Square v-for="(v, j) in edgeLength"
           :key="'square-' + ((edgeLength * i) + j)"
           :value="squares[((edgeLength * i) + j)]"
-          :onClick="onClick.bind(this, (edgeLength * i) + j)"
         />
       </div>
     </div>
@@ -13,7 +12,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Square from '../Square'
 
 export default {
@@ -22,16 +21,15 @@ export default {
     Square 
   },
   props: {
-    squares: Array,
-    onClick: {
-      type: Function,
-      required: true
-    }
+    squares: Array
   },
   computed: {
     edgeLength: function() {
       return Math.sqrt(this.squares.length)
-    }
+    },
+    ...mapState('square', [
+
+    ])
   },
   methods: {
     ...mapActions([

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { mapAction } from 'vuex'
+
 export default {
   name: "Square",
   props: {
@@ -13,10 +15,18 @@ export default {
       type: Boolean,
       default: false
     },
-    onClick: {
-      type: Function,
-      required: true
+    position: {
+      type: Object,
+      require: true
     }
+  },
+  methods: {
+    onClick: function() {
+      this.click(position)
+    },
+    ...mapAction('square', [
+      'click'
+    ])
   }
 }
 </script>
