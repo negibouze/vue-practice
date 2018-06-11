@@ -1,18 +1,16 @@
 <template>
   <div class="game">
     <div class="game-board">
-      <Board
-        :squares="squares"
-      />
+      <Board />
     </div>
     <div class="game-info">
-      <div class="status">{{ status }}</div>
+      <!-- <div class="status">{{ status }}</div>
       <button>order</button>
       <ol>
         <li v-for="(v, i) in moves" :key="'move-' + v">
           <button @click="jumpTo(i)">{{ v }}</button>
         </li>
-      </ol>
+      </ol> -->
     </div>
   </div>
 </template>
@@ -46,38 +44,28 @@ export default {
   components: {
     Board
   },
-  data() {
-    return {
-      history: [{
-        squares: Array(9).fill(null),
-        tap: {
-          col: 0,
-          row: 0
-        }
-      }],
-      current: 0,
-      xIsNext: true
-    }
-  },
   computed: {
-    squares: function() {
-      return this.history[this.current].squares
-    },
-    edgeLength: function() {
-      return Math.sqrt(this.squares.length)
-    },
-    player () {
-      return this.xIsNext ? 'X' : 'O'
-    },
-    status: function() {
-      const winner = calculateWinner(this.squares)
-      return winner ? `Winner: ${winner}` : `Next player: ${this.player}`
-    },
-    moves: function() {
-      return this.history.map((step, move) => {
-        return (move ? `Go to move #${move}` : 'Go to game start') + ` (col: ${step.tap.col}, row: ${step.tap.row})`;
-      })
-    }
+    // squares: function() {
+    //   return this.history[this.current].squares
+    // },
+    // edgeLength: function() {
+    //   return Math.sqrt(this.squares.length)
+    // },
+    // player () {
+    //   return this.xIsNext ? 'X' : 'O'
+    // },
+    // status: function() {
+    //   const winner = calculateWinner(this.squares)
+    //   return winner ? `Winner: ${winner}` : `Next player: ${this.player}`
+    // },
+    // moves: function() {
+    //   return this.history.map((step, move) => {
+    //     return (move ? `Go to move #${move}` : 'Go to game start') + ` (col: ${step.tap.col}, row: ${step.tap.row})`;
+    //   })
+    // },
+    ...mapState({
+      history: state => state.history
+    })
   },
   methods: {
     // handleClick: function(i) {
@@ -98,9 +86,11 @@ export default {
     //   this.xIsNext = !this.xIsNext
     // },
     jumpTo: function(i) {
-      this.current = i
-      this.xIsNext = (i % 2) === 0
-    }
+      this.jumpTo(i)
+    },
+    ...mapActions([
+      'jumpTo'
+    ])
   }
 }
 </script>

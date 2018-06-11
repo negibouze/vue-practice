@@ -9,6 +9,11 @@ import { mapActions } from 'vuex'
 
 export default {
   name: "Square",
+  data() {
+    return {
+      marked: false
+    }
+  },
   props: {
     value: String,
     highlight: {
@@ -26,9 +31,11 @@ export default {
   },
   methods: {
     onClick: function() {
+      if (this.marked) { return }
+      this.marked = true
       this.click({ row: this.row, col: this.col })
     },
-    ...mapActions('square', [
+    ...mapActions([
       'click'
     ])
   }
