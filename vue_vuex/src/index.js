@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './foundation/components/App'
-import store from './context/tictactoe/store'
+import store from './store'
 
 Vue.config.productionTip = false
 

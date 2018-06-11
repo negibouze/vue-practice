@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapAction } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: "Square",
@@ -15,16 +15,20 @@ export default {
       type: Boolean,
       default: false
     },
-    position: {
-      type: Object,
+    row: {
+      type: Number,
+      require: true
+    },
+    col: {
+      type: Number,
       require: true
     }
   },
   methods: {
     onClick: function() {
-      this.click(position)
+      this.click({ row: this.row, col: this.col })
     },
-    ...mapAction('square', [
+    ...mapActions('square', [
       'click'
     ])
   }

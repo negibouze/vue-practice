@@ -10,7 +10,7 @@ const Square = {
     mutations: {
         [types.CLICK_SQUARE] (state, value) {
             state.marked = true
-            stateposition = value
+            state.position = value
         }
     },
     actions: {

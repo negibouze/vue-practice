@@ -5,6 +5,8 @@
         <Square v-for="(v, j) in edgeLength"
           :key="'square-' + ((edgeLength * i) + j)"
           :value="squares[((edgeLength * i) + j)]"
+          :row="i"
+          :col="j"
         />
       </div>
     </div>
@@ -12,7 +14,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import Square from '../Square'
 
 export default {
@@ -28,12 +30,8 @@ export default {
       return Math.sqrt(this.squares.length)
     },
     ...mapState('square', [
-
+      
     ])
-  },
-  methods: {
-    ...mapActions([
-    ]),
   }
 }
 </script>
