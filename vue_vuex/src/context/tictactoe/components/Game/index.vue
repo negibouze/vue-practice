@@ -4,89 +4,57 @@
       <Board />
     </div>
     <div class="game-info">
-      <!-- <div class="status">{{ status }}</div>
-      <button>order</button>
+      <div class="status">{{ status }}</div>
+      <button @click="toggleOrder()">order {{ orderIsAsc ? '▲' : '▼' }}</button>
       <ol>
-        <li v-for="(v, i) in moves" :key="'move-' + v">
-          <button @click="jumpTo(i)">{{ v }}</button>
+        <li v-for="(v, i) in moves" :key="'move-' + i">
+          <button @click="jumpTo(v.turn)" :class="{ emphasis: turn === v.turn }">{{ v.label }}</button>
         </li>
-      </ol> -->
+      </ol>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import Board from '../Board'
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
 
 export default {
   name: "Game",
   components: {
     Board
   },
+  data() {
+    return {
+      orderIsAsc: true
+    }
+  },
   computed: {
-    // squares: function() {
-    //   return this.history[this.current].squares
-    // },
-    // edgeLength: function() {
-    //   return Math.sqrt(this.squares.length)
-    // },
-    // player () {
-    //   return this.xIsNext ? 'X' : 'O'
-    // },
-    // status: function() {
-    //   const winner = calculateWinner(this.squares)
-    //   return winner ? `Winner: ${winner}` : `Next player: ${this.player}`
-    // },
-    // moves: function() {
-    //   return this.history.map((step, move) => {
-    //     return (move ? `Go to move #${move}` : 'Go to game start') + ` (col: ${step.tap.col}, row: ${step.tap.row})`;
-    //   })
-    // },
-    ...mapState({
-      history: state => state.history
-    })
+    status: function() {
+      return this.winner ? `Winner: ${this.winner}` : `Next player: ${this.nextPlayer}`
+    },
+    moves: function() {
+      const m = this.history.map((step, move) => {
+        const label = (move ? `Go to move #${move}` : 'Go to game start') + ` (col: ${step.tap.col}, row: ${step.tap.row})`
+        return {
+          turn: move,
+          label
+        }
+      })
+      return this.orderIsAsc ? m : m.reverse()
+    },
+    ...mapState([
+      'history',
+      'turn'
+    ]),
+    ...mapGetters([
+      'nextPlayer',
+      'winner'
+    ])
   },
   methods: {
-    // handleClick: function(i) {
-    //   const squares = this.squares.slice();
-    //   if (calculateWinner(this.squares) || this.squares[i]) {
-    //     return;
-    //   }
-    //   squares[i] = this.player
-    //   const tap = ((i) => {
-    //     const v = i === 0 ? [1, 1] : [(i % this.edgeLength) + 1, parseInt(i / this.edgeLength) + 1];
-    //     return { col: v[0], row: v[1] }
-    //   })(i);
-    //   this.history = this.history.slice(0, (this.current + 1)).concat([{
-    //     squares,
-    //     tap
-    //   }])
-    //   this.current = this.history.length - 1      
-    //   this.xIsNext = !this.xIsNext
-    // },
-    jumpTo: function(i) {
-      this.jumpTo(i)
+    toggleOrder() {
+      this.orderIsAsc = !this.orderIsAsc
     },
     ...mapActions([
       'jumpTo'
@@ -96,5 +64,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import './Game'
+@import './index'
 </style>

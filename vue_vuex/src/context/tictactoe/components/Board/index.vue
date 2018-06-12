@@ -6,15 +6,17 @@
           :key="'square-' + i + '-' + j"
           :row="i"
           :col="j"
-          :value=val
+          :value="val"
+          :marked="!!val"
         />
       </div>
     </div>
+    {{ squares }}
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Square from '../Square'
 
 export default {
@@ -25,11 +27,14 @@ export default {
   computed: {
     ...mapState({
       squares: state => state.board
-    })
+    }),
+    ...mapGetters([
+      'winner'
+    ])
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import './Board'
+@import './index'
 </style>

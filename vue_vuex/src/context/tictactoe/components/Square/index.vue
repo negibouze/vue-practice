@@ -5,17 +5,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: "Square",
-  data() {
-    return {
-      marked: false
-    }
-  },
   props: {
     value: String,
+    marked: Boolean,
     highlight: {
       type: Boolean,
       default: false
@@ -29,11 +25,15 @@ export default {
       require: true
     }
   },
+  computed: {
+    ...mapGetters([
+      'nextPlayer'
+    ])
+  },
   methods: {
     onClick: function() {
       if (this.marked) { return }
-      this.marked = true
-      this.click({ row: this.row, col: this.col })
+      this.click({ row: this.row, col: this.col, value: this.nextPlayer })
     },
     ...mapActions([
       'click'
@@ -43,5 +43,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import './Square'
+@import './index'
 </style>
