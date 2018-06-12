@@ -1,14 +1,18 @@
 <template>
   <div>
     <div class="board">
-      <div class="board-row" v-for="(cols, i) in squares" :key="'row-' + i">
-        <Square v-for="(val, j) in cols"
+      <div class="board-row" v-for="(v, i) in squares" :key="'row-' + i">
+        <Square
+          :value="v"
+          :marked="!!v"
+        />
+        <!-- <Square v-for="(val, j) in cols"
           :key="'square-' + i + '-' + j"
           :row="i"
           :col="j"
           :value="val"
           :marked="!!val"
-        />
+        /> -->
       </div>
     </div>
     {{ squares }}

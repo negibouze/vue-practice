@@ -23,11 +23,11 @@ export default new Vuex.Store({
         history: [
             {
                 turn: 0,
-                board: Array(3).fill(Array(3).fill(null)),
+                board: Array(9).fill(null),
                 tap: { row: 0, col: 0 }
             }
         ],
-        board: Array(3).fill(Array(3).fill(null)),
+        board: Array(9).fill(null),
         xIsNext: true,
         turn: 0
     },
@@ -36,28 +36,19 @@ export default new Vuex.Store({
             return state.xIsNext ? 'X' : 'O'
         },
         winner: state => {
-            const b = state.board
+            const board = state.board
             for (const [a, b, c] in lines) {
-                console.log(a)
-                // if (b[a] && b[a] === b[b] && b[a] === b[c]) {
-                //     return b[a];
-                // }
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    return board[a];
+                }
             }
-            // for (let i = 0; i < lines.length; i++) {
-            //     const [a, b, c] = lines[i];
-            //     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            //         return squares[a];
-            //     }
-            // }
             return null;
         }
     },
     mutations: {
         [types.CLICK_SQUARE] (state, { row, col, value }) {
             const b = state.board.slice()
-            const r = b[row].slice()
-            r[col] = value
-            b[row] = r
+            b[0] = value
             state.board = b
             state.xIsNext = !state.xIsNext
             state.history = state.history.slice(0, state.turn).concat({ turn: state.turn, board: state.board, tap: { row: row + 1, col: col + 1 } })
