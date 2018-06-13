@@ -48,7 +48,7 @@ export default new Vuex.Store({
     mutations: {
         [types.CLICK_SQUARE] (state, { row, col, value }) {
             const b = state.board.slice()
-            b[0] = value
+            b[(col * 3) + row] = value
             state.board = b
             state.xIsNext = !state.xIsNext
             state.history = state.history.slice(0, state.turn).concat({ turn: state.turn, board: state.board, tap: { row: row + 1, col: col + 1 } })

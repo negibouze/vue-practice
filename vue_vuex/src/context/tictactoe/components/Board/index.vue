@@ -1,18 +1,14 @@
 <template>
   <div>
     <div class="board">
-      <div class="board-row" v-for="(v, i) in squares" :key="'row-' + i">
-        <Square
-          :value="v"
-          :marked="!!v"
-        />
-        <!-- <Square v-for="(val, j) in cols"
+      <div class="board-row" v-for="(cols, i) in squares" :key="'row-' + i">
+        <Square v-for="(val, j) in cols"
           :key="'square-' + i + '-' + j"
           :row="i"
           :col="j"
           :value="val"
           :marked="!!val"
-        /> -->
+        />
       </div>
     </div>
     {{ squares }}
@@ -30,7 +26,17 @@ export default {
   },
   computed: {
     ...mapState({
-      squares: state => state.board
+      squares: state => {
+        const b = state.board
+        const tmp = [
+          b.slice(0, 3),
+          b.slice(3, 6),
+          b.slice(6)
+        ]
+        return ((a) => {
+          return a[0].map((_, c) => a.map(r => r[c]))
+        })(tmp)
+      }
     }),
     ...mapGetters([
       'winner'
