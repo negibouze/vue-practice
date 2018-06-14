@@ -1,7 +1,7 @@
 {
-  "name": "vue_vuex_ts",
+  "name": "vue_ts",
   "version": "0.0.1",
-  "description": "Vue.js and Vuex and TypeScript practice",
+  "description": "Vue.js and TypeScript practice",
   "main": "index.ts",
   "scripts": {
     "start": "webpack-dev-server",
@@ -15,38 +15,32 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
-    "vue": "^2.5.16",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vue": "^2.5.16"
   },
   "devDependencies": {
-    "@types/node": "^10.3.3",
-    "autoprefixer": "^8.6.1",
-    "babel-core": "^6.26.3",
+    "autoprefixer": "^8.5.0",
+    "babel-core": "^6.26.2",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-2": "^6.24.1",
     "browserslist": "^3.2.8",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "npm-run-all": "^4.1.3",
-    "postcss-loader": "^2.1.5",
+    "postcss-loader": "^2.1.4",
     "rimraf": "^2.6.2",
-    "script-ext-html-webpack-plugin": "^2.0.1",
     "style-loader": "^0.21.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "ts-loader": "^4.4.1",
     "typescript": "^2.9.2",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "vue-loader": "^15.2.4",
+    "vue-loader": "^15.0.10",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.3"
   },
   "browserslist": [
     "> 0.25% in JP",
@@ -64,8 +58,7 @@
             ]
           }
         }
-      ],
-      "stage-2"
+      ]
     ]
   }
 }

@@ -3,16 +3,13 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const config = require('./config');
 
 module.exports = (env) => {
     const public = path.resolve(__dirname, 'public');
     const build = path.resolve(__dirname, 'build');
     const prod = (env && env.production);
-    const envVars = (prod ? config.prod : config.dev).env;
     const shouldUseSourceMap = !prod;
     const plugins = [
         new VueLoaderPlugin(),
@@ -33,12 +30,6 @@ module.exports = (env) => {
               minifyCSS: true,
               minifyURLs: true,
             },
-            googleMaps: {
-                apiKey: envVars.googleMapsAPIKey
-            }
-        }),
-        new ScriptExtHtmlWebpackPlugin({
-            defaultAttribute: 'defer'
         })
     ];
     if (prod) {
@@ -54,9 +45,7 @@ module.exports = (env) => {
         bail: true,
         mode: prod ? 'production' : 'development',
         devtool: shouldUseSourceMap ? 'source-map' : false,
-        entry: {
-            bundle: './src/index.ts'
-        },
+        entry: { bundle: './src/index.ts' },
         output: {
             path: build,
             filename: 'assets/js/[name].[chunkhash:8].js',
@@ -113,7 +102,7 @@ module.exports = (env) => {
             contentBase: build,
             publicPath: '/',
             watchContentBase: true,
-            port: 3014
+            port: 3013
         },
         optimization: {
             splitChunks: {
@@ -136,7 +125,7 @@ module.exports = (env) => {
             ]  
         },
         resolve: {
-            extensions: ['*', '.js', '.vue', '.styl', '.ts'],
+            extensions: ['*', '.js', '.ts', '.vue', '.styl'],
             alias: {
                 '@': path.join(__dirname, 'src')
             }
