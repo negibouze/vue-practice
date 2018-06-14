@@ -27,12 +27,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'nextPlayer'
+      'nextPlayer',
+      'winner'
     ])
   },
   methods: {
     onClick: function() {
-      if (this.marked) { return }
+      if (!!this.winner || this.marked) { return }
       this.click({ row: this.row, col: this.col, value: this.nextPlayer })
     },
     ...mapActions([

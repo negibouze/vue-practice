@@ -8,7 +8,7 @@
       <button @click="toggleOrder()">order {{ orderIsAsc ? '▲' : '▼' }}</button>
       <ol>
         <li v-for="(v, i) in moves" :key="'move-' + i">
-          <button @click="jumpTo(v.turn)" :class="{ emphasis: turn === v.turn }">{{ v.label }}</button>
+          <button @click="jumpTo(v.turn)" :class="{ emphasis: (nextTurn - 1) === v.turn }">{{ v.label }}</button>
         </li>
       </ol>
     </div>
@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     status: function() {
-      return this.winner ? `Winner: ${this.winner}` : `Next player: ${this.nextPlayer}`
+      return this.winner ? `Winner: ${this.winner.player}` : `Next player: ${this.nextPlayer}`
     },
     moves: function() {
       const m = this.history.map((step, move) => {
@@ -45,7 +45,7 @@ export default {
     },
     ...mapState([
       'history',
-      'turn'
+      'nextTurn'
     ]),
     ...mapGetters([
       'nextPlayer',

@@ -8,6 +8,7 @@
           :col="j"
           :value="val"
           :marked="!!val"
+          :highlight="winningLine.includes((i * 3) + j)"
         />
       </div>
     </div>
@@ -24,23 +25,30 @@ export default {
   components: {
     Square 
   },
+  data() {
+    return {
+      winningLine: []
+    }
+  },
   computed: {
     ...mapState({
       squares: state => {
         const b = state.board
-        const tmp = [
+        return [
           b.slice(0, 3),
           b.slice(3, 6),
           b.slice(6)
         ]
-        return ((a) => {
-          return a[0].map((_, c) => a.map(r => r[c]))
-        })(tmp)
       }
     }),
     ...mapGetters([
       'winner'
     ])
+  },
+  watch: {
+    winner: function(newValue) {
+      this.winningLine = newValue ? newValue.line : []
+    }
   }
 }
 </script>

@@ -29,7 +29,7 @@ export default new Vuex.Store({
         ],
         board: Array(9).fill(null),
         xIsNext: true,
-        turn: 0
+        nextTurn: 1
     },
     getters: {
         nextPlayer: state => {
@@ -37,9 +37,12 @@ export default new Vuex.Store({
         },
         winner: state => {
             const board = state.board
-            for (const [a, b, c] in lines) {
+            for (const [a, b, c] of lines) {
                 if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                    return board[a];
+                    return {
+                        player: board[a],
+                        line: [a, b, c]
+                    };
                 }
             }
             return null;
@@ -47,18 +50,19 @@ export default new Vuex.Store({
     },
     mutations: {
         [types.CLICK_SQUARE] (state, { row, col, value }) {
+            const turn = state.nextTurn
             const b = state.board.slice()
-            b[(col * 3) + row] = value
+            b[(row * 3) + col] = value
             state.board = b
             state.xIsNext = !state.xIsNext
-            state.history = state.history.slice(0, state.turn).concat({ turn: state.turn, board: state.board, tap: { row: row + 1, col: col + 1 } })
-            state.turn += 1
+            state.history = state.history.slice(0, turn).concat({ turn, board: state.board, tap: { row: row + 1, col: col + 1 } })
+            state.nextTurn += 1
         },
         [types.JUMP_TO] (state, index) {
             const c = state.history[index]
-            state.turn = index + 1
+            state.nextTurn = index + 1
             state.board = c.board
-            state.xIsNext = index % 2 === 1
+            state.xIsNext = state.nextTurn % 2 === 1
         }
     },
     actions: {
