@@ -37,6 +37,7 @@ export default Vue.extend({
   padding: 0
   text-align: center
   width: 34px
+  cursor: pointer
 
 .square:focus
   outline: none

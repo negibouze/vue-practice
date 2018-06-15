@@ -108,12 +108,12 @@ export default Vue.extend({
   methods: {
     handleClick: function(i: number): void {
       const squares = this.squares.slice()
-      if (this.winner || this.squares[i]) {
+      if (!!this.winner.name || this.squares[i]) {
         return;
       }
       squares[i] = this.player
       const tap = ((i) => {
-        const v = (i === 0) ? [1, 1] : [(i % this.edgeLength) + 1, (i / this.edgeLength) + 1]
+        const v = (i === 0) ? [1, 1] : [(i % this.edgeLength) + 1, Math.floor(i / this.edgeLength) + 1]
         return { col: v[0], row: v[1] }
       })(i);
       this.history = this.history.slice(0, (this.current + 1)).concat([{
