@@ -18,6 +18,7 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
+    "@types/node": "^10.3.3",
     "autoprefixer": "^8.5.0",
     "babel-core": "^6.26.2",
     "babel-loader": "^7.1.4",

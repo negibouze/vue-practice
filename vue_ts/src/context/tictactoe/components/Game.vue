@@ -19,10 +19,25 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import Board from './Board.vue'
 
-function calculateWinner(squares) {
+interface Move {
+  turn: number;
+  desc: string;
+}
+
+class Winner {
+  name: string;
+  line: number[];
+  constructor(name = '', line = []) {
+    this.name = name;
+    this.line = line;
+  }
+}
+
+function calculateWinner(squares: string[]): Winner {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -42,10 +57,10 @@ function calculateWinner(squares) {
       }
     }
   }
-  return null
+  return new Winner()
 }
 
-export default {
+export default Vue.extend({
   name: "Game",
   components: {
     Board
@@ -53,33 +68,33 @@ export default {
   data: function() {
     return {
       history: [{
-        squares: Array(9).fill(null),
+        squares: Array<string>(9).fill(''),
         tap: {
           col: 0,
           row: 0
         }
       }],
       current: 0,
-      winner: null,
+      winner: new Winner(),
       xIsNext: true,
       orderIsAsc: true
     }
   },
   computed: {
-    squares: function() {
+    squares: function(): Array<string> {
       return this.history[this.current].squares
     },
-    edgeLength: function() {
+    edgeLength: function(): number {
       return Math.sqrt(this.squares.length)
     },
-    player: function() {
+    player: function(): string {
       return this.xIsNext ? 'X' : 'O'
     },
-    status: function() {
-      if (this.winner) { return `Winner: ${this.winner.name}` }
-      return this.squares.includes(null) ? `Next player: ${this.player}` : 'The game is a draw.'
+    status: function(): string {
+      if (!!this.winner.name) { return `Winner: ${this.winner.name}` }
+      return this.squares.includes('') ? `Next player: ${this.player}` : 'The game is a draw.'
     },
-    moves: function() {
+    moves: function(): Move[] {
       const m = this.history.map((step, move) => {
         const desc = (move ? `Go to move #${move}` : 'Go to game start') + ` (col: ${step.tap.col}, row: ${step.tap.row})`
         return {
@@ -91,14 +106,14 @@ export default {
     }
   },
   methods: {
-    handleClick: function(i) {
+    handleClick: function(i: number): void {
       const squares = this.squares.slice()
       if (this.winner || this.squares[i]) {
         return;
       }
       squares[i] = this.player
       const tap = ((i) => {
-        const v = i === 0 ? [1, 1] : [(i % this.edgeLength) + 1, parseInt(i / this.edgeLength) + 1]
+        const v = (i === 0) ? [1, 1] : [(i % this.edgeLength) + 1, (i / this.edgeLength) + 1]
         return { col: v[0], row: v[1] }
       })(i);
       this.history = this.history.slice(0, (this.current + 1)).concat([{
@@ -109,16 +124,16 @@ export default {
       this.xIsNext = !this.xIsNext
       this.winner = calculateWinner(this.squares)
     },
-    jumpTo: function(i) {
+    jumpTo: function(i: number): void {
       this.current = i
       this.xIsNext = (i % 2) === 0
       this.winner = calculateWinner(this.squares)
     },
-    toggleOrder: function() {
+    toggleOrder: function(): void {
       this.orderIsAsc = !this.orderIsAsc
     }
   }
-}
+})
 </script>
 
 <style lang="stylus" scoped>

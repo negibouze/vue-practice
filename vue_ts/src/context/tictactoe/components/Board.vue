@@ -13,18 +13,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import Square from './Square.vue'
 
-export default {
+export default Vue.extend({
   name: "Board",
   components: {
     Square 
   },
   props: {
-    squares: Array,
+    squares: Array as () => string[],
     winningLine: {
-      type: Array,
+      type: Array as () => number[],
       default: () => { return [] }
     },
     onClick: {
@@ -33,11 +34,11 @@ export default {
     }
   },
   computed: {
-    edgeLength: function() {
+    edgeLength: function(): number {
       return Math.sqrt(this.squares.length)
     }
   }
-}
+})
 </script>
 
 <style lang="stylus" scoped>

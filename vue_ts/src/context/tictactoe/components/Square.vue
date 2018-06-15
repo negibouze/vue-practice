@@ -4,8 +4,10 @@
   </button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: "Square",
   props: {
     value: String,
@@ -18,7 +20,7 @@ export default {
       required: true
     }
   }
-}
+})
 </script>
 
 <style lang="stylus" scoped>

@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Game from '@/context/tictactoe/components/Game.vue'
 
 export default {
