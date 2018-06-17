@@ -58,7 +58,8 @@ export default {
         { label: 'Home', link: 'home' },
         { label: 'Canvas', link: 'canvas' },
         { label: 'PDF', link: 'pdf' },
-        { label: 'Map', link: 'map' }
+        { label: 'Map', link: 'map' },
+        { label: 'Trial', link: 'trial' }
       ],
       active: false,
       isClosed: false

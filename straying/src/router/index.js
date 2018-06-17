@@ -4,6 +4,7 @@ import Home from '@/foundation/components/Home'
 import Canvas from '@/foundation/components/Canvas'
 import PDF from '@/foundation/components/PDF'
 import MapLoader from '@/foundation/components/MapLoader'
+import Trial from '@/foundation/components/Trial'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/map',
       name: 'map',
       component: MapLoader
+    },
+    {
+      path: '/trial',
+      name: 'trial',
+      component: Trial
     }
   ]
 })
