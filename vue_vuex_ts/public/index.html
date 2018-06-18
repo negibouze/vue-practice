@@ -1,105 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="shortcut icon" href="/favicon-32x32.png">
-  <title>Vue Example</title>
-  <style>
-    *, *:before, *:after {
-      box-sizing: border-box;
-    }
-    .html, body {
-      width: 100vw;
-      height: 100vh;
-      /* min-width: 1340px; */
-      margin: 0;
-      padding: 0;
-    }
-    html {
-      font-size: 62.5%;
-    }
-    body {
-      font-size: 1.4em;
-      font-family: 'メイリオ','Hiragino Kaku Gothic Pro',Meiryo,'ヒラギノ角ゴ Pro W3','MS PGothic','MS UI Gothic',Helvetica,Arial,sans-serif;
-      color: #3f3f3f;
-      background-color: transparent;
-    }
-    h1,h2,h3,h4,h5,h6 {
-      margin: 0;
-      padding: 0;
-      font-size: 100%;
-    }
-    ul {
-      -webkit-overflow-scrolling: touch
-    }
-    button {
-      padding: 0;
-      outline: none;
-    }
-    .site-header {
-      width: 100%;
-      height: 100px;
-      background-color: #ccc
-    }
-    .site-footer {
-      width: 100%;
-      height: 60px;
-      background-color: #ccc
-    }
-    .content-frame {
-      width: 100%;
-      height: calc(100% - 160px);
-    }
-    .content-frame.flex {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: stretch;
-      justify-content: flex-start;
-    }
-    .content-menu {
-      width: 200px;
-      height: 100%;
-      background-color: #ddd;
-    }
-    .content-body {
-      flex-grow: 1;
-      height: 100%;
-      background-color: #eee;
-    }
-    .no-bullet {
-      list-style:none;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/favicon-32x32.png">
+    <title>Vue Example</title>
+    <style>
+        .html, body {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #fff;
+        }
+        .site-header {
+            width: 100vw;
+            height: 100px;
+            background-color: #ccc
+        }
+        .site-footer {
+            width: 100vw;
+            height: 60px;
+            background-color: #ccc
+        }
+        .content-frame {
+            width: 100vw;
+            height: calc(100vh - 160px);
+        }
+        .content-frame.flex {
+            display: flex;
+        }
+        .content-menu {
+            width: 200px;
+            height: 100%;
+            background-color: #ddd
+        }
+        .content-body {
+            width: calc(100vw - 160px);
+            height: 100%;
+            background-color: #eee
+        }
+    </style>
 </head>
 <body>
-  <noscript>
-    You need to enable JavaScript to run this app.
-  </noscript>
-  <div id="root">
-    <header class="site-header">
-      ヘッダー
-    </header>
-    <div class="content-frame flex">
-      <nav class="content-menu">
-        <ul class="no-bullet" style="text-align:center">
-          <li style="width:100%; height:50px; line-height:50px">メニュー1</li>
-          <li style="width:100%; height:50px; line-height:50px">メニュー2</li>
-          <li style="width:100%; height:50px; line-height:50px">メニュー3</li>
-        </ul>
-      </nav>
-      <main class="content-body">
-        メイン
-      </main>
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root">
+        <header class="site-header">
+            ヘッダー
+        </header>
+        <div class="content-frame flex">
+            <nav class="content-menu">
+                <ul>
+                    <li>メニュー1</li>
+                    <li>メニュー2</li>
+                    <li>メニュー3</li>
+                </ul>
+            </nav>
+            <main class="content-body">
+                メイン
+            </main>
+        </div>
+        <footer class="site-footer">
+            フッター
+        </footer>
     </div>
-    <footer class="site-footer">
-      フッター
-    </footer>
-  </div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= htmlWebpackPlugin.options.googleMaps.apiKey %>&language=jp&libraries=geometry" type="text/javascript" async defer></script>
 </body>
 </html>

@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import modules from './modules'
 import * as types from './mutation-types'
+import History from '@/vo/history'
+import Tap from '@/vo/tap'
+import Winner from '@/vo/winner'
 
 Vue.use(Vuex)
 
@@ -17,32 +20,29 @@ const lines = [
     [0, 4, 8],
     [2, 4, 6],
 ];
-  
+
 export default new Vuex.Store({
     state: {
         history: [
-            {
-                turn: 0,
-                board: Array(9).fill(null),
-                tap: { row: 0, col: 0 }
-            }
+            new History(
+                0,
+                Array(9).fill(null),
+                new Tap(0, 0)
+            )
         ],
         board: Array(9).fill(null),
         xIsNext: true,
         nextTurn: 1
     },
     getters: {
-        nextPlayer: state => {
+        nextPlayer: (state): string => {
             return state.xIsNext ? 'X' : 'O'
         },
-        winner: state => {
+        winner: (state): Winner | null => {
             const board = state.board
             for (const [a, b, c] of lines) {
                 if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                    return {
-                        player: board[a],
-                        line: [a, b, c]
-                    };
+                    return new Winner(board[a], [a, b, c])
                 }
             }
             return null;

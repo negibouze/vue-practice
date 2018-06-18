@@ -18,8 +18,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState, mapGetters } from 'vuex'
-import Square from '../Square/index.vue'
+import Winner from '@/vo/winner'
+import Square from './Square.vue'
 
 export default Vue.extend({
   name: "Board",
@@ -32,22 +32,20 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState({
-      squares: state => {
-        const b = state.board
+    squares(): string[][] {
+        const b = this.$store.state.board
         return [
           b.slice(0, 3),
           b.slice(3, 6),
           b.slice(6)
         ]
-      }
-    }),
-    ...mapGetters([
-      'winner'
-    ])
+    },
+    winner(): Winner | null {
+      return this.$store.getters.winner
+    }
   },
   watch: {
-    winner: function(newValue) {
+    winner: function(newValue): void {
       this.winningLine = newValue ? newValue.line : []
     }
   }
@@ -55,5 +53,8 @@ export default Vue.extend({
 </script>
 
 <style lang="stylus" scoped>
-@import './index'
+.board-row:after
+  clear: both
+  content: ""
+  display: table
 </style>

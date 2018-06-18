@@ -17,8 +17,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState, mapGetters, mapActions } from 'vuex'
-import Board from '../Board/index.vue'
+import { mapActions } from 'vuex'
+import History from '@/vo/history'
+import Winner from '@/vo/winner'
+import Board from './Board.vue'
+
+interface Move {
+  turn: number,
+  label: string
+}
 
 export default Vue.extend({
   name: "Game",
@@ -31,11 +38,11 @@ export default Vue.extend({
     }
   },
   computed: {
-    status: function() {
+    status(): string {
       return this.winner ? `Winner: ${this.winner.player}` : `Next player: ${this.nextPlayer}`
     },
-    moves: function() {
-      const m = this.history.map((step, move) => {
+    moves(): Move[] {
+      const m = this.history.map((step: History, move: number) => {
         const label = (move ? `Go to move #${move}` : 'Go to game start') + ` (col: ${step.tap.col}, row: ${step.tap.row})`
         return {
           turn: move,
@@ -44,17 +51,21 @@ export default Vue.extend({
       })
       return this.orderIsAsc ? m : m.reverse()
     },
-    ...mapState([
-      'history',
-      'nextTurn'
-    ]),
-    ...mapGetters([
-      'nextPlayer',
-      'winner'
-    ])
+    history(): History[] {
+      return this.$store.state.history
+    },
+    nextTurn(): number {
+      return this.$store.state.nextTurn
+    },
+    nextPlayer(): string {
+      return this.$store.getters.nextPlayer
+    },
+    winner(): Winner | null {
+      return this.$store.getters.winner
+    }
   },
   methods: {
-    toggleOrder() {
+    toggleOrder(): void {
       this.orderIsAsc = !this.orderIsAsc
     },
     ...mapActions([
@@ -65,5 +76,19 @@ export default Vue.extend({
 </script>
 
 <style lang="stylus" scoped>
-@import './index'
+ol, ul
+  padding-left: 30px
+
+.game
+  display: flex
+  flex-direction: row
+
+.game-info
+  margin-left: 20px
+
+.status
+  margin-bottom: 10px
+
+.emphasis
+  font-weight: bold
 </style>

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Game from '@/context/tictactoe/components/Game/index.vue'
+import Game from '@/context/tictactoe/components/Game.vue'
 
 export default Vue.extend({
   name: "App",
