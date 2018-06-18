@@ -1,0 +1,86 @@
+{
+  "name": "straying",
+  "version": "0.0.1",
+  "description": "Vue.js + Jest practice",
+  "main": "index.js",
+  "scripts": {
+    "unit": "jest --coverage"
+  },
+  "author": "Yoshiaki Itakura (https://github.com/negibouze)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.19",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.0.1",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.1.0",
+    "jest-serializer-vue": "^2.0.2",
+    "vue-jest": "^2.6.0",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/unit/setup",
+      "<rootDir>/__tests__/unit/coverage"
+    ],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ],
+    "setupFiles": [
+      "<rootDir>/__tests__/unit/setup"
+    ],
+    "coverageDirectory": "<rootDir>/__tests__/unit/coverage",
+    "collectCoverageFrom": [
+      "src/**/*.{js,vue}",
+      "!src/main.js",
+      "!src/router/index.js",
+      "!**/node_modules/**"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false,
+          "targets": {
+            "browsers": [
+              "> 0.25% in JP",
+              "not op_mini all"
+            ]
+          }
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
