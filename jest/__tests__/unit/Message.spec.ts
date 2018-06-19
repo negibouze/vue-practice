@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import 'jest'
 import Message from '@/components/atoms/Message.vue'
 
 describe('Message', () => {

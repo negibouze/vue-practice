@@ -4,7 +4,8 @@
   "description": "Vue.js + Jest practice",
   "main": "index.js",
   "scripts": {
-    "unit": "jest --coverage"
+    "unit": "jest --coverage",
+    "tsc": "tsc"
   },
   "author": "Yoshiaki Itakura (https://github.com/negibouze)",
   "license": "MIT",
@@ -13,37 +14,55 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
+    "@types/jest": "^23.1.1",
+    "@types/node": "^10.3.4",
     "@vue/test-utils": "^1.0.0-beta.19",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
     "babel-preset-env": "^1.7.0",
     "jest": "^23.1.0",
     "jest-serializer-vue": "^2.0.2",
+    "ts-jest": "^22.4.6",
+    "typescript": "^2.9.2",
     "vue-jest": "^2.6.0",
     "vue-template-compiler": "^2.5.16"
   },
   "jest": {
+    "globals": {
+      "vue-jest": {
+        "tsConfigFile": "tsconfig.jest.json"
+      },
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.jest.json"
+      }
+    },
     "moduleFileExtensions": [
+      "ts",
+      "tsx",
       "js",
+      "jsx",
       "json",
+      "node",
       "vue"
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },
     "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.js$": "babel-jest",
+      ".*\\.(vue)$": "vue-jest"
     },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/unit/setup",
+      "<rootDir>/__tests__/unit/setup.ts",
       "<rootDir>/__tests__/unit/coverage"
     ],
     "snapshotSerializers": [
-      "<rootDir>/node_modules/jest-serializer-vue"
+      "jest-serializer-vue"
     ],
     "setupFiles": [
-      "<rootDir>/__tests__/unit/setup"
+      "<rootDir>/__tests__/unit/setup.ts"
     ],
     "coverageDirectory": "<rootDir>/__tests__/unit/coverage",
     "collectCoverageFrom": [

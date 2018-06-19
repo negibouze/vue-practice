@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "es2015",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

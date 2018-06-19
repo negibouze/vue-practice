@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import MessageToggle from '@/components/molecules/MessageToggle.vue'
 import List from '@/components/atoms/List.vue'
 export default {

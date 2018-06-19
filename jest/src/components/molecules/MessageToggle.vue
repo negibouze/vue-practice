@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Message from '@/components/atoms/Message.vue'
 export default {
   name: 'message-toggle',
@@ -15,7 +15,7 @@ export default {
     msg: null
   }),
   methods: {
-    toggleMessage () {
+    toggleMessage(): void {
       this.msg = this.msg === 'message' ? 'toggled message' : 'message'
     }
   },

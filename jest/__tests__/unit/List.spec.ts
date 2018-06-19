@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import 'jest'
 import List from '@/components/atoms/List.vue'
 
 describe('List.vue', () => {

@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import 'jest'
 import MessageToggle from '@/components/molecules/MessageToggle.vue'
 import Message from '@/components/atoms/Message.vue'
 

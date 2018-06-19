@@ -2,7 +2,7 @@
   <h1> {{ msg || 'default message' }}</h1>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'message',
   props: [
