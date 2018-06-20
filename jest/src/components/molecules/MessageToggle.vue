@@ -8,19 +8,20 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
 import Message from '@/components/atoms/Message.vue'
-export default {
+export default Vue.extend({
   name: 'message-toggle',
+  components: {
+    Message
+  },
   data: () => ({
-    msg: null
+    msg: ''
   }),
   methods: {
     toggleMessage(): void {
       this.msg = this.msg === 'message' ? 'toggled message' : 'message'
     }
-  },
-  components: {
-    Message
   }
-}
+})
 </script>

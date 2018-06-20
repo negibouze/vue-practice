@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import 'jest'
 import List from '@/components/atoms/List.vue'
 
-describe('List.vue', () => {
+describe('List', () => {
   it('renders li for each item in props.items', () => {
     const items = ['1', '2']
     const wrapper = shallowMount(List, {
