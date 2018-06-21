@@ -6,11 +6,12 @@
   width: 50%
   height: 50%
 .list-container
+.svg-container
   width: 100%
 
 table
   color: #333
-  font-family: Helvetica, Arial, sans-serif
+  // font-family: Helvetica, Arial, sans-serif
   width: 640px 
   border-collapse: collapse
   border-spacing: 0 
@@ -26,3 +27,28 @@ th
 td
   background: #FAFAFA
   text-align: center
+
+.button-container
+  width: 100%
+  margin: 10px 0
+  padding: 10px
+  border-top: 1px solid #333
+  border-bottom: 1px solid #333
+
+.btn-normal
+  width: 120px
+  height: 40px
+  border: 1px solid transparent
+  border-radius: 4px
+  background-color: #fcfcfc
+  color: #292b2c
+  font-size: inherit
+  transition-property: all
+  transition-duration: 200ms
+  transition-timing-function: ease-in-out
+  &:disabled
+    border-color: #333
+    background-color: #666
+  &:not(:disabled):hover
+    border-color: #adadad
+    background-color: #e4e4e4
