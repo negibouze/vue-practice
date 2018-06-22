@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <div class="">
-      <div class="img-container">
-
+    <div class="upper-container flex">
+      <div id="img-container" class="img-container">
+        <img id="cat" src="./angry cat.jpg" alt="I'm angry!">
       </div>
-      <div class="info-container">
-
+      <div id="info-container" class="info-container">
+        <p>あいうえお</p>
       </div>
     </div>
-    <div class="list-container">
+    <div id="list-container" class="list-container">
       <table id="table">
       　<tr>
           <th v-for="(v, i) in titles"
@@ -53,6 +53,25 @@ const item = [
 const elm = (id) => {
   return document.getElementById(id);
 }
+const position = () => {
+  const img = elm('img-container')
+  const info = elm('info-container')
+  const list = elm('list-container')
+  return [
+    { x: 0, y: 0, w: img.clientWidth, h: img.clientHeight },
+    { x: img.clientWidth, y: 0, w: info.clientWidth, h: info.clientHeight },
+    { x: 0, y: img.clientHeight, w: list.clientWidth, h: list.clientHeight },
+  ]
+}
+
+const convertToBase64 = (image, mimeType) => {
+  var canvas = document.createElement('canvas');
+  canvas.width  = image.width;
+  canvas.height = image.height;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(image, 0, 0);
+  return canvas.toDataURL(mimeType);
+}
 
 export default {
   name: 'Trial',
@@ -75,8 +94,9 @@ export default {
       if (!!document.querySelector("svg")) {
         return;
       }
+      const pos = position();
       const svgString = `
-      <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
+      <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='640px'>
         <style>
           table {
             color: #333;
@@ -85,20 +105,30 @@ export default {
             border-spacing: 0;
           }
           td, th {
-            border: 1px solid #CCC;
+            border: 1px solid #ccc;
             height: 30px;
           }
           th {
-            background: #F3F3F3;
+            background: #f3f3f3;
             font-weight: bold;
           }
           td {
-            background: #FAFAFA;
+            background: #fafafa;
             text-align: center;
           }
         </style>
-        <foreignObject width='100%' height='100%'>
-          <div xmlns='http://www.w3.org/1999/xhtml'>
+        <foreignObject x='${pos[0].x}' y='${pos[0].y}' width='${pos[0].w}' height='${pos[0].h}'>
+          <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
+            <img src="${ convertToBase64(elm('cat'), 'image/jpeg') }" />
+          </div>
+        </foreignObject>
+        <foreignObject x='${pos[1].x}' y='${pos[1].y}' width='${pos[1].w}' height='${pos[1].h}'>
+          <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
+            ${ elm('info-container').outerHTML }
+          </div>
+        </foreignObject>
+        <foreignObject x='${pos[2].x}' y='${pos[2].y}' width='${pos[2].w}' height='${pos[2].h}'>
+          <div xmlns='http://www.w3.org/1999/xhtml' style='width:100%; height:100%;'>
             ${ elm('table').outerHTML }
           </div>
         </foreignObject>
@@ -121,7 +151,7 @@ export default {
     dlpdf() {
       this.download((canvas) => {
         const pdf = new jsPDF();
-        pdf.addImage(canvas.toDataURL("image/jpeg", 1.0), 'JPEG', 0, 0);
+        pdf.addImage(canvas.toDataURL("image/png"), 'JPEG', 0, 0);
         pdf.save("sample.pdf");
       })
     },
