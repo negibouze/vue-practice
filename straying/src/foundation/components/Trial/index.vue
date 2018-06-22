@@ -1,32 +1,34 @@
 <template>
   <div class="container">
-    <div class="upper-container flex">
-      <div id="img-container" class="img-container">
-        <img id="cat" src="./angry cat.jpg" alt="I'm angry!">
+    <div id="draw-container" class="draw-container">
+      <div class="upper-container flex">
+        <div id="img-container" class="img-container">
+          <img id="cat" src="./angry cat.jpg" alt="I'm angry!">
+        </div>
+        <div id="info-container" class="info-container">
+          <p>あいうえお</p>
+        </div>
       </div>
-      <div id="info-container" class="info-container">
-        <p>あいうえお</p>
+      <div id="list-container" class="list-container">
+        <table id="table">
+        　<tr>
+            <th v-for="(v, i) in titles"
+              :key="'th-' + i"
+            >
+              {{ v }}
+            </th>
+        　</tr>
+        　<tr v-for="(item, i) in items"
+              :key="'item-' + i"
+            >
+            <td v-for="(v, j) in item"
+              :key="'td-' + j"
+            >
+              {{ v }}
+            </td>
+        　</tr>
+        </table>
       </div>
-    </div>
-    <div id="list-container" class="list-container">
-      <table id="table">
-      　<tr>
-          <th v-for="(v, i) in titles"
-            :key="'th-' + i"
-          >
-            {{ v }}
-          </th>
-      　</tr>
-      　<tr v-for="(item, i) in items"
-            :key="'item-' + i"
-          >
-          <td v-for="(v, j) in item"
-            :key="'td-' + j"
-          >
-            {{ v }}
-          </td>
-      　</tr>
-      </table>
     </div>
     <div class="button-container">
       <button id="draw" class="btn-normal" @click="draw">draw</button>
@@ -34,6 +36,9 @@
       <button id="dlpdf" class="btn-normal" @click="dlpdf" disabled>download pdf</button>
     </div>
     <div id="svg-container" class="svg-container"></div>
+    <div id="canvas-container" class="canvas-container">
+      <canvas id="c"></canvas>
+    </div>
   </div>
 </template>
 
@@ -54,14 +59,16 @@ const elm = (id) => {
   return document.getElementById(id);
 }
 const position = () => {
+  const con = getComputedStyle(elm('draw-container'))
   const img = elm('img-container')
   const info = elm('info-container')
   const list = elm('list-container')
-  return [
-    { x: 0, y: 0, w: img.clientWidth, h: img.clientHeight },
-    { x: img.clientWidth, y: 0, w: info.clientWidth, h: info.clientHeight },
-    { x: 0, y: img.clientHeight, w: list.clientWidth, h: list.clientHeight },
-  ]
+  return {
+    'frame': { w: con.width, h: con.height },
+    'img': { x: 0, y: 0, w: img.clientWidth, h: img.clientHeight },
+    'info': { x: img.clientWidth, y: 0, w: info.clientWidth, h: info.clientHeight },
+    'list': { x: 0, y: img.clientHeight, w: list.clientWidth, h: list.clientHeight }
+  }
 }
 
 const convertToBase64 = (image, mimeType) => {
@@ -96,7 +103,7 @@ export default {
       }
       const pos = position();
       const svgString = `
-      <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='640px'>
+      <svg xmlns='http://www.w3.org/2000/svg' width='${pos.frame.w}' height='${pos.frame.h}'>
         <style>
           table {
             color: #333;
@@ -117,17 +124,17 @@ export default {
             text-align: center;
           }
         </style>
-        <foreignObject x='${pos[0].x}' y='${pos[0].y}' width='${pos[0].w}' height='${pos[0].h}'>
+        <foreignObject x='${pos.img.x}' y='${pos.img.y}' width='${pos.img.w}' height='${pos.img.h}'>
           <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
             <img src="${ convertToBase64(elm('cat'), 'image/jpeg') }" />
           </div>
         </foreignObject>
-        <foreignObject x='${pos[1].x}' y='${pos[1].y}' width='${pos[1].w}' height='${pos[1].h}'>
+        <foreignObject x='${pos.info.x}' y='${pos.info.y}' width='${pos.info.w}' height='${pos.info.h}'>
           <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
             ${ elm('info-container').outerHTML }
           </div>
         </foreignObject>
-        <foreignObject x='${pos[2].x}' y='${pos[2].y}' width='${pos[2].w}' height='${pos[2].h}'>
+        <foreignObject x='${pos.list.x}' y='${pos.list.y}' width='${pos.list.w}' height='${pos.list.h}'>
           <div xmlns='http://www.w3.org/1999/xhtml' style='width:100%; height:100%;'>
             ${ elm('table').outerHTML }
           </div>
@@ -139,13 +146,29 @@ export default {
       elm('svg-container').appendChild(svg.documentElement);
       elm('dlpng').disabled = false;
       elm('dlpdf').disabled = false;
+      this.drawOnCanvas(svgString);
+    },
+    drawOnCanvas(svgString) {
+      const pos = position();
+      const canvas = elm('c');
+      canvas.width = parseInt(pos.frame.w);
+      canvas.height = parseInt(pos.frame.h);
+      const ctx = canvas.getContext('2d');
+      const image = new Image();
+      image.onload = () => {
+        ctx.drawImage(image, 0, 0);
+      }
+      image.src = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(svgString))); 
     },
     dlpng() {
       this.download((canvas) => {
         const a = document.createElement("a");
+        a.setAttribute('type', 'hidden');
         a.download = "sample.png";
-    	  a.href = canvas.toDataURL('image/png');
+        a.href = canvas.toDataURL('image/png');
+        document.body.appendChild(a);
         a.click();
+        a.remove();
       })
     },
     dlpdf() {
