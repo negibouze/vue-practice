@@ -31,6 +31,8 @@
       </div>
     </div>
     <div class="button-container">
+      <button id="fileSystem" class="btn-normal" @click="fileSystem">fileSystem</button>
+      <button id="cors" class="btn-normal" @click="cors">cors</button>
       <button id="draw" class="btn-normal" @click="draw">draw</button>
       <button id="dlpng" class="btn-normal" @click="dlpng" disabled>download png</button>
       <button id="dlpdf" class="btn-normal" @click="dlpdf" disabled>download pdf</button>
@@ -43,6 +45,7 @@
 </template>
 
 <script>
+import { env } from '@/config'
 import jsPDF from 'jsPDF'
 
 const item = [
@@ -58,6 +61,7 @@ const item = [
 const elm = (id) => {
   return document.getElementById(id);
 }
+
 const position = () => {
   const con = getComputedStyle(elm('draw-container'))
   const img = elm('img-container')
@@ -69,6 +73,21 @@ const position = () => {
     'info': { x: img.clientWidth, y: 0, w: info.clientWidth, h: info.clientHeight },
     'list': { x: 0, y: img.clientHeight, w: list.clientWidth, h: list.clientHeight }
   }
+}
+
+const getDataUri = (targetUrl, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  const proxyUrl = '';//'https://cors-anywhere.herokuapp.com/';
+  xhr.open('GET', proxyUrl + targetUrl);
+  xhr.responseType = 'blob';
+  xhr.send();
 }
 
 const convertToBase64 = (image, mimeType) => {
@@ -97,7 +116,13 @@ export default {
     }
   },
   methods: {
-    draw() {
+    cors() {
+      const src = ''
+      getDataUri(src, (base64) => {
+        this.draw(base64);
+      })
+    },
+    draw(base64) {
       if (!!document.querySelector("svg")) {
         return;
       }
@@ -126,7 +151,7 @@ export default {
         </style>
         <foreignObject x='${pos.img.x}' y='${pos.img.y}' width='${pos.img.w}' height='${pos.img.h}'>
           <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
-            <img src="${ convertToBase64(elm('cat'), 'image/jpeg') }" />
+            <img src="${ base64 }" />
           </div>
         </foreignObject>
         <foreignObject x='${pos.info.x}' y='${pos.info.y}' width='${pos.info.w}' height='${pos.info.h}'>
