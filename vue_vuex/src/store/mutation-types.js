@@ -1,2 +1,2 @@
-export const CLICK_SQUARE = 'CLICK_SQUARE'
-export const JUMP_TO = 'JUMP_TO'
+export const ADD_TODO = 'ADD_TODO'
+export const DONE_TODO = 'DONE_TODO'
