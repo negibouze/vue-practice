@@ -1,0 +1,17 @@
+{
+  "name": "nuxt",
+  "version": "0.0.1",
+  "description": "Nuxt.js practice",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt"
+  },
+  "author": "Yoshiaki Itakura (https://github.com/negibouze)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "nuxt": "^1.4.1"
+  },
+  "devDependencies": {
+  }
+}

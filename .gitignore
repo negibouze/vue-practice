@@ -7,5 +7,6 @@
 /**/yarn-error.log
 /**/__snapshots__
 /**/coverage
+/**/.nuxt
 .idea
 .DS_Store
