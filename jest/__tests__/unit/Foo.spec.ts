@@ -8,7 +8,7 @@ const localVue = createLocalVue()
 
 localVue.use(Vuex)
 
-describe('Label.vue', () => {
+describe('Foo', () => {
   let title: string
   let store: Store<any>
   beforeEach(() => {
