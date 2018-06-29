@@ -19,7 +19,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
-  name: 'Home',
+  name: 'home',
   data() {
     return {
       message: ''

@@ -10,7 +10,7 @@ import ListMenu from '../ListMenu'
 import ListContent from '../ListContent'
 
 export default {
-  name: 'ListTest',
+  name: 'list-test',
   components: {
     ListMenu,
     ListContent

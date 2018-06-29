@@ -14,7 +14,7 @@ import MordalSearchCondition from '../MordalSearchCondition'
 import MordalForm from '../MordalForm'
 
 export default {
-  name: 'MordalContainer',
+  name: 'mordal-container',
   components: {
     Loading,
     MordalCircleSearch,

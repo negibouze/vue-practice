@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'ListContent',
+  name: 'list-content',
   props: {
     columns: {
       type: Array,

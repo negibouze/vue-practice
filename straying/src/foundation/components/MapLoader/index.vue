@@ -21,7 +21,7 @@ import ListTest from '../ListTest'
 import Loading from '../Loading'
 
 export default {
-  name: 'MapLoader',
+  name: 'map-loader',
   components: {
     Map,
     ListTest,

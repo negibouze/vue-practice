@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Hamburger',
+  name: 'hamburger',
   props: {
     toLeft: {
       type: Boolean,

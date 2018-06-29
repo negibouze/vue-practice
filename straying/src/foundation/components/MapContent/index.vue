@@ -16,7 +16,7 @@ const baseDrawingOptions = {
     clickable: false
 }
 export default {
-  name: 'MapContent',
+  name: 'map-content',
   props: {
     maps: {
       type: Object

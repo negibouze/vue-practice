@@ -14,7 +14,7 @@ import { mapActions, mapState } from 'vuex'
 import ButtonTest from '../ButtonTest'
 
 export default {
-  name: 'MordalForm',
+  name: 'mordal-form',
   components: {
     ButtonTest
   },

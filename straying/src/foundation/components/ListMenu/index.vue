@@ -16,7 +16,7 @@ import { mapState, mapActions } from 'vuex'
 import { mordalTypes as types } from '@/foundation/types'
 
 export default {
-  name: 'ListMenu',
+  name: 'list-menu',
   data() {
     return {
       items: [

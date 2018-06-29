@@ -3,36 +3,15 @@
     <div id="draw-container" class="draw-container">
       <div class="upper-container flex">
         <div id="img-container" class="img-container">
-          <img id="cat" src="./angry cat.jpg" alt="I'm angry!">
         </div>
         <div id="info-container" class="info-container">
-          <p>あいうえお</p>
+          <svg width="200" height="200" id="svg"></svg>
         </div>
-      </div>
-      <div id="list-container" class="list-container">
-        <table id="table">
-        　<tr>
-            <th v-for="(v, i) in titles"
-              :key="'th-' + i"
-            >
-              {{ v }}
-            </th>
-        　</tr>
-        　<tr v-for="(item, i) in items"
-              :key="'item-' + i"
-            >
-            <td v-for="(v, j) in item"
-              :key="'td-' + j"
-            >
-              {{ v }}
-            </td>
-        　</tr>
-        </table>
       </div>
     </div>
     <div class="button-container">
-      <button id="cors" class="btn-normal" @click="cors">cors</button>
       <button id="draw" class="btn-normal" @click="draw">draw</button>
+      <button id="draw2" class="btn-normal" @click="draw2" disabled>draw2</button>
       <button id="dlpng" class="btn-normal" @click="dlpng" disabled>download png</button>
       <button id="dlpdf" class="btn-normal" @click="dlpdf" disabled>download pdf</button>
     </div>
@@ -44,17 +23,10 @@
 </template>
 
 <script>
-import { env } from '@/config'
+import * as d3 from 'd3'
 import jsPDF from 'jsPDF'
 
 const item = [
-  '319戸',
-  'RC一部S32階',
-  '72.71㎡',
-  '7,534万円',
-  '2LDK 55.01㎡～',
-  '108台',
-  '2016年7月'
 ]
 
 const elm = (id) => {
@@ -68,9 +40,7 @@ const position = () => {
   const list = elm('list-container')
   return {
     'frame': { w: con.width, h: con.height },
-    'img': { x: 0, y: 0, w: img.clientWidth, h: img.clientHeight },
-    'info': { x: img.clientWidth, y: 0, w: info.clientWidth, h: info.clientHeight },
-    'list': { x: 0, y: img.clientHeight, w: list.clientWidth, h: list.clientHeight }
+    'img': { x: 0, y: 0, w: img.clientWidth, h: img.clientHeight }
   }
 }
 
@@ -83,8 +53,7 @@ const getDataUri = (targetUrl, callback) => {
     };
     reader.readAsDataURL(xhr.response);
   };
-  const proxyUrl = '';//'https://cors-anywhere.herokuapp.com/';
-  xhr.open('GET', proxyUrl + targetUrl);
+  xhr.open('GET', targetUrl);
   xhr.responseType = 'blob';
   xhr.send();
 }
@@ -99,79 +68,90 @@ const convertToBase64 = (image, mimeType) => {
 }
 
 export default {
-  name: 'trial',
+  name: 'chart',
   data() {
     return {
-      titles: [
-        '総戸数',
-        '構造・規模',
-        '平均面積',
-        '平均価格',
-        '間取り',
-        '駐車場',
-        '竣工年月'
-      ],
+      titles: [],
       items: Array(10).fill(item)
     }
   },
   methods: {
-    cors() {
-      const src = ''
-      getDataUri(src, (base64) => {
-        this.drawSVG(base64);
-      })
-    },
     draw() {
-      const src = elm('cat');
-      this.drawSVG(convertToBase64(src, 'image/png'));
+      this.drawChart()
     },
-    drawSVG(base64) {
-      if (!!document.querySelector('svg')) {
-        return;
-      }
+    drawChart() {
+      const svg = d3.select('svg')
+        .append('circle')
+        .style('stroke', 'gray')
+        .style('fill', 'white')
+        .attr('r', 40)
+        .attr('cx', 50)
+        .attr('cy', 50)
+        .on('mouseover', function() { d3.select(this).style('fill', 'aliceblue'); })
+        .on('mouseout', function() { d3.select(this).style('fill', 'white'); });
+      // const svg = d3.select('svg');
+      // const margin = {top: 20, right: 20, bottom: 30, left: 50};
+      // const width = +svg.attr('width') - margin.left - margin.right;
+      // const height = +svg.attr('height') - margin.top - margin.bottom;
+      // const g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
+      // const parseTime = d3.timeParse('%d-%b-%y');
+      // const x = d3.scaleTime().rangeRound([0, width]);
+      // const y = d3.scaleLinear().rangeRound([height, 0]);
+
+      // d3.tsv('./data.tsv', (d) => {
+      //   d.date = parseTime(d.date);
+      //   d.close = +d.close;
+      //   return d;
+      // }, (error, data) => {
+      //   if (error) throw error;
+      //   x.domain(d3.extent(data, (d) => { return d.date; }));
+      //   y.domain(d3.extent(data, (d) => { return d.close; }));
+      //   g.append('g')
+      //       .attr('transform', `translate(0, ${height})`)
+      //       .call(d3.axisBottom(x))
+      //       .select('.domain')
+      //       .remove();
+      //   g.append('g')
+      //       .call(d3.axisLeft(y))
+      //       .append('text')
+      //       .attr('fill', '#000')
+      //       .attr('transform', 'rotate(-90)')
+      //       .attr('y', 6)
+      //       .attr('dy', '0.71em')
+      //       .attr('text-anchor', 'end')
+      //       .text('Price ($)');
+      //   g.append('path')
+      //       .datum(data)
+      //       .attr('fill', 'none')
+      //       .attr('stroke', 'steelblue')
+      //       .attr('stroke-linejoin', 'round')
+      //       .attr('stroke-linecap', 'round')
+      //       .attr('stroke-width', 1.5)
+      //       .attr('d', line);
+      // });
+      elm('draw2').disabled = false;
+    },
+    draw2() {
+      this.drawSVG(elm('svg'))
+    },
+    drawSVG(svg) {
+      // if (!!document.querySelector('svg')) {
+      //   return;
+      // }
+      console.log(svg)
       const pos = position();
       const svgString = `
       <svg xmlns='http://www.w3.org/2000/svg' width='${pos.frame.w}' height='${pos.frame.h}'>
-        <style>
-          table {
-            color: #333;
-            width: 640px ;
-            border-collapse: collapse;
-            border-spacing: 0;
-          }
-          td, th {
-            border: 1px solid #ccc;
-            height: 30px;
-          }
-          th {
-            background: #f3f3f3;
-            font-weight: bold;
-          }
-          td {
-            background: #fafafa;
-            text-align: center;
-          }
-        </style>
         <foreignObject x='${pos.img.x}' y='${pos.img.y}' width='${pos.img.w}' height='${pos.img.h}'>
           <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
-            <img src="${ base64 }" />
-          </div>
-        </foreignObject>
-        <foreignObject x='${pos.info.x}' y='${pos.info.y}' width='${pos.info.w}' height='${pos.info.h}'>
-          <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
-            ${ elm('info-container').outerHTML }
-          </div>
-        </foreignObject>
-        <foreignObject x='${pos.list.x}' y='${pos.list.y}' width='${pos.list.w}' height='${pos.list.h}'>
-          <div xmlns='http://www.w3.org/1999/xhtml' style='width:100%; height:100%;'>
-            ${ elm('table').outerHTML }
+            ${ svg }
           </div>
         </foreignObject>
       </svg>
       `;
       const parser = new DOMParser();
-      const svg = parser.parseFromString(svgString, 'image/svg+xml');
-      elm('svg-container').appendChild(svg.documentElement);
+      const svg2 = parser.parseFromString(svgString, 'image/svg+xml');
+      elm('svg-container').appendChild(svg2.documentElement);
       elm('dlpng').disabled = false;
       elm('dlpdf').disabled = false;
       this.drawOnCanvas(svgString);

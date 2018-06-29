@@ -57,7 +57,7 @@ export default {
       listItems: [
         { label: 'Home', link: 'home' },
         { label: 'Canvas', link: 'canvas' },
-        { label: 'PDF', link: 'pdf' },
+        { label: 'Chart', link: 'chart' },
         { label: 'Map', link: 'map' },
         { label: 'Trial', link: 'trial' }
       ],

@@ -27,7 +27,7 @@ import { mordalTypes as types } from '@/foundation/types'
 import ButtonTest from '../ButtonTest'
 
 export default {
-  name: 'MordalCircleSearch',
+  name: 'mordal-circle-search',
   components: {
     ButtonTest
   },

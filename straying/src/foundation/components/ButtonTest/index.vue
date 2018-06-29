@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "ButtonTest",
+  name: "button-test",
   props: {
     title: {
       type: String,
