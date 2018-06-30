@@ -138,15 +138,10 @@ export default {
       // if (!!document.querySelector('svg')) {
       //   return;
       // }
-      console.log(svg)
       const pos = position();
       const svgString = `
       <svg xmlns='http://www.w3.org/2000/svg' width='${pos.frame.w}' height='${pos.frame.h}'>
-        <foreignObject x='${pos.img.x}' y='${pos.img.y}' width='${pos.img.w}' height='${pos.img.h}'>
-          <div xmlns="http://www.w3.org/1999/xhtml" style='width:100%; height:100%;'>
-            ${ svg }
-          </div>
-        </foreignObject>
+        ${ svg.outerHTML }
       </svg>
       `;
       const parser = new DOMParser();
