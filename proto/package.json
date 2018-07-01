@@ -1,0 +1,102 @@
+{
+  "name": "proto",
+  "version": "0.0.1",
+  "description": "prototype",
+  "main": "index.ts",
+  "scripts": {
+    "clean": "rimraf ./build",
+    "start": "webpack-dev-server",
+    "build": "webpack --env.production",
+    "build:dev": "webpack",
+    "rebuild": "npm-run-all -s clean build",
+    "rebuild:dev": "npm-run-all -s clean build:dev",
+    "unit": "jest",
+    "unitw": "jest --watch",
+    "unitc": "jest --coverage"
+  },
+  "author": "Yoshiaki Itakura (https://github.com/negibouze)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+  },
+  "jest": {
+    "globals": {
+      "vue-jest": {
+        "tsConfigFile": "tsconfig.jest.json"
+      },
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.jest.json"
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.js$": "babel-jest",
+      ".*\\.(vue)$": "vue-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/unit/setup.ts",
+      "<rootDir>/__tests__/unit/coverage"
+    ],
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ],
+    "setupFiles": [
+      "<rootDir>/__tests__/unit/setup.ts"
+    ],
+    "coverageDirectory": "<rootDir>/__tests__/unit/coverage",
+    "collectCoverageFrom": [
+      "src/**/*.{js,vue}",
+      "!src/main.js",
+      "!src/router/index.js",
+      "!**/node_modules/**"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false,
+          "targets": {
+            "browsers": [
+              "> 0.25% in JP",
+              "not op_mini all"
+            ]
+          }
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
