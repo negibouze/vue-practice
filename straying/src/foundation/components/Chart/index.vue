@@ -87,8 +87,6 @@ export default {
         .attr('r', 40)
         .attr('cx', 50)
         .attr('cy', 50)
-        .on('mouseover', function() { d3.select(this).style('fill', 'aliceblue'); })
-        .on('mouseout', function() { d3.select(this).style('fill', 'white'); });
       // const svg = d3.select('svg');
       // const margin = {top: 20, right: 20, bottom: 30, left: 50};
       // const width = +svg.attr('width') - margin.left - margin.right;
