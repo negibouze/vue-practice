@@ -24,6 +24,7 @@
 
 <script>
 import * as d3 from 'd3'
+import data from './data'
 import jsPDF from 'jsPDF'
 
 const item = [
@@ -80,53 +81,50 @@ export default {
       this.drawChart()
     },
     drawChart() {
-      const svg = d3.select('svg')
-        .append('circle')
-        .style('stroke', 'gray')
-        .style('fill', 'white')
-        .attr('r', 40)
-        .attr('cx', 50)
-        .attr('cy', 50)
-      // const svg = d3.select('svg');
-      // const margin = {top: 20, right: 20, bottom: 30, left: 50};
-      // const width = +svg.attr('width') - margin.left - margin.right;
-      // const height = +svg.attr('height') - margin.top - margin.bottom;
-      // const g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
-      // const parseTime = d3.timeParse('%d-%b-%y');
-      // const x = d3.scaleTime().rangeRound([0, width]);
-      // const y = d3.scaleLinear().rangeRound([height, 0]);
+      const svg = d3.select('svg');
+      const margin = {top: 20, right: 20, bottom: 30, left: 50};
+      const width = +svg.attr('width') - margin.left - margin.right;
+      const height = +svg.attr('height') - margin.top - margin.bottom;
+      const g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
+      const parseTime = d3.timeParse('%d-%b-%y');
+      const x = d3.scaleTime().rangeRound([0, width]);
+      const y = d3.scaleLinear().rangeRound([height, 0]);
+      const line = d3.line()
+          .x(function(d) { return x(d.date); })
+          .y(function(d) { return y(d.close); });
 
-      // d3.tsv('./data.tsv', (d) => {
-      //   d.date = parseTime(d.date);
-      //   d.close = +d.close;
-      //   return d;
-      // }, (error, data) => {
-      //   if (error) throw error;
-      //   x.domain(d3.extent(data, (d) => { return d.date; }));
-      //   y.domain(d3.extent(data, (d) => { return d.close; }));
-      //   g.append('g')
-      //       .attr('transform', `translate(0, ${height})`)
-      //       .call(d3.axisBottom(x))
-      //       .select('.domain')
-      //       .remove();
-      //   g.append('g')
-      //       .call(d3.axisLeft(y))
-      //       .append('text')
-      //       .attr('fill', '#000')
-      //       .attr('transform', 'rotate(-90)')
-      //       .attr('y', 6)
-      //       .attr('dy', '0.71em')
-      //       .attr('text-anchor', 'end')
-      //       .text('Price ($)');
-      //   g.append('path')
-      //       .datum(data)
-      //       .attr('fill', 'none')
-      //       .attr('stroke', 'steelblue')
-      //       .attr('stroke-linejoin', 'round')
-      //       .attr('stroke-linecap', 'round')
-      //       .attr('stroke-width', 1.5)
-      //       .attr('d', line);
-      // });
+      const convertedData = data.map(d => {
+        return {
+          date: parseTime(d.date),
+          close: +d.close
+        }
+      })
+
+      x.domain(d3.extent(convertedData, (d) => { return d.date; }));
+      y.domain(d3.extent(convertedData, (d) => { return d.close; }));
+      g.append('g')
+          .attr('transform', `translate(0, ${height})`)
+          .call(d3.axisBottom(x))
+          .select('.domain')
+          .remove();
+      g.append('g')
+          .call(d3.axisLeft(y))
+          .append('text')
+          .attr('fill', '#000')
+          .attr('transform', 'rotate(-90)')
+          .attr('y', 6)
+          .attr('dy', '0.71em')
+          .attr('text-anchor', 'end')
+          .text('Price ($)');
+      g.append('path')
+          .datum(convertedData)
+          .attr('fill', 'none')
+          .attr('stroke', 'steelblue')
+          .attr('stroke-linejoin', 'round')
+          .attr('stroke-linecap', 'round')
+          .attr('stroke-width', 1.5)
+          .attr('d', line);
+
       elm('draw2').disabled = false;
     },
     draw2() {
