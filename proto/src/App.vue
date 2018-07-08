@@ -4,6 +4,7 @@
     <TButton @onclick="click" type="primary">ボタン</TButton>
     <TButton @onclick="click" type="error">ボタン</TButton>
     <Hamburger direction="" />
+    <TCheckbox>チェックボックス</TCheckbox>
   </div>
 </template>
 
@@ -11,12 +12,14 @@
 import Vue from 'vue'
 import TButton from '@/components/atoms/button'
 import Hamburger from '@/components/atoms/hamburger'
+import TCheckbox from '@/components/atoms/checkbox'
 
 export default Vue.extend({
   name: 'app',
   components: {
     TButton,
-    Hamburger
+    Hamburger,
+    TCheckbox
   },
   methods: {
     click(val: string) {
