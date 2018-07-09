@@ -32,12 +32,12 @@ export default Vue.extend({
     }
   },
   computed: {
-      isChecked(): boolean {
-        return this.checked
-      },
-      isDisabled(): boolean {
-        return this.disabled
-      }
+    isChecked(): boolean {
+      return this.checked
+    },
+    isDisabled(): boolean {
+      return this.disabled
+    }
   },
   methods: {
     handleChange(evt: Object) {
@@ -94,5 +94,4 @@ export default Vue.extend({
   width: 0px
   &:checked + .squarebox:after
     opacity: 1
-
 </style>
