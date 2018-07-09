@@ -1,6 +1,16 @@
 <template>
-  <label class="label">
-    <input type="checkbox" class="checkbox">
+  <label class="label"
+    :class="[
+      { 'is-disabled': isDisabled },
+      { 'is-checked': isChecked }
+    ]"
+  >
+    <input type="checkbox" class="checkbox"
+      :name="name"
+      :disabled="isDisabled"
+      :checked="isChecked"
+      @change="handleChange"
+    >
     <span class="squarebox"></span><span class="text"><slot></slot></span>
   </label>
 </template>
@@ -9,7 +19,31 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 't-checkbox'
+  name: 't-checkbox',
+  props: {
+    name: String,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    checked: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+      isChecked(): boolean {
+        return this.checked
+      },
+      isDisabled(): boolean {
+        return this.disabled
+      }
+  },
+  methods: {
+    handleChange(evt: Object) {
+      this.$emit('onchange', 'aiueo', evt);
+    }
+  }
 })
 </script>
 
@@ -20,6 +54,16 @@ export default Vue.extend({
   height: 100%
   cursor: pointer
   user-select: none
+  & > .text
+    margin-left: 10px
+    background: transparent
+    color: rgba(0,0,0,0.65)
+    font-size: 14px
+    font-size: 1.4rem
+  &.is-disabled
+    cursor: not-allowed
+    & > .text
+      color: #c0c4cc
 
 .squarebox
   display: inline-block
@@ -30,33 +74,25 @@ export default Vue.extend({
   border: 1px solid #d3d3d3
   border-radius: 4px
   background: #fcfff4
-
-.squarebox:after
-  position: absolute
-  content: ''
-  width: 10px
-  height: 6px
-  top: 5px
-  left: 4px
-  border: 3px solid #888
-  border-top: none
-  border-right: none
-  background: transparent
-  -webkit-transform: rotate(-45deg)
-  transform: rotate(-45deg)
-  opacity: 0
-
-.squarebox + .text
-  margin-left: 10px
-  background: transparent
-  color: rgba(0,0,0,0.65)
-  font-size: 14px
-  font-size: 1.4rem
+  &:after
+    position: absolute
+    content: ''
+    width: 10px
+    height: 6px
+    top: 5px
+    left: 4px
+    border: 3px solid #888
+    border-top: none
+    border-right: none
+    background: transparent
+    -webkit-transform: rotate(-45deg)
+    transform: rotate(-45deg)
+    opacity: 0
 
 .checkbox
   visibility: hidden
   width: 0px
+  &:checked + .squarebox:after
+    opacity: 1
 
-.checkbox:checked + .squarebox:after
-  opacity: 1
 </style>

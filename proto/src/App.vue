@@ -4,7 +4,9 @@
     <TButton @onclick="click" type="primary">ボタン</TButton>
     <TButton @onclick="click" type="error">ボタン</TButton>
     <Hamburger direction="" />
-    <TCheckbox>チェックボックス</TCheckbox>
+    <TCheckbox @onchange="change">チェックボックス</TCheckbox>
+    <TCheckbox @onchange="change" disabled>チェックボックス</TCheckbox>
+    <TCheckbox @onchange="change" checked>チェックボックス</TCheckbox>
   </div>
 </template>
 
@@ -24,6 +26,10 @@ export default Vue.extend({
   methods: {
     click(val: string) {
       console.log(val)
+    },
+    change(val: string, evt: string) {
+      console.log(val)
+      console.log(evt)
     }
   }
 })
