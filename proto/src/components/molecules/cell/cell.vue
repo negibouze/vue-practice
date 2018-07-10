@@ -2,7 +2,7 @@
   <li
     class="btn"
     @click="handleClick"
-    :class=""
+    :class="[]"
   >
     <slot></slot>
   </li>
