@@ -32,15 +32,15 @@ export default Vue.extend({
     }
   },
   computed: {
-    isChecked(): boolean {
+    isChecked (): boolean {
       return this.checked
     },
-    isDisabled(): boolean {
+    isDisabled (): boolean {
       return this.disabled
     }
   },
   methods: {
-    handleChange(evt: Object) {
+    handleChange (evt: Object): void {
       this.$emit('onchange', 'aiueo', evt);
     }
   }

@@ -1,4 +1,12 @@
+import { Commit } from 'vuex'
 import * as types from '../mutation-types'
+import Project from '@/entities/project'
+
+export interface SearchState {
+    circle: boolean,
+    rectangle: boolean,
+    projects: Project[]
+}
 
 const Search = {
     namespaced: true,
@@ -10,35 +18,35 @@ const Search = {
     getters: {
     },
     mutations: {
-        [types.EXECUTE_CIRCLE_SEARCH] (state) {
+        [types.EXECUTE_CIRCLE_SEARCH] (state: SearchState) {
             if (state.circle || state.rectangle) {
                 return
             }
             state.circle = true
         },
-        [types.EXECUTE_RECTANGLE_SEARCH] (state) {
+        [types.EXECUTE_RECTANGLE_SEARCH] (state: SearchState) {
             if (state.circle || state.rectangle) {
                 return
             }
             state.rectangle = true
         },
-        [types.END_CIRCLE_SEARCH] (state, { projects }) {
+        [types.END_CIRCLE_SEARCH] (state: SearchState, { projects }: { projects: Project[] }) {
             state.projects = projects
             state.circle = false
         },
-        [types.END_RECTANGLE_SEARCH] (state, { projects }) {
+        [types.END_RECTANGLE_SEARCH] (state: SearchState, { projects }: { projects: Project[] }) {
             state.projects = projects
             state.rectangle = false
         }
     },
     actions: {
-        circle({ commit }) {
+        circle({ commit }: { commit: Commit }) {
             commit(types.EXECUTE_CIRCLE_SEARCH)
         },
-        rectangle({ commit }) {
+        rectangle({ commit }: { commit: Commit }) {
             commit(types.EXECUTE_RECTANGLE_SEARCH)
         },
-        executeCircle({ commit }, options) {
+        executeCircle({ commit }: { commit: Commit }, options: { [ key: string]: string | number }) {
             // api.map.circle(options).then((projects) => {
             //     commit(types.END_CIRCLE_SEARCH, {
             //         projects
@@ -47,7 +55,7 @@ const Search = {
             //     console.log('Error')
             // })
         },
-        executeRectangle({ commit }, options) {
+        executeRectangle({ commit }: { commit: Commit }, options: { [ key: string]: string | number }) {
             // api.map.rectangle(options).then((projects) => {
             //     commit(types.END_RECTANGLE_SEARCH, {
             //         projects

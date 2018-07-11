@@ -1,28 +1,34 @@
+import { Commit } from 'vuex'
 import * as types from '../mutation-types'
+
+export interface CircleState {
+    enable: boolean;
+    radius: number;
+}
 
 const Circle = {
     namespaced: true,
     state: {
         enable: false,
         radius: 0
-    },
+    } as CircleState,
     getters: {},
     mutations: {
-        [types.BEGIN_CIRCLE_SEARCH] (state, value: boolean) {
+        [types.BEGIN_CIRCLE_SEARCH] (state: CircleState, value: boolean): void {
             state.enable = value
         },
-        [types.UPDATE_RADIUS] (state, value: number) {
+        [types.UPDATE_RADIUS] (state: CircleState, value: number): void {
             state.radius = value
         }
     },
     actions: {
-        begin({ commit }) {
+        begin ({ commit }: { commit: Commit }): void {
             commit(types.BEGIN_CIRCLE_SEARCH, true)
         },
-        end({ commit }) {
+        end ({ commit }: { commit: Commit }): void {
             commit(types.BEGIN_CIRCLE_SEARCH, false)
         },
-        updateRadius({ commit }, value: number) {
+        updateRadius ({ commit }: { commit: Commit }, value: number): void {
             commit(types.UPDATE_RADIUS, value)
         }
     }

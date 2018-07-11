@@ -1,36 +1,32 @@
 <template>
-  <div>
-    <TButton @onclick="click">ボタン</TButton>
-    <TButton @onclick="click" type="primary">ボタン</TButton>
-    <TButton @onclick="click" type="error">ボタン</TButton>
-    <Hamburger direction="" />
-    <TCheckbox @onchange="change">チェックボックス</TCheckbox>
-    <TCheckbox @onchange="change" disabled>チェックボックス</TCheckbox>
-    <TCheckbox @onchange="change" checked>チェックボックス</TCheckbox>
+  <div id="app" class="site-frame">
+    <header class="site-header">
+      <Header />
+    </header>
+    <div class="content-frame flex">
+      <Sidebar />
+      <main class="content-body">
+        <router-view></router-view>
+      </main>
+    </div>
+    <footer class="site-footer">
+      <Footer />
+    </footer>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import TButton from '@/components/atoms/button'
-import Hamburger from '@/components/atoms/hamburger'
-import TCheckbox from '@/components/atoms/checkbox'
+import Header from '@/components/organisms/header'
+import Sidebar from '@/components/organisms/sidebar'
+import Footer from '@/components/organisms/footer'
 
 export default Vue.extend({
   name: 'app',
   components: {
-    TButton,
-    Hamburger,
-    TCheckbox
-  },
-  methods: {
-    click(val: string) {
-      console.log(val)
-    },
-    change(val: string, evt: string) {
-      console.log(val)
-      console.log(evt)
-    }
+    Header,
+    Sidebar,
+    Footer
   }
 })
 </script>
