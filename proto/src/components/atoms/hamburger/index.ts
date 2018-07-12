@@ -1,3 +1,3 @@
-import Hamburger from './hamburger.vue';
+import Hamburger from './Hamburger.vue';
 
 export default Hamburger;

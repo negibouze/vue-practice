@@ -1,3 +1,3 @@
-import TCheckbox from './checkbox.vue';
+import TCheckbox from './Checkbox.vue';
 
 export default TCheckbox;

@@ -1,3 +1,3 @@
-import TList from './list.vue';
+import TList from './List.vue';
 
 export default TList;

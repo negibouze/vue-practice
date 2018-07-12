@@ -1,7 +1,7 @@
 import { default as axios, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Method } from './method';
 
-export class Client {
+export default class Client {
 
     private api: AxiosInstance;
 

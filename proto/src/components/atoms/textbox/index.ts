@@ -1,3 +1,3 @@
-import TTextbox from './textbox.vue';
+import TTextbox from './Textbox.vue';
 
 export default TTextbox;

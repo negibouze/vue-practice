@@ -1,6 +1,7 @@
 import { Commit } from 'vuex'
 import * as types from '../mutation-types'
-import Project from '@/entities/project'
+import api from '../../api'
+import Project from '../../entities/Project'
 
 export interface SearchState {
     circle: boolean,
@@ -47,22 +48,22 @@ const Search = {
             commit(types.EXECUTE_RECTANGLE_SEARCH)
         },
         executeCircle({ commit }: { commit: Commit }, options: { [ key: string]: string | number }) {
-            // api.map.circle(options).then((projects) => {
-            //     commit(types.END_CIRCLE_SEARCH, {
-            //         projects
-            //     })
-            // }).catch(() => {
-            //     console.log('Error')
-            // })
+            api.map.circle(options).then((projects: Project[]) => {
+                commit(types.END_CIRCLE_SEARCH, {
+                    projects
+                })
+            }).catch(() => {
+                console.log('Error')
+            })
         },
         executeRectangle({ commit }: { commit: Commit }, options: { [ key: string]: string | number }) {
-            // api.map.rectangle(options).then((projects) => {
-            //     commit(types.END_RECTANGLE_SEARCH, {
-            //         projects
-            //     })
-            // }).catch(() => {
-            //     console.log('Error')
-            // })
+            api.map.rectangle(options).then((projects: Project[]) => {
+                commit(types.END_RECTANGLE_SEARCH, {
+                    projects
+                })
+            }).catch(() => {
+                console.log('Error')
+            })
         }  
     }
 }
