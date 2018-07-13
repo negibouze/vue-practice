@@ -1,5 +1,5 @@
 enum Endpoint {
-  PROJECT = 'project'
+    PROJECT = 'project'
 }
 
 export default Endpoint
