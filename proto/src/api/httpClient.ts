@@ -1,12 +1,12 @@
-import { default as axios, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Method } from './method';
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import Method from './method';
 
-export default class Client {
+export default class HttpClient {
 
     private api: AxiosInstance;
 
-    constructor(conf: AxiosRequestConfig) {
-        this.api = axios.create(conf)
+    constructor(api: AxiosInstance) {
+        this.api = api
     }
 
     protected async fetch<T>(method: Method, conf: AxiosRequestConfig): Promise<T> {

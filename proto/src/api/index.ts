@@ -1,5 +1,6 @@
-import map from './map';
+import Search from './search';
+import IClient from './IClient';
 
 export default {
-    map
+    search: (client: IClient) => { return new Search(client) }
 }

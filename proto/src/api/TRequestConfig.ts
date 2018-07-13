@@ -1,4 +1,4 @@
 import { AxiosRequestConfig } from 'axios';
 
-export class TRequestConfig implements AxiosRequestConfig {
+export default interface TRequestConfig extends AxiosRequestConfig {
 }

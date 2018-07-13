@@ -1,23 +1,28 @@
-import Client from './client'
+import { default as axios } from 'axios';
+import HttpClient from './httpClient'
 import IClient from './IClient';
-import { Method } from './method'
-import { TRequestConfig } from './TRequestConfig';
-import { TResponse } from './TResponse';
+import Method from './method';
+import TRequestConfig from './TRequestConfig';
+import TResponse from './TResponse';
+import Endpoint from './endpoint';
 
-export default class TClient extends Client implements IClient {
+export default class TClient extends HttpClient implements IClient {
     constructor() {
-        super({
+        const client = axios.create({
             baseURL: 'api/',
             timeout: 10000
         })
+        super(client)
     }
 
-    async get(conf: TRequestConfig): Promise<TResponse> {
-        return await super.fetch<TResponse>(Method.GET, conf).then(this.verifyResponse);
+    async get(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
+        const c = Object.assign(conf, { url: endpoint });
+        return await super.fetch<TResponse>(Method.GET, c).then(this.verifyResponse);
     }
 
-    async post(conf: TRequestConfig): Promise<TResponse> {
-        return await super.fetch<TResponse>(Method.POST, conf).then(this.verifyResponse);
+    async post(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
+        const c = Object.assign(conf, { url: endpoint });
+        return await super.fetch<TResponse>(Method.POST, c).then(this.verifyResponse);
     }
 
     /**

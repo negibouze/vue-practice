@@ -1,4 +1,4 @@
-export interface TResponse {
+export default interface TResponse {
     status: string
     result_code: number
     message: string | null

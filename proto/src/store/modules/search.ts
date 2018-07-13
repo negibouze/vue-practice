@@ -1,7 +1,10 @@
-import { Commit } from 'vuex'
-import * as types from '../mutation-types'
-import api from '../../api'
-import Project from '../../entities/Project'
+import { Commit } from 'vuex';
+import * as types from '../mutation-types';
+import api from '../../api';
+import Project from '../../entities/Project';
+import TClient from '../../api/TClient';
+import CircleSearchOptions from '../../api/circleSearchOptions';
+import RectangleSearchOptions from '../../api/rectangleSearchOptions';
 
 export interface SearchState {
     circle: boolean,
@@ -47,8 +50,8 @@ const Search = {
         rectangle({ commit }: { commit: Commit }) {
             commit(types.EXECUTE_RECTANGLE_SEARCH)
         },
-        executeCircle({ commit }: { commit: Commit }, options: { [ key: string]: string | number }) {
-            api.map.circle(options).then((projects: Project[]) => {
+        executeCircle({ commit }: { commit: Commit }, options: CircleSearchOptions) {
+            api.search(new TClient()).circle(options).then((projects: Project[]) => {
                 commit(types.END_CIRCLE_SEARCH, {
                     projects
                 })
@@ -56,8 +59,8 @@ const Search = {
                 console.log('Error')
             })
         },
-        executeRectangle({ commit }: { commit: Commit }, options: { [ key: string]: string | number }) {
-            api.map.rectangle(options).then((projects: Project[]) => {
+        executeRectangle({ commit }: { commit: Commit }, options: RectangleSearchOptions) {
+            api.search(new TClient()).rectangle(options).then((projects: Project[]) => {
                 commit(types.END_RECTANGLE_SEARCH, {
                     projects
                 })

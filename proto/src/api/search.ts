@@ -1,10 +1,11 @@
-import { CircleSearchOptions } from '../../entity/circleSearchOptions';
-import { RectangleSearchOptions } from '../../entity/rectangleSearchOptions';
-import { TResponse } from './TResponse';
+import CircleSearchOptions from './circleSearchOptions';
+import RectangleSearchOptions from './rectangleSearchOptions';
+import TResponse from './TResponse';
 import IClient from './IClient';
 import Project from '../entities/Project';
+import Endpoint from './endpoint';
 
-export default class Map { 
+export default class Search { 
     private client: IClient
 
     constructor(client: IClient) {
@@ -12,11 +13,11 @@ export default class Map {
     }
 
     async circle(options: CircleSearchOptions): Promise<Project[]> {
-        return await this.client.get({
-            url: 'projects',
+        return await this.client.get(Endpoint.PROJECT, {
             headers: {},
             params: {
-                center: options.center
+                center: options.center,
+                radius: options.radius
             }
         }).then((data: TResponse) => {
             const results = data.results
@@ -30,8 +31,7 @@ export default class Map {
     }
 
     async rectangle(options: RectangleSearchOptions): Promise<Project[]> {
-        return await this.client.get({
-            url: 'projects',
+        return await this.client.get(Endpoint.PROJECT, {
             headers: {},
             params: {
                 sw: `${options.sw.lat},${options.sw.lng}`,
