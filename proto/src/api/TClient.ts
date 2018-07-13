@@ -1,21 +1,23 @@
 import { default as axios } from 'axios';
-import HttpClient from './httpClient'
 import IClient from './IClient';
 import Method from './method';
 import TRequestConfig from './TRequestConfig';
 import TResponse from './TResponse';
 import Endpoint from './endpoint';
+import IHttpClient from './IHttpClient';
+import HttpClient from './httpClient';
+import MockHttpClient from './mockHttpClient';
 
 export default class TClient implements IClient {
 
-    private client: HttpClient;
+    private client: IHttpClient;
 
-    constructor() {
+    constructor(httpClient?: typeof MockHttpClient) {
         const instance = axios.create({
             baseURL: 'api/',
             timeout: 10000
         })
-        this.client = new HttpClient(instance)
+        this.client = !!httpClient ? new httpClient(instance) : new HttpClient(instance);
     }
 
     async get(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
