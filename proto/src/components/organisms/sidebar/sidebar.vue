@@ -42,7 +42,7 @@ export default Vue.extend({
   },
   computed: {
     direction (): string {
-      if (this.active) { return '' }
+      if (!this.active) { return '' }
       return this.isClosed ? 'right' : 'left'
     }
   },
@@ -61,5 +61,42 @@ export default Vue.extend({
 </script>
 
 <style lang="stylus" scoped>
+.content-menu
+  overflow-x: hidden
+  transition: all 150ms ease-in-out
+  &.closed
+    width: 50px
 
+.trigger
+  width: 100%
+  height: 60px
+  padding-right: calc(10px + 6%)
+  cursor: pointer
+
+.hamburger-wrapper
+  position: relative
+  width: 24px
+  height: 24px
+  top: calc(50% - 12px)
+  margin-left: auto
+  margin-right: 0
+
+.menu-list
+  text-align: center
+
+.menu-list-item
+  width: 100%
+  height: 50px
+  line-height: 50px
+  &:hover
+    background-color: #eee
+  >a
+    display: block
+    width: 100%
+    height: 100%
+    text-decoration: none
+    color: inherit
+    &.active
+      font-weight: bold
+      background-color: #eee
 </style>
