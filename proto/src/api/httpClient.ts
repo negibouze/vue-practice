@@ -3,15 +3,15 @@ import Method from './method';
 
 export default class HttpClient {
 
-    private api: AxiosInstance;
+    private client: AxiosInstance;
 
-    constructor(api: AxiosInstance) {
-        this.api = api
+    constructor(client: AxiosInstance) {
+        this.client = client
     }
 
-    protected async fetch<T>(method: Method, conf: AxiosRequestConfig): Promise<T> {
-        const apiConf = Object.assign(conf, { method });
-        const res: AxiosResponse = await this.api.request(apiConf);
+    public async fetch<T>(method: Method, conf: AxiosRequestConfig): Promise<T> {
+        const c = Object.assign(conf, { method });
+        const res: AxiosResponse = await this.client.request(c);
         return <T>res.data;
     }
 }

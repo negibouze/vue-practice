@@ -7,30 +7,30 @@ import TResponse from './TResponse';
 import Endpoint from './endpoint';
 import MockAdapter from 'axios-mock-adapter';
 
-export default class MockTClient extends HttpClient implements IClient {
+export default class MockTClient implements IClient {
 
+    private client: HttpClient;
     private mock: MockAdapter;
 
     constructor() {
-        const client = axios.create({
+        const instance = axios.create({
             baseURL: 'api/',
             timeout: 10000
         })
-        const tmp = new MockAdapter(client)
-        super(client)
-        this.mock = tmp
+        this.mock = new MockAdapter(instance)
+        this.client = new HttpClient(instance)
     }
 
     async get(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
         this.attachGetResponse(endpoint, conf);
         const c = Object.assign(conf, { url: endpoint });
-        return await super.fetch<TResponse>(Method.GET, c);
+        return await this.client.fetch<TResponse>(Method.GET, c);
     }
 
     async post(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
         this.attachPostResponse(endpoint, conf);
         const c = Object.assign(conf, { url: endpoint });
-        return await super.fetch<TResponse>(Method.POST, c);
+        return await this.client.fetch<TResponse>(Method.POST, c);
     }
 
     private attachGetResponse(endpoint: Endpoint, conf: TRequestConfig): void {
