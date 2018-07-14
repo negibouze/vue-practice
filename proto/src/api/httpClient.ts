@@ -10,6 +10,10 @@ export default class HttpClient implements IHttpClient {
         this.client = client
     }
 
+    public setClient(client: AxiosInstance): void {
+        this.client = client;
+    }
+
     public async fetch<T>(method: Method, conf: AxiosRequestConfig): Promise<T> {
         const c = Object.assign(conf, { method });
         const res: AxiosResponse = await this.client.request(c);

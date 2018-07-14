@@ -6,18 +6,23 @@ import TResponse from './TResponse';
 import Endpoint from './endpoint';
 import IHttpClient from './IHttpClient';
 import HttpClient from './httpClient';
-import MockHttpClient from './mockHttpClient';
 
 export default class TClient implements IClient {
 
     private client: IHttpClient;
 
-    constructor(httpClient?: typeof MockHttpClient) {
+    constructor(httpClient?: IHttpClient) {
         const instance = axios.create({
             baseURL: 'api/',
             timeout: 10000
         })
-        this.client = !!httpClient ? new httpClient(instance) : new HttpClient(instance);
+        this.client = ((httpClient?: IHttpClient) => {
+            if (!(!!httpClient)) {
+                return new HttpClient(instance);
+            }
+            httpClient.setClient(instance);
+            return httpClient;
+        })(httpClient);
     }
 
     async get(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
