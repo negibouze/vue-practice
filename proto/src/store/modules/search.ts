@@ -2,7 +2,6 @@ import { Commit } from 'vuex';
 import * as types from '../mutation-types';
 import api from '../../api';
 import Project from '../../entities/Project';
-import TClient from '../../api/TClient';
 import CircleSearchOptions from '../../api/circleSearchOptions';
 import RectangleSearchOptions from '../../api/rectangleSearchOptions';
 
@@ -51,7 +50,7 @@ const Search = {
             commit(types.EXECUTE_RECTANGLE_SEARCH)
         },
         executeCircle({ commit }: { commit: Commit }, options: CircleSearchOptions) {
-            api.search(new TClient()).circle(options).then((projects: Project[]) => {
+            api.search().circle(options).then((projects: Project[]) => {
                 commit(types.END_CIRCLE_SEARCH, {
                     projects
                 })
@@ -60,7 +59,7 @@ const Search = {
             })
         },
         executeRectangle({ commit }: { commit: Commit }, options: RectangleSearchOptions) {
-            api.search(new TClient()).rectangle(options).then((projects: Project[]) => {
+            api.search().rectangle(options).then((projects: Project[]) => {
                 commit(types.END_RECTANGLE_SEARCH, {
                     projects
                 })
