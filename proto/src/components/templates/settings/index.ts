@@ -1,3 +1,3 @@
-import Settings from './Settings.vue';
+import Settings from './settings.vue';
 
 export default Settings;

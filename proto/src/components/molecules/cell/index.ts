@@ -1,3 +1,3 @@
-import TCell from './Cell.vue';
+import TCell from './cell.vue';
 
 export default TCell;
