@@ -100,6 +100,7 @@ export default Vue.extend({
     display: block
     width: 100%
     height: 100%
+    padding-left: 17px
     text-decoration: none
     color: inherit
     &.active

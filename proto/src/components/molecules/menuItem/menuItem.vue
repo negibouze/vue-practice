@@ -51,7 +51,6 @@ export default Vue.extend({
 .menu-item-container
   width: 100%
   height: 100%
-  padding-left: 17px
 
 .icon
   position: relative
