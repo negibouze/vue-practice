@@ -14,8 +14,11 @@
           :to="{ name: item.link, params: {}}"
           exact-active-class="active"
         >
-          <span class="icon"><img :src="`assets/images/${item.icon}.svg`"></span>
-          <span class="label">{{ item.label }}</span>
+        <MenuItem
+          :icon="item.icon"
+          :label="item.label"
+          :hideLabel="isClosed"
+        />
         </router-link>
       </li>
     </ul>
@@ -25,11 +28,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import Hamburger from '@/components/atoms/hamburger'
+import MenuItem from '@/components/molecules/menuItem'
 
 export default Vue.extend({
   name: 'sidebar',
   components: {
-    Hamburger
+    Hamburger,
+    MenuItem
   },
   data () {
     return {
@@ -38,13 +43,16 @@ export default Vue.extend({
         { icon: 'cogs', label: 'Setting', link: 'settings' }
       ],
       active: false,
-      isClosed: false
+      closed: false,
     }
   },
   computed: {
     direction (): string {
       if (!this.active) { return '' }
-      return this.isClosed ? 'right' : 'left'
+      return this.closed ? 'right' : 'left'
+    },
+    isClosed (): boolean {
+      return this.closed
     }
   },
   methods: {
@@ -55,7 +63,7 @@ export default Vue.extend({
       this.active = false
     },
     handleClick (): void {
-      this.isClosed = !this.isClosed
+      this.closed = !this.closed
     }
   }
 })
@@ -67,8 +75,6 @@ export default Vue.extend({
   transition: all 150ms ease-in-out
   &.closed
     width: 50px
-    .label
-      opacity: 0
 
 .trigger
   width: 100%
@@ -91,27 +97,12 @@ export default Vue.extend({
   &:hover
     background-color: #eee
   > a
-    display: flex
+    display: block
     width: 100%
     height: 100%
-    padding-left: 17px
     text-decoration: none
     color: inherit
     &.active
       font-weight: bold
       background-color: #eee
-
-.icon
-  position: relative
-  width: 30px
-  > img
-    position: absolute
-    top: calc(50% - 8px)
-    width: 16px
-    height: 16px
-
-.label
-  transition: all 100ms ease-in-out
-  opacity: 1.0
-
 </style>
