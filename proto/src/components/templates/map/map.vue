@@ -11,7 +11,7 @@ import TRadio from '@/components/atoms/radio'
 import TTextbox from '@/components/atoms/textbox'
 
 export default Vue.extend({
-  name: 'map',
+  name: 't-map',
   components: {
     TRadio,
     TTextbox

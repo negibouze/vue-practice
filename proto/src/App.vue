@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="site-frame">
     <header class="site-header">
-      <Header />
+      <THeader />
     </header>
     <div class="content-frame flex">
       <Sidebar />
@@ -10,23 +10,23 @@
       </main>
     </div>
     <footer class="site-footer">
-      <Footer />
+      <TFooter />
     </footer>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Header from '@/components/organisms/header'
+import THeader from '@/components/organisms/header'
 import Sidebar from '@/components/organisms/sidebar'
-import Footer from '@/components/organisms/footer'
+import TFooter from '@/components/organisms/footer'
 
 export default Vue.extend({
   name: 'app',
   components: {
-    Header,
+    THeader,
     Sidebar,
-    Footer
+    TFooter
   }
 })
 </script>

@@ -14,7 +14,8 @@
           :to="{ name: item.link, params: {}}"
           exact-active-class="active"
         >
-          {{ item.label }}
+          <span class="icon"><img :src="`assets/images/${item.icon}.svg`"></span>
+          <span class="label">{{ item.label }}</span>
         </router-link>
       </li>
     </ul>
@@ -33,8 +34,8 @@ export default Vue.extend({
   data () {
     return {
       listItems: [
-        { label: 'Map', link: 'map' },
-        { label: 'Setting', link: 'settings' }
+        { icon: 'map', label: 'Map', link: 'map' },
+        { icon: 'cogs', label: 'Setting', link: 'settings' }
       ],
       active: false,
       isClosed: false
@@ -66,6 +67,8 @@ export default Vue.extend({
   transition: all 150ms ease-in-out
   &.closed
     width: 50px
+    .label
+      opacity: 0
 
 .trigger
   width: 100%
@@ -81,22 +84,34 @@ export default Vue.extend({
   margin-left: auto
   margin-right: 0
 
-.menu-list
-  text-align: center
-
 .menu-list-item
   width: 100%
   height: 50px
   line-height: 50px
   &:hover
     background-color: #eee
-  >a
-    display: block
+  > a
+    display: flex
     width: 100%
     height: 100%
+    padding-left: 17px
     text-decoration: none
     color: inherit
     &.active
       font-weight: bold
       background-color: #eee
+
+.icon
+  position: relative
+  width: 30px
+  > img
+    position: absolute
+    top: calc(50% - 8px)
+    width: 16px
+    height: 16px
+
+.label
+  transition: all 100ms ease-in-out
+  opacity: 1.0
+
 </style>

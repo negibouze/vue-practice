@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Map from '@/components/templates/Map'
+import TMap from '@/components/templates/Map'
 import Settings from '@/components/templates/Settings'
 
 Vue.use(Router)
@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/map',
       name: 'map',
-      component: Map
+      component: TMap
     },
     {
       path: '/settings',

@@ -1,7 +1,8 @@
 /**/node_modules/
 /**/build/
 /**/config/
-/**/public/assets/
+/**/public/assets/*
+!/**/public/assets/images/
 /**/npm-debug.log
 /**/yarn.lock
 /**/yarn-error.log
