@@ -73,5 +73,4 @@ export default Vue.extend({
 .hide
   visibility: hidden
   opacity: 0
-
 </style>
