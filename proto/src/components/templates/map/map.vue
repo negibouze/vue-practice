@@ -1,20 +1,17 @@
 <template>
-  <div>
-    <div><TRadio @onchange="change"></TRadio></div>
-    <div><TTextbox></TTextbox></div>
+  <div class="map-container">
+    <div class="content"><Gmap /></div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import TRadio from '@/components/atoms/radio'
-import TTextbox from '@/components/atoms/textbox'
+import Gmap from '@/containers/gmapContainer'
 
 export default Vue.extend({
   name: 't-map',
   components: {
-    TRadio,
-    TTextbox
+    Gmap
   },
   methods: {
     change (evt: Object): void {
@@ -25,5 +22,15 @@ export default Vue.extend({
 </script>
 
 <style lang="stylus" scoped>
+.map-container
+  width: 100%
+  height: 100%
 
+.menu
+  width: 100%
+  height: 40px
+
+.content
+  width: 100%
+  height: calc(100% - 40px)
 </style>
