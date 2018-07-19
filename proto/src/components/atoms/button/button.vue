@@ -23,7 +23,7 @@ export default Vue.extend({
 
   },
   methods: {
-    handleClick (evt: Object): void {
+    handleClick (evt: MouseEvent): void {
       this.$emit('onclick', evt)
     }
   }

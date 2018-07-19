@@ -40,7 +40,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleChange (evt: Object): void {
+    handleChange (evt: Event): void {
       this.$emit('onchange', 'aiueo', evt);
     }
   }

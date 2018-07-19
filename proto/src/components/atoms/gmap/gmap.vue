@@ -36,6 +36,9 @@ export default class Gmap extends GmapProps {
     })
     this.mapObj = map
   }
+  $refs!: {
+    map: HTMLDivElement
+  }
 }
 </script>
 

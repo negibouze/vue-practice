@@ -75,7 +75,8 @@ module.exports = (env) => {
                     }              
                 },
                 {
-                    test: /\.(styl|stylus)$/, exclude: /node_modules/,
+                    test: /\.css$/,
+                    include: [/node_modules\/element-ui/],
                     use: [
                         'vue-style-loader',
                         {
@@ -83,7 +84,33 @@ module.exports = (env) => {
                             options: {
                                 sourceMap: shouldUseSourceMap,
                                 minimize: true,
-                                importLoaders: 2                                       
+                                importLoaders: 1
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: shouldUseSourceMap,
+                                plugins: () => [
+                                    autoprefixer({
+                                        flexbox: 'no-2009'
+                                    })
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.(styl|stylus)$/,
+                    exclude: /node_modules/,
+                    use: [
+                        'vue-style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: shouldUseSourceMap,
+                                minimize: true,
+                                importLoaders: 2
                             }
                         },
                         {

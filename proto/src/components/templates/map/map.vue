@@ -1,16 +1,19 @@
 <template>
   <div class="map-container">
+    <div class="menu"><MapMenu /></div>
     <div class="content"><Gmap /></div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Gmap from '@/containers/gmapContainer'
+import MapMenu from '@/containers/map-menu'
+import Gmap from '@/containers/gmap'
 
 export default Vue.extend({
   name: 't-map',
   components: {
+    MapMenu,
     Gmap
   },
   methods: {

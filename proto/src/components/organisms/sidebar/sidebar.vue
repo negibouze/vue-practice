@@ -28,7 +28,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Hamburger from '@/components/atoms/hamburger'
-import MenuItem from '@/components/molecules/menuItem'
+import MenuItem from '@/components/molecules/menu-item'
 
 export default Vue.extend({
   name: 'sidebar',
