@@ -1,21 +1,29 @@
 <template>
   <div>
-    <Settings />
+    <span>{{ title }}</span>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Settings from '@/containers/settings'
 
 export default Vue.extend({
-  name: 'settings',
+  name: 'f-textbox',
   components: {
-    Settings
+
+  },
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+  },
+  methods: {
   }
 })
 </script>
 
 <style lang="stylus" scoped>
-
 </style>
