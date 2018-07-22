@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="settings-container">
     <Settings />
   </div>
 </template>
@@ -17,5 +17,7 @@ export default Vue.extend({
 </script>
 
 <style lang="stylus" scoped>
-
+.settings-container
+  width: 100%
+  height: 100%
 </style>
