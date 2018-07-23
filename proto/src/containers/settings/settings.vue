@@ -1,9 +1,17 @@
 <template>
   <div class="settings-wrapper">
-    <FRadio
-      title="Radio"
-      :items="items"
-    />
+    <div>
+      <FRadio
+        title="Radio"
+        :items="items"
+      />
+    </div>
+    <div>
+      <FSelect
+        title="Select"
+        :options="options"
+      />
+    </div>
   </div>
 </template>
 
@@ -11,6 +19,7 @@
 import Vue from 'vue'
 import { FCheckbox, FDropdown, FRadio, FSelect, FTextbox } from '@/components/molecules/form-item'
 import RadioVO from '@/value-objects/radio'
+import SelectVO from '@/value-objects/select'
 
 export default Vue.extend({
   name: 'settings',
@@ -27,6 +36,9 @@ export default Vue.extend({
   computed: {
     items(): RadioVO {
       return this.$store.state.settings.items
+    },
+    options(): SelectVO {
+      return this.$store.state.settings.options
     }
   },
   methods: {    

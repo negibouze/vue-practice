@@ -31,7 +31,7 @@
     "@types/googlemaps": "^3.30.11",
     "@types/jest": "^23.3.0",
     "@types/node": "^10.5.2",
-    "@vue/test-utils": "^1.0.0-beta.20",
+    "@vue/test-utils": "^1.0.0-beta.21",
     "autoprefixer": "^9.0.1",
     "axios-mock-adapter": "^1.15.0",
     "babel-core": "^6.26.3",
@@ -61,9 +61,9 @@
     "vue-jest": "^2.6.0",
     "vue-loader": "^15.2.6",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.16.1",
+    "webpack": "^4.16.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.5"
   },
   "jest": {
     "globals": {

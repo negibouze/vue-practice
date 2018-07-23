@@ -11,6 +11,7 @@
 import Vue from 'vue'
 import { Prop } from 'vue/types/options'
 import TRadio from '@/components/atoms/radio'
+import RadioVO from '@/value-objects/radio'
 
 export default Vue.extend({
   name: 'f-radio',
