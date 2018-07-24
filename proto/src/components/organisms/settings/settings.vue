@@ -1,9 +1,11 @@
 <template>
   <div class="settings-inner-container">
-    <component :is="content" />
-    <div class="button-container">
-      <TButton @onclick="click">設定する</TButton>
-    </div>
+    <form :name="`form-${name}`" ref="form">
+      <component :is="content" class="menu-container" />
+      <div class="button-container flex flex-center">
+        <TButton @onclick="click">設定する</TButton>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -61,6 +63,8 @@ export default Vue.extend({
   methods: {
     click (evt: MouseEvent): void {
       console.log(evt)
+      console.log(this.$refs.form.name)
+      evt.preventDefault()
     }
   }
 })
@@ -69,9 +73,13 @@ export default Vue.extend({
 <style lang="stylus" scoped>
 .settings-inner-container
   width 100%
-  height calc(100% - 80px)
+  height 100%
+
+.menu-container
+  width 100%
+  padding 10px
 
 .button-container
   width 100%
-  height 80px
+  height 60px
 </style>
