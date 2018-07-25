@@ -58,6 +58,15 @@ $accent-color = #CAB27C
 .select-none
   user-select: none
   -webkit-touch-callout: none
+
+.scrollable
+  overflow: scroll
+
+.scrollable-x
+  overflow-x: scroll
+
+.scrollable-y
+  overflow-y: scroll
 </style>
 
 <!-- this component only -->
