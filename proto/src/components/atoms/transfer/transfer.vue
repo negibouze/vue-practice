@@ -1,45 +1,46 @@
 <template>
+<div>
   <ElTransfer
-    :titles="['非表示', '表示']"
+    :titles="[leftTitle, rightTitle]"
     filterable
     filter-placeholder="Search..."
     :filter-method="filter"
     v-model="values"
     :data="items"
   />
+</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { Prop } from 'vue/types/options'
 import Component from 'vue-class-component'
 import { Transfer as ElTransfer } from 'element-ui'
 
 type Item = {
-  label: string,
   key: number,
-  initial: string
+  label: string
 }
 
-const generateData = (): Item[] => {
-  const items: Item[] = [];
-  const states = ['California', 'Illinois', 'Maryland', 'Texas', 'Florida', 'Colorado', 'Connecticut '];
-  const initials = ['CA', 'IL', 'MD', 'TX', 'FL', 'CO', 'CT'];
-  states.forEach((city, index) => {
-    items.push({
-      label: city,
-      key: index,
-      initial: initials[index]
-    });
-  });
-  return items;
-};
-
 const TransferProps = Vue.extend({
-  // props: {
-  //   items: {
-  //     type: Array
-  //   }
-  // }
+  props: {
+    leftTitle: {
+      type: String,
+      default: '非表示'
+    },
+    rightTitle: {
+      type: String,
+      default: '表示'
+    },
+    items: {
+      type: Array as Prop<Item[]>,
+      required: true
+    },
+    selectedKeys: {
+      type: Array as Prop<number[]>,
+      required: true
+    }
+  }
 })
 @Component({
   components: {
@@ -47,8 +48,8 @@ const TransferProps = Vue.extend({
   }
 })
 export default class Transfer extends TransferProps {
-  items: object[] = generateData()
-  values: object[] = []
+  items: Item[] = this.items
+  values: number[] = this.selectedKeys
   filter (query: string, item: Item): boolean {
     console.log(query)
     console.log(item)

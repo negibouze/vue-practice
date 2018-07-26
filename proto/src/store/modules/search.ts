@@ -11,7 +11,7 @@ export interface SearchState {
     projects: Project[]
 }
 
-const Search = {
+const search = {
     namespaced: true,
     state: {
         circle: false,
@@ -70,4 +70,4 @@ const Search = {
     }
 }
 
-export default Search
+export default search

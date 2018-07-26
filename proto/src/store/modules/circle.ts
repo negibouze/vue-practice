@@ -6,7 +6,7 @@ export interface CircleState {
     radius: number;
 }
 
-const Circle = {
+const circle = {
     namespaced: true,
     state: {
         enable: false,
@@ -34,4 +34,4 @@ const Circle = {
     }
 }
 
-export default Circle
+export default circle

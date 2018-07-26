@@ -1,7 +1,10 @@
 <template>
   <div class="settings-wrapper">
-    <Settings @onclick="click">
-      <Balloon />
+    <Settings @onclick="update">
+      <Balloon
+        :items="items"
+        :displayKeys="display"
+      />
     </Settings>
   </div>
 </template>
@@ -17,11 +20,29 @@ export default Vue.extend({
     Settings,
     Balloon
   },
-  methods: {
-    click (evt: MouseEvent, form: HTMLFormElement): void {
-      console.log(evt)
-      console.log(form)
+  computed: {
+    items (): any {
+      const items = this.$store.state.settings.balloon.items
+      return items
+    },
+    display (): number[] {
+      const keys = this.$store.state.settings.balloon.display
+      return keys
     }
+  },
+  methods: {
+    get (): void {
+      this.$store.dispatch('settings/balloon/get')
+    },
+    update (evt: MouseEvent, form: HTMLFormElement): void {
+      console.log(form)
+      this.$store.dispatch('settings/balloon/update', [])
+      evt.preventDefault()
+      evt.stopPropagation()
+    }
+  },
+  created () {
+    this.get()
   }
 })
 </script>

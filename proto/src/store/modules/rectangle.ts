@@ -12,7 +12,7 @@ export interface Coordinate {
     ne: number
 }
 
-const Rectangle = {
+const rectangle = {
     namespaced: true,
     state: {
         enable: false,
@@ -43,4 +43,4 @@ const Rectangle = {
     }
 }
 
-export default Rectangle
+export default rectangle
