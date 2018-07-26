@@ -1,6 +1,7 @@
+import IClient from './core/IClient';
+import TClient from './core/TClient';
 import Search from './search';
-import IClient from './IClient';
-import TClient from './TClient';
+import Settings from './settings';
 
 export default {
     search: (client?: IClient) => {
@@ -8,5 +9,11 @@ export default {
             return new Search(new TClient());
         }
         return new Search(client)
+    },
+    settings: (client?: IClient) => {
+        if (!(!!client)) {
+            return new Settings(new TClient());
+        }
+        return new Settings(client)
     }
 }

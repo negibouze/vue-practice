@@ -1,7 +1,7 @@
 import CircleSearchOptions from './circleSearchOptions';
 import RectangleSearchOptions from './rectangleSearchOptions';
-import TResponse from './TResponse';
-import IClient from './IClient';
+import TResponse from './core/TResponse';
+import IClient from './core/IClient';
 import Project from '../entities/Project';
 import Endpoint from './endpoint';
 

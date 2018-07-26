@@ -1,5 +1,5 @@
-import { Commit } from 'vuex'
-import * as types from '../mutation-types'
+import { Commit } from 'vuex';
+import * as types from '../mutation-types';
 
 export interface CircleState {
     enable: boolean;

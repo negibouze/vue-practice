@@ -3,7 +3,7 @@ import IClient from './IClient';
 import Method from './method';
 import TRequestConfig from './TRequestConfig';
 import TResponse from './TResponse';
-import Endpoint from './endpoint';
+import Endpoint from '../endpoint';
 import IHttpClient from './IHttpClient';
 import HttpClient from './httpClient';
 

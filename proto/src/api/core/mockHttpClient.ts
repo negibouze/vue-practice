@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import IHttpClient from './IHttpClient';
 import Method from './method';
-import Endpoint from './endpoint';
+import Endpoint from '../endpoint';
 import TRequestConfig from './TRequestConfig';
 import MockAdapter from 'axios-mock-adapter/types';
 

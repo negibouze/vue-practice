@@ -3,7 +3,7 @@ import IClient from './IClient';
 import Method from './method';
 import TRequestConfig from './TRequestConfig';
 import TResponse from './TResponse';
-import Endpoint from './endpoint';
+import Endpoint from '../endpoint';
 import MockHttpClient from './mockHttpClient';
 
 export default class MockTClient implements IClient {

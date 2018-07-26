@@ -1,6 +1,6 @@
 // import { Commit } from 'vuex'
 // import * as types from '../mutation-types'
-import DropDownVO from '@/value-objects/dropdown'
+import DropDownVO from '@/value-objects/dropdown';
 
 export interface MapMenuState {
     menu: DropDownVO;

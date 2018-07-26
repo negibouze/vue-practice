@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig } from "../../node_modules/axios";
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 import Method from "./method";
 
 export default interface IHttpClient {

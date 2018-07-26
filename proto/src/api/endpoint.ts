@@ -1,5 +1,6 @@
 enum Endpoint {
-    PROJECT = 'project'
+    PROJECT = 'project',
+    SETTINGS_BALLOON = 'settings/balloon'
 }
 
 export default Endpoint
