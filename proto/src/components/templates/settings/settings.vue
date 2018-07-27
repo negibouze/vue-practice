@@ -40,9 +40,9 @@ export default class Settings extends SettingsProps {
   activeNames: number[] = []
   menus: Menu[] = [
     { title: 'バルーン', name: 'balloon', component: Balloon },
+    { title: 'リスト', name: 'list', component: List },
     { title: 'CSV', name: 'csv', component: CSV },
     { title: '帳票', name: 'forms', component: Forms },
-    { title: 'リスト', name: 'list', component: List },
     { title: 'レンジ', name: 'range', component: Range }
   ]
   handleChange(val: object) {
