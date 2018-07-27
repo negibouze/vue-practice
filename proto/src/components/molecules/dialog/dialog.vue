@@ -1,51 +1,62 @@
 <template>
-  <div>
-    <button type="text" @click="dialogVisible = true">click to open the Dialog</button>
-    <ElDialog
-      title="Tips"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>This is a message</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
-      </span>
-    </ElDialog>
+  <div
+    v-show="visible"
+  >
+    <Overlay
+      :visible.sync="overlay"
+      :window="backgroundArea === 'window'"
+      :theme="backgroundTheme"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Dialog as ElDialog } from 'element-ui'
+import Component from 'vue-class-component'
+import Overlay from '@/components/atoms/overlay'
 
-export default Vue.extend({
-  name: 't-dialog',
-  components: {
-    ElDialog
-  },
-  data() {
-    return {
-      dialogVisible: false
-    };
-  },
+const DialogProps = Vue.extend({
   props: {
-  },
-  computed: {
-  },
-  methods: {
-    handleClick(evt: Object) {
-      this.$emit('onclick', evt)
+    visible: {
+      type: Boolean,
+      default: false
     },
-    handleClose(done: () => void) {
-      this.$confirm('Are you sure to close this dialog?')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+    zIndex: {
+      type: Number,
+      default: 10
+    },
+    background: {
+      type: Boolean,
+      default: true
+    },
+    backgroundArea: {
+      type: String,
+      default: 'window'
+    },
+    backgroundTheme: {
+      type: String,
+      default: 'dark'
     }
   }
 })
+@Component({
+  components: {
+    Overlay
+  }
+})
+export default class Dialog extends DialogProps {
+  overlay: boolean = this.background
+  handleClick(evt: Object) {
+    this.$emit('onclick', evt)
+  }
+  handleClose(done: () => void) {
+    this.$confirm('Are you sure to close this dialog?')
+      .then(_ => {
+        done();
+      })
+      .catch(_ => {});
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

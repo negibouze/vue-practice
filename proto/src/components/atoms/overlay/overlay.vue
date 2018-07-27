@@ -40,8 +40,10 @@ const OverlayProps = Vue.extend({
 })
 @Component({})
 export default class Overlay extends OverlayProps {
-  hide () {
+  hide (evt: MouseEvent): void {
     this.$emit('update:visible', false);
+    evt.preventDefault()
+    evt.stopPropagation()
   }
 }
 </script>

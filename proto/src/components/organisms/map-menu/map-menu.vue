@@ -8,7 +8,7 @@
       />
     </div>
     <TButton @onclick="click">ボタン</TButton>
-    <Overlay
+    <Dialog
       :visible.sync="visible"
     />
   </div>
@@ -20,19 +20,19 @@ import { Prop } from 'vue/types/options'
 import DropDown from '@/components/atoms/dropdown'
 import TButton from '@/components/atoms/button'
 import DropDownVO from '@/value-objects/dropdown'
-import Overlay from '@/components/atoms/overlay'
+import Dialog from '@/components/molecules/dialog'
 
 export default Vue.extend({
   name: 'map-menu',
-  components: {
-    DropDown,
-    TButton,
-    Overlay
-  },
-  data() {
+  data () {
     return {
       visible: false
     }
+  },
+  components: {
+    DropDown,
+    TButton,
+    Dialog
   },
   props: {
     menu: {
