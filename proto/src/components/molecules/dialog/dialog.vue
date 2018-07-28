@@ -1,11 +1,20 @@
 <template>
   <div
     v-show="visible"
+    class="dialog-wrapper"
   >
+    <div
+      :style="{ 'z-index': zIndex+1 }"
+      class="test"
+    >
+      あいうえおあいうえお {{ overlay }} : {{ background }}
+    </div>
     <Overlay
       :visible.sync="overlay"
       :window="backgroundArea === 'window'"
       :theme="backgroundTheme"
+      :zIndex="zIndex"
+      @onclick="hide"
     />
   </div>
 </template>
@@ -45,12 +54,22 @@ const DialogProps = Vue.extend({
   }
 })
 export default class Dialog extends DialogProps {
-  overlay: boolean = this.background
-  handleClick(evt: Object) {
+  get overlay (): boolean {
+    return this.visible && this.background
+  }
+  hide() {
+    this.$emit('update:visible', false)
+  }
+  click (evt: MouseEvent): void {
+    this.hide()
+    evt.preventDefault()
+    evt.stopPropagation()
+  }
+  handleClick (evt: Object): void {
     this.$emit('onclick', evt)
   }
-  handleClose(done: () => void) {
-    this.$confirm('Are you sure to close this dialog?')
+  handleClose (done: () => void): void {
+    this.$confirm('Are you sure t o close this dialog?')
       .then(_ => {
         done();
       })
@@ -60,4 +79,11 @@ export default class Dialog extends DialogProps {
 </script>
 
 <style lang="stylus" scoped>
+.dialog-wrapper
+  position: relative
+
+.test
+  position: fixed
+  background-color #fff
+  border 1px solid #000
 </style>

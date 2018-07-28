@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{ 'z-index': zIndex }"
-    @click="hide"
+    @click="handleClick"
     :class="[
       {
         'light-theme': theme === 'light',
@@ -40,10 +40,8 @@ const OverlayProps = Vue.extend({
 })
 @Component({})
 export default class Overlay extends OverlayProps {
-  hide (evt: MouseEvent): void {
-    this.$emit('update:visible', false);
-    evt.preventDefault()
-    evt.stopPropagation()
+  handleClick (evt: MouseEvent): void {
+    this.$emit('onclick', evt)
   }
 }
 </script>
