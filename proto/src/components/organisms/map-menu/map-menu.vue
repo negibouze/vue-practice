@@ -8,7 +8,7 @@
       />
     </div>
     <TButton @onclick="click">ボタン</TButton>
-    <Dialog
+    <CircleSearch
       :visible.sync="visible"
     />
   </div>
@@ -20,7 +20,7 @@ import { Prop } from 'vue/types/options'
 import DropDown from '@/components/atoms/dropdown'
 import TButton from '@/components/atoms/button'
 import DropDownVO from '@/value-objects/dropdown'
-import Dialog from '@/components/molecules/dialog'
+import { CircleSearch } from '@/containers/mordal'
 
 export default Vue.extend({
   name: 'map-menu',
@@ -32,7 +32,7 @@ export default Vue.extend({
   components: {
     DropDown,
     TButton,
-    Dialog
+    CircleSearch
   },
   props: {
     menu: {

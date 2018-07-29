@@ -5,9 +5,9 @@
   >
     <div
       :style="{ 'z-index': zIndex+1 }"
-      class="test"
+      class="box-outer"
     >
-      あいうえおあいうえお {{ overlay }} : {{ background }}
+      <slot></slot>
     </div>
     <Overlay
       :visible.sync="overlay"
@@ -82,8 +82,11 @@ export default class Dialog extends DialogProps {
 .dialog-wrapper
   position: relative
 
-.test
-  position: fixed
-  background-color #fff
-  border 1px solid #000
+.box-outer
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  margin: auto
 </style>
