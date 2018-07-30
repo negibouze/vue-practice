@@ -51,6 +51,9 @@ export default Vue.extend({
       this.currentValue = this.anyValue
     },
     search() {
+    },
+    hide() {
+      
     }
   }
 })

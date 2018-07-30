@@ -11,6 +11,7 @@
     ]"
     v-show="visible"
   >
+    <slot></slot>
   </div>
 </template>
 
