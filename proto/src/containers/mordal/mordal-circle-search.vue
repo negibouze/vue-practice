@@ -1,6 +1,8 @@
 <template>
   <Dialog
     :visible="visible"
+    :draggable="true"
+    @onclickbackground="hide"
   >
     <CircleSearch
       @onchange="change"

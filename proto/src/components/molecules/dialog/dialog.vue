@@ -15,14 +15,16 @@
       <slot></slot>
     </div>
     <Overlay
+      v-if="background"
       :visible.sync="overlay"
       :window="true"
       :theme="backgroundTheme"
       :zIndex="zIndex"
-      @onclick="hide"
+      @onclick="handleClickOverlay"
     >
     </Overlay>
     <div
+      v-if="draggable"
       :style="{ 'z-index': zIndex+1 }"
       class="draggable-container"
       :class="{ active: dragging }"
@@ -41,7 +43,7 @@ const DialogProps = Vue.extend({
   props: {
     draggable: {
       type: Boolean,
-      default: true
+      default: false
     },
     visible: {
       type: Boolean,
@@ -96,7 +98,6 @@ export default class Dialog extends DialogProps {
       throw new Error('unexpected event')
     }
   }
-
   dragEnd (e: Event): void {
     // e.preventDefault()
     if (e instanceof TouchEvent) {
@@ -110,7 +111,6 @@ export default class Dialog extends DialogProps {
     }
     this.dragging = false
   }
-
   drag (e: Event): void {
     if (e instanceof TouchEvent) {
       // e.preventDefault()
@@ -127,21 +127,12 @@ export default class Dialog extends DialogProps {
 
     this.setTranslate(this.currentX, this.currentY, this.$refs.item)
   }
-
   setTranslate (xPos: number, yPos: number, el: HTMLElement) {
     el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`
   }
 
-  hide() {
-    this.$emit('update:visible', false)
-  }
-  click (e: MouseEvent): void {
-    this.hide()
-    e.preventDefault()
-    e.stopPropagation()
-  }
-  handleClick (e: Object): void {
-    this.$emit('onclick', e)
+  handleClickOverlay (evt: MouseEvent): void {
+    this.$emit('onclickbackground', evt)
   }
   handleClose (done: () => void): void {
     this.$confirm('Are you sure t o close this dialog?')
@@ -149,9 +140,6 @@ export default class Dialog extends DialogProps {
         done()
       })
       .catch(_ => {})
-  }
-  test () {
-    console.log('test')
   }
   _addListenerMulti(el: HTMLElement, eventName: string[], fn: (e: Event) => void) {
     eventName.forEach(e => el.addEventListener(e, fn, false));
