@@ -1,27 +1,30 @@
 <template>
   <div class="mordal-search">
-    <ul class="no-bullet radius-list">
-      <li v-for="v in preparedRadius"
-        :key="'radius-' + v"
-        class="radius-list-item"
-        :class="{ active: v === currentValue }"
-      >
-        <input type="radio" name="radius" :id=v :value=v v-model=currentValue>
-        <label :for=v><span class="select-none">{{ v }}m</span></label>
-      </li>
-      <li class="radius-list-item" :class="{ active: anyValue === currentValue }">
-        <input type="radio" name="radius" id="any" :value="anyValue" v-model=currentValue>
-        <label for="any"><span class="select-none">その他：</span><input type="number" min="10" max="10000" step="10" class="input--number" @focus="updateValue" @input="updateValue" v-model=anyValue></label>
-      </li>
-    </ul>
-    <div class="button-container flex flex-between">
-      <TButton @onclick="search">検索</TButton>
-      <TButton @onclick="hide">閉じる</TButton>
+    <div class="header"></div>
+    <div class="content" @click="prevent">
+      <ul class="no-bullet radius-list">
+        <li v-for="v in preparedRadius"
+          :key="'radius-' + v"
+          class="radius-list-item"
+          :class="{ active: v === currentValue }"
+        >
+          <input type="radio" name="radius" :id=v :value=v v-model=currentValue>
+          <label :for=v><span class="select-none">{{ v }}m</span></label>
+        </li>
+        <li class="radius-list-item" :class="{ active: anyValue === currentValue }">
+          <input type="radio" name="radius" id="any" :value="anyValue" v-model=currentValue>
+          <label for="any"><span class="select-none">その他：</span><input type="number" min="10" max="10000" step="10" class="input--number" @focus="updateValue" @input="updateValue" v-model=anyValue></label>
+        </li>
+      </ul>
+      <div class="button-container flex flex-between">
+        <TButton @onclick="search">検索</TButton>
+        <TButton @onclick="hide">閉じる</TButton>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import TButton from '@/components/atoms/button'
 
@@ -50,10 +53,19 @@ export default Vue.extend({
     updateValue() {
       this.currentValue = this.anyValue
     },
-    search() {
+    prevent (e: Event): void {
+      console.log('Stop')
+      e.preventDefault()
+      e.stopPropagation()
     },
-    hide() {
-      
+    change (e: Event): void {
+      this.$emit('onchange', e)
+    },
+    search (e: MouseEvent): void {
+      this.$emit('onclicksearch', e)
+    },
+    hide (e: MouseEvent): void {
+      this.$emit('onclickcancel', e)
     }
   }
 })
@@ -64,6 +76,10 @@ export default Vue.extend({
   width: 270px
   border-radius: 8px
   background-color: #cfcfcf
+
+.header
+  width: 100%
+  height: 40px
 
 .radius-list
   width: 100%

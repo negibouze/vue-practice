@@ -6,7 +6,10 @@
     <div
       :style="{ 'z-index': zIndex+2 }"
       class="box-outer"
-      :class="[ draggable ? 'suitable' : 'center' ]"
+      :class="[
+        draggable ? 'suitable' : 'center',
+        { expanded: dragging }
+      ]"
       ref="item"
     >
       <slot></slot>
@@ -24,6 +27,7 @@
       class="draggable-container"
       :class="{ active: dragging }"
       ref="container"
+      @click="dragEnd"
     />
   </div>
 </template>
@@ -180,6 +184,9 @@ export default class Dialog extends DialogProps {
 
 .box-outer
   position: fixed
+
+.expanded
+  padding: 20px
 
 .suitable
   top: 25vh

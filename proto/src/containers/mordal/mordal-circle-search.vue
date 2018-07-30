@@ -2,7 +2,11 @@
   <Dialog
     :visible="visible"
   >
-    <CircleSearch />
+    <CircleSearch
+      @onchange="change"
+      @onclicksearch="search"
+      @onclickcancel="hide"
+    />
   </Dialog>
 </template>
 
@@ -28,6 +32,14 @@ export default Vue.extend({
     }
   },
   methods: {
+    change (evt: Event): void {
+      console.log(evt)
+    },
+    search (): void {
+    },
+    hide (): void {
+      this.$emit('update:visible', false)
+    }
   }
 })
 </script>
