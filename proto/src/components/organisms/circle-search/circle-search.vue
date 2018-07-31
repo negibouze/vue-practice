@@ -1,7 +1,9 @@
 <template>
   <div class="mordal-search">
     <div class="header"></div>
-    <div class="content" @click="prevent">
+    <div class="content"
+      @mousedown="stopEventPropagation"
+    >
       <ul class="no-bullet radius-list">
         <li v-for="v in preparedRadius"
           :key="'radius-' + v"
@@ -50,13 +52,11 @@ export default Vue.extend({
     }
   },
   methods: {
+    stopEventPropagation(e: Event): void {
+      e.stopPropagation();
+    },
     updateValue() {
       this.currentValue = this.anyValue
-    },
-    prevent (e: Event): void {
-      console.log('Stop')
-      e.preventDefault()
-      e.stopPropagation()
     },
     change (e: Event): void {
       this.$emit('onchange', e)
@@ -80,6 +80,9 @@ export default Vue.extend({
 .header
   width: 100%
   height: 40px
+  border-radius: 8px 8px 0 0
+  cursor: move
+  background-color: #4169e1
 
 .radius-list
   width: 100%
@@ -89,8 +92,6 @@ export default Vue.extend({
   height: 100%
   padding: 10px 15px
   cursor: pointer
-  &:nth-child(1)
-    border-radius: 8px 8px 0 0
   &.active
     background-color: #fff
     font-weight: bold

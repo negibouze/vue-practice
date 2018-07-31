@@ -7,8 +7,7 @@
       :style="{ 'z-index': zIndex+2 }"
       class="box-outer"
       :class="[
-        draggable ? 'suitable' : 'center',
-        { expanded: dragging }
+        draggable ? 'suitable' : 'center'
       ]"
       ref="item"
     >
@@ -29,7 +28,7 @@
       class="draggable-container"
       :class="{ active: dragging }"
       ref="container"
-      @click="_dragEnd"
+      @click="dragEnd"
     />
   </div>
 </template>
@@ -70,80 +69,46 @@ const DialogProps = Vue.extend({
 })
 
 export default class Dialog extends DialogProps {
-  dragging: boolean = false;
-  initialX: number = 0;
-  initialY: number = 0;
-  currentX: number = 0;
-  currentY: number = 0;
-  offsetX: number = 0;
-  offsetY: number = 0;
-  timerId: number = 0;
+  dragging: boolean = false
+  initialX: number = 0
+  initialY: number = 0
+  currentX: number = 0
+  currentY: number = 0
+  offsetX: number = 0
+  offsetY: number = 0
 
   get overlay (): boolean {
     return this.visible && this.background
   }
-  handleClickOverlay (evt: MouseEvent): void {
-    this.$emit('onclickbackground', evt)
-  }
-  handleClose (done: () => void): void {
-    this.$confirm('Are you sure t o close this dialog?')
-      .then(_ => {
-        done()
-      })
-      .catch(_ => {})
-  }
-  _dragPreparation(e: Event): void {
-    if (this.dragging) {
-      return;
-    }
-    if (e instanceof TouchEvent) {
-      this.$refs.item.addEventListener('touchend', this._dragEnd)
-    } else if (e instanceof MouseEvent) {
-      this.$refs.item.addEventListener('mouseup', this._dragEnd)
-    } else {
-      throw new Error('unexpected event')
-    }
-    this.timerId = setTimeout(() => {
-      this._dragStart(e);
-    }, 800);
-  }
-  _dragStart(e: Event): void {
+  dragStart(e: Event): void {
     this.dragging = true
     if (e instanceof TouchEvent) {
       this.initialX = e.touches[0].clientX - this.offsetX
       this.initialY = e.touches[0].clientY - this.offsetY
-      this.$refs.item.addEventListener('touchmove', this._drag)
+      this.$refs.item.addEventListener('touchend', this.dragEnd)
+      this.$refs.item.addEventListener('touchmove', this.drag)
     } else if (e instanceof MouseEvent) {
       this.initialX = e.clientX - this.offsetX
       this.initialY = e.clientY - this.offsetY
-      this.$refs.item.addEventListener('mousemove', this._drag)
+      this.$refs.item.addEventListener('mouseup', this.dragEnd)
+      this.$refs.item.addEventListener('mousemove', this.drag)
     } else {
       throw new Error('unexpected event')
     }
   }
-  _dragEnd(e: Event): void {
-    clearTimeout(this.timerId);
+  dragEnd(e: Event): void {
     if (e instanceof TouchEvent) {
-      this.$refs.item.removeEventListener('touchend', this._dragEnd)
+      this.$refs.item.removeEventListener('touchend', this.dragEnd)
+      this.$refs.item.removeEventListener('touchmove', this.drag)
     } else if (e instanceof MouseEvent) {
-      this.$refs.item.removeEventListener('mouseup', this._dragEnd)
+      this.$refs.item.removeEventListener('mouseup', this.dragEnd)
+      this.$refs.item.removeEventListener('mousemove', this.drag)
     } else {
       throw new Error('unexpected event')
-    }
-    if (!this.dragging) {
-      return;
-    }
-    if (e instanceof TouchEvent) {
-      this.$refs.item.removeEventListener('touchmove', this._drag)
-    } else if (e instanceof MouseEvent) {
-      this.$refs.item.removeEventListener('mousemove', this._drag)
     }
     this.dragging = false
   }
-  _drag(e: Event): void {
-    if (!this.dragging) {
-      return;
-    }
+  drag(e: Event): void {
     if (e instanceof TouchEvent) {
       this.currentX = e.touches[0].clientX - this.initialX
       this.currentY = e.touches[0].clientY - this.initialY
@@ -156,10 +121,21 @@ export default class Dialog extends DialogProps {
     this.offsetX = this.currentX
     this.offsetY = this.currentY
 
-    this._setTranslate(this.currentX, this.currentY, this.$refs.item)
+    this.setTranslate(this.currentX, this.currentY, this.$refs.item)
   }
-  _setTranslate(xPos: number, yPos: number, el: HTMLElement) {
+  setTranslate (xPos: number, yPos: number, el: HTMLElement) {
     el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`
+  }
+
+  handleClickOverlay(e: MouseEvent): void {
+    this.$emit('onclickbackground', e)
+  }
+  handleClose(done: () => void): void {
+    this.$confirm('Are you sure t o close this dialog?')
+      .then(_ => {
+        done()
+      })
+      .catch(_ => {})
   }
   _addListenerMulti(el: HTMLElement, eventName: string[], fn: (e: Event) => void) {
     eventName.forEach(e => el.addEventListener(e, fn, false));
@@ -168,14 +144,14 @@ export default class Dialog extends DialogProps {
     eventName.forEach(e => el.removeEventListener(e, fn, false));
   }
   // lifecycle hook
-  mounted () {
+  mounted() {
     if (this.draggable) {
-      this._addListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this._dragPreparation);
+      this._addListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
     }
   }
-  destroyed () {
+  destroyed() {
     if (this.draggable) {
-      this._removeListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this._dragPreparation);
+      this._removeListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
     }
   }
   // dynamic component
@@ -192,9 +168,6 @@ export default class Dialog extends DialogProps {
 
 .box-outer
   position: fixed
-
-.expanded
-  padding: 20px
 
 .suitable
   top: 25vh
