@@ -1,4 +1,10 @@
-import { Module, GetterTree, ActionTree, MutationTree, ModuleTree } from 'vuex'
+import {
+    ActionTree,
+    GetterTree,
+    Module,
+    ModuleTree,
+    MutationTree,
+} from 'vuex';
 
 // export interface Module<S, R> {
 //     namespaced?: boolean;
@@ -9,12 +15,12 @@ import { Module, GetterTree, ActionTree, MutationTree, ModuleTree } from 'vuex'
 //     modules?: ModuleTree<R>;
 //   }
 export class ModuleTemplate<S, R> implements Module<S, R> {
-    readonly namespaced?: boolean;
-    readonly state?: S | (() => S)
-    readonly getters?: GetterTree<S, R>
-    readonly actions?: ActionTree<S, R>
-    readonly mutations?: MutationTree<S>
-    readonly modules?: ModuleTree<R>;
+    public readonly namespaced?: boolean;
+    public readonly state?: S | (() => S);
+    public readonly getters?: GetterTree<S, R>;
+    public readonly actions?: ActionTree<S, R>;
+    public readonly mutations?: MutationTree<S>;
+    public readonly modules?: ModuleTree<R>;
 
     constructor(options: {
         namespaced?: boolean,
@@ -22,13 +28,13 @@ export class ModuleTemplate<S, R> implements Module<S, R> {
         getters?: GetterTree<S, R>,
         actions?: ActionTree<S, R>,
         mutations?: MutationTree<S>,
-        modules?: ModuleTree<R>
+        modules?: ModuleTree<R>,
     }) {
-        this.namespaced = options.namespaced
-        this.state = options.state
-        this.getters = options.getters
-        this.actions = options.actions
-        this.mutations = options.mutations
-        this.modules = options.modules
+        this.namespaced = options.namespaced;
+        this.state = options.state;
+        this.getters = options.getters;
+        this.actions = options.actions;
+        this.mutations = options.mutations;
+        this.modules = options.modules;
     }
 }

@@ -9,5 +9,5 @@ export {
   CSV,
   Forms,
   List,
-  Range
-}
+  Range,
+};

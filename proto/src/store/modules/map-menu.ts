@@ -18,15 +18,15 @@ const MapMenu = {
             { key: 5, value: '北海道' },
             { key: 6, value: '東北' },
             { key: 7, value: '甲信越' },
-            { key: 8, value: '中国四国' }
-          ]
-        )
+            { key: 8, value: '中国四国' },
+          ],
+        ),
     } as MapMenuState,
     getters: {},
     mutations: {
     },
     actions: {
-    }
-}
+    },
+};
 
-export default MapMenu
+export default MapMenu;

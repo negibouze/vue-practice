@@ -10,28 +10,28 @@ const circle = {
     namespaced: true,
     state: {
         enable: false,
-        radius: 0
+        radius: 0,
     } as CircleState,
     getters: {},
     mutations: {
-        [types.BEGIN_CIRCLE_SEARCH] (state: CircleState, value: boolean): void {
-            state.enable = value
+        [types.BEGIN_CIRCLE_SEARCH](state: CircleState, value: boolean): void {
+            state.enable = value;
         },
-        [types.UPDATE_RADIUS] (state: CircleState, value: number): void {
-            state.radius = value
-        }
+        [types.UPDATE_RADIUS](state: CircleState, value: number): void {
+            state.radius = value;
+        },
     },
     actions: {
-        begin ({ commit }: { commit: Commit }): void {
-            commit(types.BEGIN_CIRCLE_SEARCH, true)
+        begin({ commit }: { commit: Commit }): void {
+            commit(types.BEGIN_CIRCLE_SEARCH, true);
         },
-        end ({ commit }: { commit: Commit }): void {
-            commit(types.BEGIN_CIRCLE_SEARCH, false)
+        end({ commit }: { commit: Commit }): void {
+            commit(types.BEGIN_CIRCLE_SEARCH, false);
         },
-        updateRadius ({ commit }: { commit: Commit }, value: number): void {
-            commit(types.UPDATE_RADIUS, value)
-        }
-    }
-}
+        updateRadius({ commit }: { commit: Commit }, value: number): void {
+            commit(types.UPDATE_RADIUS, value);
+        },
+    },
+};
 
-export default circle
+export default circle;

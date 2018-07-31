@@ -3,5 +3,5 @@ import SearchCondition from './mordal-search-condition.vue';
 
 export {
   CircleSearch,
-  SearchCondition
-}
+  SearchCondition,
+};

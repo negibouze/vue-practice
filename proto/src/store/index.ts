@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import modules from './modules'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import modules from './modules';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-const debug = process.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
     state: {
@@ -16,5 +16,5 @@ export default new Vuex.Store({
     actions: {
     },
     modules,
-    strict: debug
-})
+    strict: debug,
+});

@@ -1,6 +1,6 @@
 enum Endpoint {
     PROJECT = 'project',
-    SETTINGS_BALLOON = 'settings/balloon'
+    SETTINGS_BALLOON = 'settings/balloon',
 }
 
-export default Endpoint
+export default Endpoint;

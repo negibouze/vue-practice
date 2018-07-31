@@ -9,7 +9,7 @@ export interface RectangleState {
 
 export interface Coordinate {
     sw: number;
-    ne: number
+    ne: number;
 }
 
 const rectangle = {
@@ -17,30 +17,30 @@ const rectangle = {
     state: {
         enable: false,
         sw: 0,
-        ne: 0
+        ne: 0,
     },
     getters: {
     },
     mutations: {
-        [types.BEGIN_RECTANGLE_SEARCH] (state: RectangleState, value: boolean) {
-            state.enable = value
+        [types.BEGIN_RECTANGLE_SEARCH](state: RectangleState, value: boolean) {
+            state.enable = value;
         },
-        [types.UPDATE_BOUNDS] (state: RectangleState, { sw, ne }: Coordinate) {
-            state.sw = sw
-            state.ne = ne
-        }
+        [types.UPDATE_BOUNDS](state: RectangleState, { sw, ne }: Coordinate) {
+            state.sw = sw;
+            state.ne = ne;
+        },
     },
     actions: {
         begin({ commit }: { commit: Commit }) {
-            commit(types.BEGIN_RECTANGLE_SEARCH, true)
+            commit(types.BEGIN_RECTANGLE_SEARCH, true);
         },
         end({ commit }: { commit: Commit }) {
-            commit(types.BEGIN_RECTANGLE_SEARCH, false)
+            commit(types.BEGIN_RECTANGLE_SEARCH, false);
         },
         updateBounds({ commit }: { commit: Commit }, { sw, ne }: Coordinate) {
-            commit(types.UPDATE_BOUNDS, { sw, ne })
-        }
-    }
-}
+            commit(types.UPDATE_BOUNDS, { sw, ne });
+        },
+    },
+};
 
-export default rectangle
+export default rectangle;

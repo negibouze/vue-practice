@@ -8,12 +8,12 @@ export default {
         if (!(!!client)) {
             return new Search(new TClient());
         }
-        return new Search(client)
+        return new Search(client);
     },
     settings: (client?: IClient) => {
         if (!(!!client)) {
             return new Settings(new TClient());
         }
-        return new Settings(client)
-    }
-}
+        return new Settings(client);
+    },
+};

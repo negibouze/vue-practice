@@ -9,5 +9,5 @@ export {
   FDropdown,
   FRadio,
   FSelect,
-  FTextbox
-}
+  FTextbox,
+};
