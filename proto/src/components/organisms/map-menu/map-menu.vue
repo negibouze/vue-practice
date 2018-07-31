@@ -7,9 +7,13 @@
         @onchange="change"
       />
     </div>
-    <TButton @onclick="click">ボタン</TButton>
+    <TButton @onclick="clickCircle">円検索</TButton>
+    <TButton @onclick="clickCond">検索条件</TButton>
     <CircleSearch
-      :visible.sync="visible"
+      :visible.sync="visibleCircle"
+    />
+    <SearchCondition
+      :visible.sync="visibleCond"
     />
   </div>
 </template>
@@ -20,19 +24,21 @@ import { Prop } from 'vue/types/options'
 import DropDown from '@/components/atoms/dropdown'
 import TButton from '@/components/atoms/button'
 import DropDownVO from '@/value-objects/dropdown'
-import { CircleSearch } from '@/containers/mordal'
+import { CircleSearch, SearchCondition } from '@/containers/mordal'
 
 export default Vue.extend({
   name: 'map-menu',
   data () {
     return {
-      visible: false
+      visibleCircle: false,
+      visibleCond: false
     }
   },
   components: {
     DropDown,
     TButton,
-    CircleSearch
+    CircleSearch,
+    SearchCondition,
   },
   props: {
     menu: {
@@ -41,9 +47,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    click (evt: MouseEvent): void {
-      console.log(evt)
-      this.visible = true
+    clickCircle (evt: MouseEvent): void {
+      this.visibleCircle = true
+    },
+    clickCond (evt: MouseEvent): void {
+      this.visibleCond = true
     },
     change (v: string | number): void {
       console.log(v)

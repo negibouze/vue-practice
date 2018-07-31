@@ -1,26 +1,26 @@
 <template>
   <Dialog
     :visible="visible"
+    @onclickbackground="hide"
   >
-    <div class="mordal-search">
-      <div class="button-container flex flex-between">
-        <TButton @onclick="search">検索</TButton>
-        <TButton @onclick="hide">閉じる</TButton>
-      </div>
-    </div>
+    <SearchCondition
+      @onclickcirclesearch="circle"
+      @onclickrectanglesearch="rectangle"
+      @onclickcancel="hide"
+    />
   </Dialog>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Dialog from '@/components/molecules/dialog'
-import TButton from '@/components/atoms/button'
+import SearchCondition from '@/components/organisms/search-condition'
 
 export default Vue.extend({
   name: 'mordal-search-condition',
   components: {
     Dialog,
-    TButton
+    SearchCondition,
   },
   data() {
     return {
@@ -33,6 +33,10 @@ export default Vue.extend({
     }
   },
   methods: {
+    circle (): void {
+    },
+    rectangle (): void {
+    },
     hide (): void {
       this.$emit('update:visible', false)
     }
