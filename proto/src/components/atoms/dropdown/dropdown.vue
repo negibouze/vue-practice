@@ -1,5 +1,5 @@
 <template>
-  <ElDropdown
+  <el-dropdown
     class="select-none"
     :trigger="trigger"
      @command="handleCommand"
@@ -7,16 +7,16 @@
     <span class="el-dropdown-link">
       {{ current }}<i class="el-icon-arrow-down el-icon--right"></i>
     </span>
-    <ElDropdownMenu slot="dropdown">
-      <ElDropdownItem v-for="item in items"
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item v-for="item in items"
         :key="item.key"
         :command="item.key"
         :disabled="item.key === selected"
       >
         {{ item.value }}
-      </ElDropdownItem>
-    </ElDropdownMenu>
-  </ElDropdown>
+      </el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
 </template>
 
 <script lang="ts">

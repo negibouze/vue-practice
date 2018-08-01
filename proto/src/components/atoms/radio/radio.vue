@@ -1,13 +1,13 @@
 <template>
-  <ElRadioGroup v-model="selected">
-    <ElRadio v-for="item in items"
+  <el-radio-group v-model="selected">
+    <el-radio v-for="item in items"
       :key="item.value"
       :label="item.value"
       @change="handleChange"
     >
       {{ item.label }}
-    </ElRadio>
-  </ElRadioGroup>
+    </el-radio>
+  </el-radio-group>
 </template>
 
 <script lang="ts">
