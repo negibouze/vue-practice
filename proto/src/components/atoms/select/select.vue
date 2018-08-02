@@ -1,46 +1,61 @@
-<template lang="pug">
-  <ElSelect
+<template>
+  <el-select
     v-model="selected"
-    placeholder="Select"
+    :placeholder="placeholder"
     @change="handleChange"
     clearable
   >
-    <ElOption v-for="item in options"
+    <el-option v-for="item in options"
       :key="item.value"
       :label="item.label"
       :value="item.value"
+      :disabled="isDisabled(item.value)"
     />
-  </ElSelect>
+  </el-select>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Prop } from 'vue/types/options'
-import Component from 'vue-class-component'
-import { Select as ElSelect, Option as ElOption } from 'element-ui'
-import SelectVO from '@/value-objects/select'
+import Vue from 'vue';
+import { Prop } from 'vue/types/options';
+import Component from 'vue-class-component';
+import { Select as ElSelect, Option as ElOption } from 'element-ui';
+import SelectVO from '@/value-objects/select';
 
 const SelectProps = Vue.extend({
   props: {
+    placeholder: {
+      type: String,
+      default: 'Select',
+    },
     options: {
       type: Array as Prop<SelectVO[]>,
-      required: true
+      required: true,
     },
     selectedValue: {
-      type: [String, Number]
-    }
-  }
+      type: [String, Number],
+    },
+    disabledOptions: {
+      type: [Boolean, Function],
+      default: false,
+    },
+  },
 })
 @Component({
   components: {
     ElSelect,
-    ElOption
-  }
+    ElOption,
+  },
 })
 export default class TSelect extends SelectProps {
-  selected: string | number = this.selectedValue | this.options[0].value
-  handleChange (newValue: string | number): void {
-    console.log(newValue)
+  selected: string|number|null = this.selectedValue ? this.selectedValue : null;
+  isDisabled (val: object): boolean {
+    if (typeof this.disabledOptions === 'boolean') {
+      return this.disabledOptions;
+    }
+    return this.disabledOptions(val);
+  }
+  handleChange (val: string|number): void {
+    this.$emit('onchange', val);
   }
 }
 </script>
