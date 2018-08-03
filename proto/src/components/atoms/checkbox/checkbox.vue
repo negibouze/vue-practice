@@ -1,27 +1,34 @@
 <template>
-  <label class="label"
-    :class="[
-      { 'is-disabled': isDisabled },
-      { 'is-checked': isChecked }
-    ]"
+  <el-checkbox
+    v-model="status"
+    :value="value"
+    :label="value"
+    :indeterminate="indeterminate"
+    :disabled="disabled"
+    :checked="status"
+    :name="name"
+    :id="id"
+    :controls="controls"
+    :border="border"
+    :size="size"
+    @change="handleChange"
   >
-    <input type="checkbox" class="checkbox"
-      :name="name"
-      :disabled="isDisabled"
-      :checked="isChecked"
-      @change="handleChange"
-    >
-    <span class="squarebox"></span><span class="text"><slot></slot></span>
-  </label>
+    <slot></slot>
+  </el-checkbox>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Checkbox as ElCheckbox } from 'element-ui';
 
-export default Vue.extend({
-  name: 't-checkbox',
+const CheckboxProps = Vue.extend({
   props: {
-    name: String,
+    value: [String, Number, Boolean],
+    indeterminate: {
+      type: Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -29,69 +36,26 @@ export default Vue.extend({
     checked: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    isChecked (): boolean {
-      return this.checked
     },
-    isDisabled (): boolean {
-      return this.disabled
-    }
-  },
-  methods: {
-    handleChange (evt: Event): void {
-      this.$emit('onchange', 'aiueo', evt);
-    }
+    name: String,
+    id: String,
+    controls: String,
+    border: Boolean,
+    size: String
   }
 })
+@Component({
+  components: {
+    ElCheckbox
+  }
+})
+export default class TCheckbox extends CheckboxProps {
+  status: boolean = this.checked;
+  handleChange(val: object, e: Event): void {
+    this.$emit('change', val, e);
+  }
+}
 </script>
 
 <style lang="stylus" scoped>
-.label
-  display: block
-  width: 100%
-  height: 100%
-  cursor: pointer
-  user-select: none
-  & > .text
-    margin-left: 10px
-    background: transparent
-    color: rgba(0,0,0,0.65)
-    font-size: 14px
-    font-size: 1.4rem
-  &.is-disabled
-    cursor: not-allowed
-    & > .text
-      color: #c0c4cc
-
-.squarebox
-  display: inline-block
-  position: relative
-  width: 20px
-  height: 20px
-  top: 5px
-  border: 1px solid #d3d3d3
-  border-radius: 4px
-  background: #fcfff4
-  &:after
-    position: absolute
-    content: ''
-    width: 10px
-    height: 6px
-    top: 5px
-    left: 4px
-    border: 3px solid #888
-    border-top: none
-    border-right: none
-    background: transparent
-    -webkit-transform: rotate(-45deg)
-    transform: rotate(-45deg)
-    opacity: 0
-
-.checkbox
-  visibility: hidden
-  width: 0px
-  &:checked + .squarebox:after
-    opacity: 1
 </style>
