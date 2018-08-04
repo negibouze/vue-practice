@@ -23,7 +23,10 @@ import { Checkbox as ElCheckbox } from 'element-ui';
 
 const CheckboxProps = Vue.extend({
   props: {
-    value: Boolean,
+    value: {
+      type: [Object, Boolean],
+      default: () => undefined
+    },
     label: [String, Number],
     indeterminate: {
       type: Boolean,
@@ -50,11 +53,11 @@ const CheckboxProps = Vue.extend({
   }
 })
 export default class TCheckbox extends CheckboxProps {
-  selfModel: boolean = false;
-  get status(): boolean {
+  selfModel: object|boolean = false;
+  get status(): object|boolean {
     return this.value !== undefined ? this.value : this.selfModel;
   }
-  set status(val: boolean) {
+  set status(val: object|boolean) {
     this.$emit('input', val);
     this.selfModel = val;
   }

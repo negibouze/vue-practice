@@ -29,7 +29,7 @@
                     <span>MIN</span>
                     <span>MAX</span>
                     <div>
-                      <TCheckbox>バス乗車時間を含む</TCheckbox>
+                      <t-checkbox>バス乗車時間を含む</t-checkbox>
                     </div>
                   </li>
                 </ul>
@@ -61,17 +61,19 @@ const MordalSearchConditionProps = Vue.extend({
   props: {
     items: {
       type: Object,
-      default: {
-        stage: [
-          { value: 0, id: 'development', label: '開発段階', checked: true },
-          { value: 1, id: 'plans', label: '予定段階' },
-          { value: 2, id: 'sale', label: '分譲段階', checked: false },
-        ],
-        test: [
-          { value: 50, label: '50' },
-          { value: 100, label: '100' },
-          { value: 200, label: '200' },
-        ]
+      default: () => {
+        return {
+          stage: [
+            { value: 0, id: 'development', label: '開発段階', checked: true },
+            { value: 1, id: 'plans', label: '予定段階' },
+            { value: 2, id: 'sale', label: '分譲段階', checked: false },
+          ],
+          test: [
+            { value: 50, label: '50' },
+            { value: 100, label: '100' },
+            { value: 200, label: '200' },
+          ]
+        }
       }
     },
     selectedkey: {
