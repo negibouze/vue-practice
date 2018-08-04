@@ -1,14 +1,14 @@
 6<template>
   <div>
-    <el-checkbox
+    <t-checkbox
       v-if="hasAll"
       v-model="checkAll"
       :indeterminate="isIndeterminate"
       @change="handleCheckAllChange"
     >
       <slot name="allcheck-label"></slot>
-      <template v-if="!$slots['allcheck-label']">全てチェック {{ checkAll }}</template>
-    </el-checkbox>
+      <template v-if="!$slots['allcheck-label']">全てチェック</template>
+    </t-checkbox>
     <el-checkbox-group
       v-model="checkedValues"
       @change="handleCheckedValuesChange"
@@ -18,7 +18,7 @@
         :key="item.value"
         :id="item.id"
         :name="name"
-        :value="item.value"
+        :label="item.value"
         :checked="item.checked"
         :border="border"
         @change="handleChange"
@@ -64,9 +64,10 @@ const CheckboxGroupProps = Vue.extend({
 export default class CheckboxGroup extends CheckboxGroupProps {
   checkAll: boolean = false;
   isIndeterminate: boolean = true;
-  checkedValues: string[] = [];
+  checkedValues: number[]|string[] = [];
+  allValues: number[]|string[] = this.items.map((item) => item.value);
   handleCheckAllChange(val: boolean): void {
-    this.checkedValues = val ? [] : [];
+    this.checkedValues = val ? this.allValues : [];
     this.isIndeterminate = false;
   }
   handleCheckedValuesChange(vals: array): void {

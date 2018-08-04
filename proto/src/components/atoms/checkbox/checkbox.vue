@@ -1,11 +1,10 @@
 <template>
   <el-checkbox
     v-model="status"
-    :value="value"
-    :label="value"
+    :label="label"
     :indeterminate="indeterminate"
     :disabled="disabled"
-    :checked="status"
+    :checked="checked"
     :name="name"
     :id="id"
     :controls="controls"
@@ -24,7 +23,8 @@ import { Checkbox as ElCheckbox } from 'element-ui';
 
 const CheckboxProps = Vue.extend({
   props: {
-    value: [String, Number, Boolean],
+    value: Boolean,
+    label: [String, Number],
     indeterminate: {
       type: Boolean,
       default: false
@@ -50,7 +50,14 @@ const CheckboxProps = Vue.extend({
   }
 })
 export default class TCheckbox extends CheckboxProps {
-  status: boolean = this.checked;
+  selfModel: boolean = false;
+  get status(): boolean {
+    return this.value !== undefined ? this.value : this.selfModel;
+  }
+  set status(val: boolean) {
+    this.$emit('input', val);
+    this.selfModel = val;
+  }
   handleChange(val: object, e: Event): void {
     this.$emit('change', val, e);
   }
