@@ -1,33 +1,50 @@
 <template>
-  <button
-    class="btn"
+  <el-button
+    :type="type"
+    :size="size"
+    :icon="icon"
+    :nativeType="nativeType"
+    :loading="loading"
+    :disabled="disabled"
+    :plain="plain"
+    :autofocus="autofocus"
+    :round="round"
+    :circle="circle"
     @click="handleClick"
-    :class="[ type ? type : '' ]"
   >
     <slot></slot>
-  </button>
+  </el-button>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Component from 'vue-class-component';
+import { Button as ElButton } from 'element-ui';
 
-export default Vue.extend({
-  name: 't-button',
+const ButtonProps = Vue.extend({
   props: {
-    type: {
-      type: String,
-      default: "default"
-    }
-  },
-  computed: {
-
-  },
-  methods: {
-    handleClick (evt: MouseEvent): void {
-      this.$emit('onclick', evt)
-    }
+    type: String,
+    size: String,
+    icon: String,
+    nativeType: String,
+    loading: Boolean,
+    disabled: Boolean,
+    plain: Boolean,
+    autofocus: Boolean,
+    round: Boolean,
+    circle: Boolean
   }
 })
+@Component({
+  components: {
+    ElButton
+  }
+})
+export default class TButton extends ButtonProps {
+  handleClick (evt: MouseEvent): void {
+    this.$emit('onclick', evt)
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

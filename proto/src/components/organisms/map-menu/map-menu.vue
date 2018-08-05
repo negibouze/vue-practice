@@ -7,8 +7,8 @@
         @onchange="change"
       />
     </div>
-    <TButton @onclick="clickCircle">円検索</TButton>
-    <TButton @onclick="clickCond">検索条件</TButton>
+    <TButton type="text" @onclick="clickCircle">円検索</TButton>
+    <TButton type="text" @onclick="clickCond">検索条件</TButton>
     <CircleSearch
       :visible.sync="visibleCircle"
     />
