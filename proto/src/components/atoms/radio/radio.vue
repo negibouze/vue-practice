@@ -1,43 +1,52 @@
 <template>
-  <el-radio-group v-model="selected">
-    <el-radio v-for="item in items"
-      :key="item.value"
-      :label="item.value"
-      @change="handleChange"
-    >
-      {{ item.label }}
-    </el-radio>
-  </el-radio-group>
+  <el-radio
+    v-model="status"
+    :label="item.value"
+    :disabled="disabled"
+    :name="name"
+    :border="border"
+    :size="size"
+    @change="handleChange"
+  >
+    {{ item.label }}
+  </el-radio>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { Prop } from 'vue/types/options'
 import Component from 'vue-class-component'
-import { Radio as ElRadio, RadioGroup as ElRadioGroup } from 'element-ui'
+import { Radio as ElRadio } from 'element-ui'
 import RadioVO from '@/value-objects/radio'
 
 const RadioProps = Vue.extend({
-  props: {
-    items: {
-      type: Array as Prop<RadioVO[]>,
-      required: true
-    },
-    selectedValue: {
-      type: [String, Number]
-    }
+  value: {
+    type: [Object, Boolean],
+    default: () => undefined
+  },
+  disabled: Boolean,
+  name: String,
+  border: Boolean,
+  size: String,
+  item: {
+    type: Array as Prop<RadioVO>,
+    required: true
   }
 })
 @Component({
   components: {
-    ElRadio,
-    ElRadioGroup
+    ElRadio
   }
 })
 export default class TRadio extends RadioProps {
-  selected: string | number = this.selectedValue | this.items[0].value
-  handleChange (newValue: string | number): void {
-    console.log(newValue)
+  get status(): object|boolean {
+    return this.value;
+  }
+  set status(val: object|boolean) {
+    this.$emit('input', val);
+  }
+  handleChange (val: object|boolean): void {
+    this.$emit('change', val);
   }
 }
 </script>
