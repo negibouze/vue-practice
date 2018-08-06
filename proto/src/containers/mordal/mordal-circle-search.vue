@@ -40,7 +40,7 @@ export default Vue.extend({
     search (): void {
     },
     hide (): void {
-      this.$emit('update:visible', false)
+      this.$store.dispatch('circle/invisible');
     }
   }
 })

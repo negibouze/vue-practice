@@ -1,6 +1,8 @@
 <template>
   <MapMenu
     :menu="menu"
+    :visibleCircle="circle"
+    :visibleConditions="conditions"
   />
 </template>
 
@@ -16,7 +18,18 @@ export default Vue.extend({
   },
   computed: {
     menu(): DropDownVO {
-      return this.$store.state.mapmenu.menu
+      return this.$store.state.mapmenu.menu;
+    },
+    circle(): void {
+      this.$store.dispatch('conditions/invisible');
+      return this.$store.state.circle.visibility;
+    },
+    rectangle(): void {
+      this.$store.dispatch('conditions/invisible');
+      return this.$store.state.rectangle.visibility;
+    },
+    conditions(): void {
+      return this.$store.state.conditions.visibility;
     }
   },
   methods: {

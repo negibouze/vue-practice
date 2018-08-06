@@ -33,12 +33,16 @@ export default Vue.extend({
     }
   },
   methods: {
-    circle (): void {
+    circle(form: HTMLFormElement): void {
+      this.$store.dispatch('search/updateCondition', {});
+      this.$store.dispatch('circle/visible');
     },
-    rectangle (): void {
+    rectangle(form: HTMLFormElement): void {
+      this.$store.dispatch('search/updateCondition', {});
+      this.$store.dispatch('rectangle/visible');
     },
-    hide (): void {
-      this.$emit('update:visible', false)
+    hide(): void {
+      this.$store.dispatch('conditions/invisible');
     }
   }
 })

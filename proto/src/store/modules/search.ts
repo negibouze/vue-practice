@@ -1,66 +1,41 @@
 import { Commit } from 'vuex';
 import * as types from '../mutation-types';
 import api from '../../api';
+import SearchOptions from '../../api/search-options';
 import Project from '../../entities/Project';
-import CircleSearchOptions from '../../api/circleSearchOptions';
-import RectangleSearchOptions from '../../api/rectangleSearchOptions';
 
 export interface SearchState {
-    circle: boolean;
-    rectangle: boolean;
+    conditions: {};
     projects: Project[];
 }
 
 const search = {
     namespaced: true,
     state: {
-        circle: false,
-        rectangle: false,
+        conditions: {},
         projects: [],
     },
     getters: {
     },
     mutations: {
-        [types.EXECUTE_CIRCLE_SEARCH](state: SearchState) {
-            if (state.circle || state.rectangle) {
-                return;
-            }
-            state.circle = true;
+        [types.UPDATE_SEARCH_CONDITION](state: SearchState, conditions: object) {
+            state.conditions = conditions;
         },
-        [types.EXECUTE_RECTANGLE_SEARCH](state: SearchState) {
-            if (state.circle || state.rectangle) {
-                return;
-            }
-            state.rectangle = true;
+        [types.BEFORE_EXECUTE_SEARCH](state: SearchState) {
+
         },
-        [types.END_CIRCLE_SEARCH](state: SearchState, { projects }: { projects: Project[] }) {
+        [types.EXECUTE_SEARCH](state: SearchState, projects: Project[]) {
             state.projects = projects;
-            state.circle = false;
-        },
-        [types.END_RECTANGLE_SEARCH](state: SearchState, { projects }: { projects: Project[] }) {
-            state.projects = projects;
-            state.rectangle = false;
         },
     },
     actions: {
-        circle({ commit }: { commit: Commit }) {
-            commit(types.EXECUTE_CIRCLE_SEARCH);
+        updateCondition({ commit }: { commit: Commit }, conditions: object) {
+            commit(types.UPDATE_SEARCH_CONDITION, conditions);
         },
-        rectangle({ commit }: { commit: Commit }) {
-            commit(types.EXECUTE_RECTANGLE_SEARCH);
-        },
-        executeCircle({ commit }: { commit: Commit }, options: CircleSearchOptions) {
-            api.search().circle(options).then((projects: Project[]) => {
-                commit(types.END_CIRCLE_SEARCH, {
-                    projects,
-                });
-            }).catch(() => {
-                // console.log('Error');
-            });
-        },
-        executeRectangle({ commit }: { commit: Commit }, options: RectangleSearchOptions) {
-            api.search().rectangle(options).then((projects: Project[]) => {
-                commit(types.END_RECTANGLE_SEARCH, {
+        execute({ commit }: { commit: Commit }, options: SearchOptions) {
+            commit(types.BEFORE_EXECUTE_SEARCH);
+            api.search().execute(options).then((projects: Project[]) => {
+                commit(types.EXECUTE_SEARCH, {
                     projects,
                 });
             }).catch(() => {
