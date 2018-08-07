@@ -1,29 +1,31 @@
 <template>
   <div class="settings-wrapper">
-    <Settings @onclick="click">
-      <CSV />
-    </Settings>
+    <settings @onclick="click">
+      <csv />
+    </settings>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Component from 'vue-class-component'
 import Settings from '@/components/organisms/settings'
-import { CSV } from '@/components/molecules/settings'
+import { Csv } from '@/components/molecules/settings'
 
-export default Vue.extend({
-  name: 'settings-csv-container',
+const SettingsCsvContainerProps = Vue.extend({})
+@Component({
   components: {
     Settings,
-    CSV
-  },
-  methods: {
-    click (evt: MouseEvent, form: HTMLFormElement): void {
-      console.log(evt)
-      console.log(form)
-    }
+    Csv,
   }
 })
+export default class SettingsCsvContainer extends SettingsCsvContainerProps {
+  // method
+  click(evt: MouseEvent, form: HTMLFormElement): void {
+    console.log(evt);
+    console.log(form);
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

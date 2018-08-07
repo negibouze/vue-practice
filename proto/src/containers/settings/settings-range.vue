@@ -1,29 +1,31 @@
 <template>
   <div class="settings-wrapper">
-    <Settings @onclick="click">
-      <Range />
-    </Settings>
+    <settings @onclick="click">
+      <range />
+    </settings>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Component from 'vue-class-component'
 import Settings from '@/components/organisms/settings'
 import { Range } from '@/components/molecules/settings'
 
-export default Vue.extend({
-  name: 'settings-range-container',
+const SettingsRangeContainerProps = Vue.extend({})
+@Component({
   components: {
     Settings,
-    Range
-  },
-  methods: {
-    click (evt: MouseEvent, form: HTMLFormElement): void {
-      console.log(evt)
-      console.log(form)
-    }
+    Range,
   }
 })
+export default class SettingsRangeContainer extends SettingsRangeContainerProps {
+  // method
+  click(evt: MouseEvent, form: HTMLFormElement): void {
+    console.log(evt);
+    console.log(form);
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

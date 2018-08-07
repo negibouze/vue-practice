@@ -1,5 +1,5 @@
 <template>
-  <nav class="content-menu" :class="{ closed: isClosed }">
+  <nav class="menu-wrapper" :class="{ closed: isClosed }" role="navigation">
     <div class="trigger" @click="handleClick" @mouseover="mouseOver" @mouseout="mouseout">
       <div class="hamburger-wrapper">
         <Hamburger :direction='direction' />
@@ -70,11 +70,11 @@ export default Vue.extend({
 </script>
 
 <style lang="stylus" scoped>
-.content-menu
+.menu-wrapper
   overflow-x: hidden
   transition: all 150ms ease-in-out
   &.closed
-    width: 50px
+    flex-basis: 50px;
 
 .trigger
   width: 100%

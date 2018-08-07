@@ -1,16 +1,16 @@
 <template>
-  <div id="app" class="site-frame">
+  <div id="app" class="site-frame flex">
     <header class="site-header">
-      <THeader />
+      <t-header />
     </header>
     <div class="content-frame flex">
-      <Sidebar />
-      <main class="content-body">
+      <sidebar class="content-menu" />
+      <main class="content-body" role="main">
         <router-view></router-view>
       </main>
     </div>
     <footer class="site-footer">
-      <TFooter />
+      <t-footer />
     </footer>
   </div>
 </template>

@@ -18,21 +18,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Prop } from 'vue/types/options'
-import DropDown from '@/components/atoms/dropdown'
-import TButton from '@/components/atoms/button'
-import DropDownVO from '@/value-objects/dropdown'
-import { CircleSearch, SearchCondition } from '@/containers/mordal'
+import Vue from 'vue';
+import { Prop } from 'vue/types/options';
+import Component from 'vue-class-component';
+import DropDown from '@/components/atoms/dropdown';
+import TButton from '@/components/atoms/button';
+import DropDownVO from '@/value-objects/dropdown';
+import { CircleSearch, SearchCondition } from '@/containers/mordal';
 
-export default Vue.extend({
-  name: 'map-menu',
-  components: {
-    DropDown,
-    TButton,
-    CircleSearch,
-    SearchCondition,
-  },
+const MapMenuProps = Vue.extend({
   props: {
     menu: {
       type: Object as Prop<DropDownVO>,
@@ -47,15 +41,23 @@ export default Vue.extend({
       default: false,
     },
   },
-  methods: {
-    clickCond (evt: MouseEvent): void {
-      this.$store.dispatch('conditions/visible');
-    },
-    change (v: string | number): void {
-      console.log(v)
-    }
+})
+@Component({
+  components: {
+    DropDown,
+    TButton,
+    CircleSearch,
+    SearchCondition,
   }
 })
+export default class MapMenu extends MapMenuProps {
+  clickCond (evt: MouseEvent): void {
+    this.$store.dispatch('conditions/visible');
+  }
+  change (v: string | number): void {
+    console.log(v)
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

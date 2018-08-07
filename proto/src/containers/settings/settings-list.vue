@@ -1,29 +1,31 @@
 <template>
   <div class="settings-wrapper">
-    <Settings @onclick="click">
-      <List />
-    </Settings>
+    <settings @onclick="click">
+      <list />
+    </settings>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Component from 'vue-class-component'
 import Settings from '@/components/organisms/settings'
 import { List } from '@/components/molecules/settings'
 
-export default Vue.extend({
-  name: 'settings-list-container',
+const SettingsListContainerProps = Vue.extend({})
+@Component({
   components: {
     Settings,
-    List
-  },
-  methods: {
-    click (evt: MouseEvent, form: HTMLFormElement): void {
-      console.log(evt)
-      console.log(form)
-    }
+    List,
   }
 })
+export default class SettingsListContainer extends SettingsListContainerProps {
+  // method
+  click(evt: MouseEvent, form: HTMLFormElement): void {
+    console.log(evt);
+    console.log(form);
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

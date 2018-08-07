@@ -12,40 +12,36 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Dialog from '@/components/molecules/dialog'
-import SearchCondition from '@/components/organisms/search-condition'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import Dialog from '@/components/molecules/dialog';
+import SearchCondition from '@/components/organisms/search-condition';
 
-export default Vue.extend({
-  name: 'mordal-search-condition',
+const MordalSearchConditionProps = Vue.extend({
+  props: {
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+  },
+})
+@Component({
   components: {
     Dialog,
     SearchCondition,
   },
-  data() {
-    return {
-    }
-  },
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    circle(form: HTMLFormElement): void {
-      this.$store.dispatch('search/updateCondition', {});
-      this.$store.dispatch('circle/visible');
-    },
-    rectangle(form: HTMLFormElement): void {
-      this.$store.dispatch('search/updateCondition', {});
-      this.$store.dispatch('rectangle/visible');
-    },
-    hide(): void {
-      this.$store.dispatch('conditions/invisible');
-    }
-  }
 })
+export default class MordalSearchCondition extends MordalSearchConditionProps {
+  circle(form: HTMLFormElement): void {
+    this.$store.dispatch('search/updateCondition', {});
+  }
+  rectangle(form: HTMLFormElement): void {
+    this.$store.dispatch('search/updateCondition', {});
+  }
+  hide(): void {
+    this.$store.dispatch('conditions/invisible');
+  }
+}
 </script>
 
 <style lang="stylus" scoped>
