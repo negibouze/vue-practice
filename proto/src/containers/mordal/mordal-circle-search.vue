@@ -39,7 +39,7 @@ export default class MordalCircleSearch extends MordalCircleSearchProps {
   search (): void {
   }
   hide (): void {
-    this.$store.dispatch('circle/invisible');
+    this.$store.dispatch('circle/hideMordal');
   }
 }
 </script>

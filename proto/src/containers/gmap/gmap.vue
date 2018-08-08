@@ -5,9 +5,16 @@
         :menu="menu"
         :visibleCircle="circle"
         :visibleConditions="conditions"
+        :visibleOverlay="foo"
+        @clickConditions="clickConditions"
+        @clickOverlay="clickOverlay"
       />
     </div>
-    <div class="content"><gmap /></div>
+    <div class="content">
+      <gmap
+        @click="clickMap"
+      />
+    </div>
   </div>
 </template>
 
@@ -32,13 +39,26 @@ export default class GmapContainer extends GmapContainerProps {
     return this.$store.state.map.menu;
   }
   get circle(): void {
-    return this.$store.state.circle.visibility;
+    return this.$store.state.circle.mordal;
   }
   get rectangle(): void {
     return this.$store.state.rectangle.visibility;
   }
   get conditions(): void {
     return this.$store.state.conditions.visibility;
+  }
+  get foo(): void {
+    return this.$store.state.circle.active;
+  }
+  clickConditions(): void {
+    this.$store.dispatch('conditions/visible');
+  }
+  clickOverlay(): void {
+    this.$store.dispatch('circle/end');
+  }
+  clickMap(v: object): void {
+    console.log(v);
+    this.$store.dispatch('circle/setCenter');
   }
 }
 </script>

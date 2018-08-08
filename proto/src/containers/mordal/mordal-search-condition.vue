@@ -35,6 +35,7 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   circle(form: HTMLFormElement): void {
     this.$store.dispatch('search/updateCondition', {}).then(() => {
       this.hide();
+      this.$store.dispatch('circle/begin');
     });
   }
   rectangle(form: HTMLFormElement): void {

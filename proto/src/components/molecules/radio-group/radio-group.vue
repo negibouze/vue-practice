@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Prop } from 'vue/types/options'
-import Component from 'vue-class-component'
-import { RadioGroup as ElRadioGroup } from 'element-ui'
+import Vue from 'vue';
+import { Prop } from 'vue/types/options';
+import Component from 'vue-class-component';
+import { RadioGroup as ElRadioGroup } from 'element-ui';
 import TRadio from '@/components/atoms/radio';
-import RadioVO from '@/value-objects/radio'
+import RadioVO from '@/value-objects/radio';
 
 const RadioGroupProps = Vue.extend({
   props: {

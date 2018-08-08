@@ -38,11 +38,14 @@ export default class Gmap extends GmapProps {
       ]
     })
     this.mapObj = map
+    this.addClickListener();
   }
   // method
-  addClickListener(fn: Function): void {
+  addClickListener(): void {
     if (!(!!this.mapObj)) { return }
-    this.mapObj.addListener('click', fn)
+    this.mapObj.addListener('click', (v) => {
+      this.$emit('click', v.latLng);
+    })
   }
   // removeClickListener(): void {
   //   if (!(!!this.mapObj)) { return }

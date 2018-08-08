@@ -20,8 +20,7 @@ import Vue from 'vue';
 import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
 import TButton from '@/components/atoms/button';
-import ListMenu from '@/components/organisms/list-menu'
-import Message from '@/components/atoms/message';
+import ListMenu from '@/components/organisms/list-menu';
 
 const ListMenuProps = Vue.extend({
   props: {
@@ -31,21 +30,20 @@ const ListMenuProps = Vue.extend({
 @Component({
   components: {
     TButton,
-    Message,
-  }
+  },
 })
 export default class ListMenu extends ListMenuProps {
   clickVertical (e: MouseEvent): void {
-    this.$emit('clickVertical', e)
+    this.$emit('clickVertical', e);
   }
   clickHorizontal (e: MouseEvent): void {
-    this.$emit('clickHorizontal', e)
+    this.$emit('clickHorizontal', e);
   }
   clickFull (e: MouseEvent): void {
-    this.$emit('clickFull', e)
+    this.$emit('clickFull', e);
   }
   clickMinimize (e: MouseEvent): void {
-    this.$emit('clickMinimize', e)
+    this.$emit('clickMinimize', e);
   }
 }
 </script>

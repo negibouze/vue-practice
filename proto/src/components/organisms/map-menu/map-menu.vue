@@ -7,13 +7,20 @@
         @onchange="change"
       />
     </div>
-    <TButton type="text" @onclick="clickCond">検索条件</TButton>
-    <CircleSearch
+    <t-button type="text" @onclick="clickCond">検索条件</t-button>
+    <circle-search
       :visible.sync="visibleCircle"
     />
-    <SearchCondition
+    <search-condition
       :visible.sync="visibleConditions"
     />
+    <overlay
+      :visible="visibleOverlay"
+      :zIndex="0"
+      @onclick="clickOverlay"
+    >
+      <p class="message">円検索の中心を指定してください。</p>
+    </overlay>
   </div>
 </template>
 
@@ -21,8 +28,9 @@
 import Vue from 'vue';
 import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
-import DropDown from '@/components/atoms/dropdown';
 import TButton from '@/components/atoms/button';
+import DropDown from '@/components/atoms/dropdown';
+import Overlay from '@/components/atoms/overlay'
 import DropDownVO from '@/value-objects/dropdown';
 import { CircleSearch, SearchCondition } from '@/containers/mordal';
 
@@ -40,19 +48,27 @@ const MapMenuProps = Vue.extend({
       type: Boolean,
       default: false,
     },
+    visibleOverlay: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 @Component({
   components: {
-    DropDown,
     TButton,
+    DropDown,
+    Overlay,
     CircleSearch,
     SearchCondition,
   }
 })
 export default class MapMenu extends MapMenuProps {
-  clickCond (evt: MouseEvent): void {
-    this.$store.dispatch('conditions/visible');
+  clickCond (e: MouseEvent): void {
+    this.$emit('clickConditions', e);
+  }
+  clickOverlay (e: MouseEvent): void {
+    this.$emit('clickOverlay', e);
   }
   change (v: string | number): void {
     console.log(v)
@@ -68,4 +84,10 @@ export default class MapMenu extends MapMenuProps {
 .dropdown-outer
   width: calc(100% / 3)
   height: 100%
+
+.message
+  position: relative
+  top: 10vh
+  text-align: center
+  color: #fff
 </style>
