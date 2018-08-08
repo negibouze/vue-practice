@@ -20,7 +20,7 @@ const MapMenuContaierProps = Vue.extend({})
 })
 export default class MapMenuContaier extends MapMenuContaierProps {
   get menu(): DropDownVO {
-    return this.$store.state.mapmenu.menu;
+    return this.$store.state.map.menu;
   }
   get circle(): void {
     return this.$store.state.circle.visibility;

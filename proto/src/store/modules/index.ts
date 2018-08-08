@@ -1,6 +1,6 @@
 import circle from './circle';
 import conditions from './conditions';
-import mapmenu from './map-menu';
+import map from './map';
 import rectangle from './rectangle';
 import search from './search';
 import settings from './settings';
@@ -8,7 +8,7 @@ import settings from './settings';
 export default {
     circle,
     conditions,
-    mapmenu,
+    map,
     rectangle,
     search,
     settings,

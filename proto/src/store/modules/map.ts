@@ -1,14 +1,22 @@
-// import { Commit } from 'vuex'
-// import * as types from '../mutation-types'
+import { Commit } from 'vuex';
+import * as types from '../mutation-types';
 import DropDownVO from '@/value-objects/dropdown';
 
-export interface MapMenuState {
+export enum MapLayout {
+    MapFull,
+    SplitHorizontal,
+    SplitVertical,
+    ListFull,
+}
+export interface MapState {
+    layout: MapLayout;
     menu: DropDownVO;
 }
 
-const MapMenu = {
+const Map = {
     namespaced: true,
     state: {
+        layout: MapLayout.SplitHorizontal,
         menu: new DropDownVO(
           [
             { key: 1, value: '首都圏' },
@@ -21,12 +29,18 @@ const MapMenu = {
             { key: 8, value: '中国四国' },
           ],
         ),
-    } as MapMenuState,
+    } as MapState,
     getters: {},
     mutations: {
+        [types.CHANGE_MAP_LAYOUT](state: MapState, value: MapLayout): void {
+            state.layout = value;
+        },
     },
     actions: {
+        changeLayout({ commit }: { commit: Commit }, value: MapLayout): void {
+            commit(types.CHANGE_MAP_LAYOUT, value);
+        },
     },
 };
 
-export default MapMenu;
+export default Map;

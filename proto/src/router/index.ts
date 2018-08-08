@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import TMap from '@/containers/map';
 import Settings from '@/components/templates/settings';
+import TMap from '@/containers/map';
 
 Vue.use(Router);
 

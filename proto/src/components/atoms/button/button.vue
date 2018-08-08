@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Button as ElButton } from 'element-ui';
 
@@ -32,17 +32,17 @@ const ButtonProps = Vue.extend({
     plain: Boolean,
     autofocus: Boolean,
     round: Boolean,
-    circle: Boolean
+    circle: Boolean,
   }
 })
 @Component({
   components: {
-    ElButton
-  }
+    ElButton,
+  },
 })
 export default class TButton extends ButtonProps {
-  handleClick (evt: MouseEvent): void {
-    this.$emit('onclick', evt)
+  handleClick (e: MouseEvent): void {
+    this.$emit('onclick', e);
   }
 }
 </script>

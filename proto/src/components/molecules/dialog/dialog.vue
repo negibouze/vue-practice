@@ -130,13 +130,6 @@ export default class Dialog extends DialogProps {
   handleClickOverlay(e: MouseEvent): void {
     this.$emit('onclickbackground', e)
   }
-  handleClose(done: () => void): void {
-    this.$confirm('Are you sure t o close this dialog?')
-      .then(_ => {
-        done()
-      })
-      .catch(_ => {})
-  }
   _addListenerMulti(el: HTMLElement, eventName: string[], fn: (e: Event) => void) {
     eventName.forEach(e => el.addEventListener(e, fn, false));
   }
@@ -150,7 +143,7 @@ export default class Dialog extends DialogProps {
     }
   }
   destroyed() {
-    if (this.draggable) {
+    if (this.draggable && !!this.$refs.item) {
       this._removeListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
     }
   }
