@@ -33,10 +33,14 @@ const MordalSearchConditionProps = Vue.extend({
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   circle(form: HTMLFormElement): void {
-    this.$store.dispatch('search/updateCondition', {});
+    this.$store.dispatch('search/updateCondition', {}).then(() => {
+      this.hide();
+    });
   }
   rectangle(form: HTMLFormElement): void {
-    this.$store.dispatch('search/updateCondition', {});
+    this.$store.dispatch('search/updateCondition', {}).then(() => {
+      this.hide();
+    });
   }
   hide(): void {
     this.$store.dispatch('conditions/invisible');

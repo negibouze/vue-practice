@@ -30,7 +30,10 @@ const search = {
     },
     actions: {
         updateCondition({ commit }: { commit: Commit }, conditions: object) {
-            commit(types.UPDATE_SEARCH_CONDITION, conditions);
+            return new Promise((resolve) => {
+                commit(types.UPDATE_SEARCH_CONDITION, conditions);
+                resolve();
+            });
         },
         execute({ commit }: { commit: Commit }, options: SearchOptions) {
             commit(types.BEFORE_EXECUTE_SEARCH);

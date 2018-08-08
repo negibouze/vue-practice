@@ -1,3 +1,7 @@
 import TList from './list.vue';
+import TTable from './table.vue';
 
-export default TList;
+export {
+  TList,
+  TTable,
+};

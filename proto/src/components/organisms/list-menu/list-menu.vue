@@ -1,30 +1,51 @@
 <template>
   <div class="listmenu-inner flex">
-    あいうあおあいうえお
+    <div>
+      <t-button type="default" @onclick="clickMinimize" round>_</t-button>
+    </div>
+    <div>
+      <t-button type="default" @onclick="clickVertical" round>||</t-button>
+    </div>
+    <div>
+      <t-button type="default" @onclick="clickHorizontal" round>=</t-button>
+    </div>
+    <div>
+      <t-button type="default" @onclick="clickFull" round>□</t-button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Prop } from 'vue/types/options'
+import Vue from 'vue';
+import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
-import TButton from '@/components/atoms/button'
+import TButton from '@/components/atoms/button';
+import ListMenu from '@/components/organisms/list-menu'
+import Message from '@/components/atoms/message';
 
 const ListMenuProps = Vue.extend({
   props: {
+
   },
 })
 @Component({
   components: {
     TButton,
+    Message,
   }
 })
 export default class ListMenu extends ListMenuProps {
-  clickCond (evt: MouseEvent): void {
-    this.$store.dispatch('conditions/visible');
+  clickVertical (e: MouseEvent): void {
+    this.$emit('clickVertical', e)
   }
-  change (v: string | number): void {
-    console.log(v)
+  clickHorizontal (e: MouseEvent): void {
+    this.$emit('clickHorizontal', e)
+  }
+  clickFull (e: MouseEvent): void {
+    this.$emit('clickFull', e)
+  }
+  clickMinimize (e: MouseEvent): void {
+    this.$emit('clickMinimize', e)
   }
 }
 </script>
