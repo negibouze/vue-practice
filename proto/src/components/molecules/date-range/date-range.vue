@@ -3,13 +3,13 @@
     <date-picker
       :placeholder="leftPlaceholder"
       :picker-options="leftPickerOptions"
-      @onchange="changeLeft"
+      @change="changeLeft"
     />
     <span>〜</span>
     <date-picker
       :placeholder="rightPlaceholder"
       :picker-options="rightPickerOptions"
-      @onchange="changeRight"
+      @change="changeRight"
     />
   </div>
 </template>

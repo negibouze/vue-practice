@@ -55,7 +55,7 @@ export default class TSelect extends SelectProps {
     return this.disabledOptions(val);
   }
   handleChange (val: string|number): void {
-    this.$emit('onchange', val);
+    this.$emit('change', val);
   }
 }
 </script>

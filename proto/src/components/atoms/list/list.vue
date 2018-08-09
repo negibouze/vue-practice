@@ -2,7 +2,7 @@
   <ul>
     <t-cell v-for="(v, i) in items"
       :key="'items-' + i"
-      @onclick="click"
+      @click="click"
     />
     {{ v[key] }}
     </t-cell>

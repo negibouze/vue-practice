@@ -20,7 +20,7 @@ const TCellProps = Vue.extend({})
 export default class TCell extends TCellProps {
   // method
   handleClick(evt: Object) {
-    this.$emit('onclick', evt)
+    this.$emit('click', evt)
   }
 }
 </script>

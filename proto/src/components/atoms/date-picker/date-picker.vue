@@ -32,7 +32,7 @@ const DatePickerProps = Vue.extend({
 export default class DatePicker extends DatePickerProps {
   value: object = '';
   handleChange(val: object): void {
-    this.$emit('onchange', val);
+    this.$emit('change', val);
   }
 }
 </script>

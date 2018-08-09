@@ -1,16 +1,16 @@
 <template>
   <div class="listmenu-inner flex">
     <div>
-      <t-button type="default" @onclick="clickMinimize" round>_</t-button>
+      <t-button type="default" @click="clickMinimize" round>_</t-button>
     </div>
     <div>
-      <t-button type="default" @onclick="clickVertical" round>||</t-button>
+      <t-button type="default" @click="clickVertical" round>||</t-button>
     </div>
     <div>
-      <t-button type="default" @onclick="clickHorizontal" round>=</t-button>
+      <t-button type="default" @click="clickHorizontal" round>=</t-button>
     </div>
     <div>
-      <t-button type="default" @onclick="clickFull" round>□</t-button>
+      <t-button type="default" @click="clickFull" round>□</t-button>
     </div>
   </div>
 </template>

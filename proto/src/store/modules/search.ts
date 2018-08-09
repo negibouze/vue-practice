@@ -29,7 +29,7 @@ const search = {
         },
     },
     actions: {
-        updateCondition({ commit }: { commit: Commit }, conditions: object) {
+        updateCondition({ commit }: { commit: Commit }, conditions: object): Promise<{}> {
             return new Promise((resolve) => {
                 commit(types.UPDATE_SEARCH_CONDITION, conditions);
                 resolve();

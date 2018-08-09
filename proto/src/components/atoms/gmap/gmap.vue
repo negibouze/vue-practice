@@ -3,19 +3,43 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import Vue from 'vue';
+import { Prop } from 'vue/types/options';
+import Component from 'vue-class-component';
+import Coordinate from '@/value-objects/coordinate';
+
+const drawingColor = '#ff0000';
+const baseDrawingOptions = {
+    strokeColor: drawingColor,
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: drawingColor,
+    fillOpacity: 0.1,
+    clickable: false
+};
 
 const GmapProps = Vue.extend({
   props: {
-    projects: Array
+    center: Object as Prop<Coordinate>,
+    radius: Number,
+    projects: Array,
   }
 })
 @Component({
-  components: {}
+  components: {},
+  watch: {
+    radius(newValue, oldValue) {
+      this.drawCircle(newValue);
+    }
+  }
 })
 export default class Gmap extends GmapProps {
-  mapObj: google.maps.Map | null = null
+  mapObj: google.maps.Map|null = null;
+  timerId: number = 0;
+  waitTime: number = 500;
+  drawingObj: object|null = null;
+  drawings: array = [];
+
   // lifecycle hook
   mounted () {
     const map = new google.maps.Map(this.$refs.map, {
@@ -36,21 +60,21 @@ export default class Gmap extends GmapProps {
           ]
         }  
       ]
-    })
-    this.mapObj = map
+    });
+    this.mapObj = map;
     this.addClickListener();
   }
   // method
   addClickListener(): void {
     if (!(!!this.mapObj)) { return }
-    this.mapObj.addListener('click', (v) => {
-      this.$emit('click', v.latLng);
+    this.mapObj.addListener('click', (e: MouseEvent) => {
+      this.$emit('clickMap', e.latLng);
     })
   }
-  // removeClickListener(): void {
-  //   if (!(!!this.mapObj)) { return }
-  //   this.maps.event.clearListeners(this.mapObj, 'click');
-  // }
+  removeClickListener(): void {
+    if (!(!!this.mapObj)) { return }
+    this.maps.event.clearListeners(this.mapObj, 'click');
+  }
   // drawMarker(projects): void {
   //   projects.forEach(v => {
   //     new this.maps.Marker({
@@ -60,18 +84,17 @@ export default class Gmap extends GmapProps {
   //     })
   //   })
   // }
-  // drawCircle(radius): void {
-  //   if (!(!!this.startingPoint)) { return }
-  //   if (this.drawingObj) {
-  //     this.updateWithTimer(this.updateCircle, radius);
-  //   } else {
-  //     const options = { ...baseDrawingOptions, ...{ 'map': this.mapObj, 'center': this.startingPoint, radius } }
-  //     this.drawingObj = new this.maps.Circle(options)
-  //   }
-  // }
-  // updateCircle(radius): void {
-  //   this.drawingObj.setRadius(radius);
-  // }
+  drawCircle(radius): void {
+    if (!(!!this.center)) { return }
+    if (this.drawingObj) {
+      this.updateWithTimer((radius) => {
+        this.drawingObj.setRadius(radius);
+      }, radius);
+    } else {
+      const options = { ...baseDrawingOptions, ...{ 'map': this.mapObj, 'center': this.center, radius } }
+      this.drawingObj = new google.maps.Circle(options)
+    }
+  }
   updateWithTimer(fn, ...args): void {
     if (this.timerId) {
       clearTimeout(this.timerId)
@@ -79,7 +102,7 @@ export default class Gmap extends GmapProps {
     this.timerId = setTimeout(() => {
       fn(...args)
       this.timerId = null
-    }, this.waitTime)
+    }, this.waitTime);
   }
   // removeDrawingObject(): void {
   //   if (!(!!this.drawingObj)) { return }

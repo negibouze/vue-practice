@@ -68,7 +68,7 @@ export default class Dropdown extends DropdownProps {
   }
   handleCommand (command: string | number | object): void {
     this.selected = command
-    this.$emit('onchange', command);
+    this.$emit('change', command);
   }
 }
 </script>

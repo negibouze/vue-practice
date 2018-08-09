@@ -19,21 +19,22 @@
         </li>
       </ul>
       <div class="button-container flex flex-between">
-        <TButton @onclick="search">検索</TButton>
-        <TButton @onclick="hide">閉じる</TButton>
+        <TButton @click="search">検索</TButton>
+        <TButton @click="hide">閉じる</TButton>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import TButton from '@/components/atoms/button'
+import Vue from 'vue';
+// import CheckboxGroup from '@/components/molecules/checkbox-group';
+import TButton from '@/components/atoms/button';
 
 export default Vue.extend({
   name: 'circle-search',
   components: {
-    TButton
+    TButton,
   },
   data() {
     return {
@@ -44,11 +45,15 @@ export default Vue.extend({
         2000
       ],
       currentValue: 0,
-      anyValue: 10
+      anyValue: 10,
     }
   },
   watch: {
     currentValue(newValue, oldValue) {
+      const n = parseInt(newValue);
+      if (!isNaN(n)) {
+        this.$emit('changeValue', n);
+      }
     }
   },
   methods: {
@@ -58,14 +63,11 @@ export default Vue.extend({
     updateValue() {
       this.currentValue = this.anyValue
     },
-    change (e: Event): void {
-      this.$emit('onchange', e)
-    },
     search (e: MouseEvent): void {
-      this.$emit('onclicksearch', e)
+      this.$emit('clicksearch', e)
     },
     hide (e: MouseEvent): void {
-      this.$emit('onclickcancel', e)
+      this.$emit('clickcancel', e)
     }
   }
 })

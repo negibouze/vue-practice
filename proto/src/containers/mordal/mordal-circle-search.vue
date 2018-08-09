@@ -2,12 +2,12 @@
   <Dialog
     :visible="visible"
     :draggable="true"
-    @onclickbackground="hide"
+    @clickbackground="hide"
   >
     <CircleSearch
-      @onchange="change"
-      @onclicksearch="search"
-      @onclickcancel="hide"
+      @changeValue="change"
+      @clicksearch="search"
+      @clickcancel="hide"
     />
   </Dialog>
 </template>
@@ -33,8 +33,8 @@ const MordalCircleSearchProps = Vue.extend({
   },
 })
 export default class MordalCircleSearch extends MordalCircleSearchProps {
-  change (evt: Event): void {
-    console.log(evt)
+  change (v: number): void {
+    this.$store.dispatch('circle/updateRadius', v);
   }
   search (): void {
   }

@@ -19,7 +19,7 @@
       :window="true"
       :theme="backgroundTheme"
       :zIndex="zIndex"
-      @onclick="handleClickOverlay"
+      @click="handleClickOverlay"
     >
     </Overlay>
     <div
@@ -128,7 +128,7 @@ export default class Dialog extends DialogProps {
   }
 
   handleClickOverlay(e: MouseEvent): void {
-    this.$emit('onclickbackground', e)
+    this.$emit('clickbackground', e)
   }
   _addListenerMulti(el: HTMLElement, eventName: string[], fn: (e: Event) => void) {
     eventName.forEach(e => el.addEventListener(e, fn, false));

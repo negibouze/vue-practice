@@ -1,12 +1,12 @@
 <template>
   <Dialog
     :visible="visible"
-    @onclickbackground="hide"
+    @clickbackground="hide"
   >
     <SearchCondition
-      @onclickcirclesearch="circle"
-      @onclickrectanglesearch="rectangle"
-      @onclickcancel="hide"
+      @clickcirclesearch="circle"
+      @clickrectanglesearch="rectangle"
+      @clickcancel="hide"
     />
   </Dialog>
 </template>

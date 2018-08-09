@@ -42,7 +42,7 @@ const OverlayProps = Vue.extend({
 @Component({})
 export default class Overlay extends OverlayProps {
   handleClick (evt: MouseEvent): void {
-    this.$emit('onclick', evt)
+    this.$emit('click', evt)
   }
 }
 </script>

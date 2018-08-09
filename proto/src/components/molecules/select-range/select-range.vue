@@ -5,7 +5,7 @@
       :placeholder="leftPlaceholder"
       :disabled-options="disabledLeft"
       :selected-value="leftSelectedValue"
-      @onchange="changeLeft"
+      @change="changeLeft"
     />
     <span>〜</span>
     <t-select
@@ -13,7 +13,7 @@
       :placeholder="rightPlaceholder"
       :disabled-options="disabledRight"
       :selected-value="rightSelectedValue"
-      @onchange="changeRight"
+      @change="changeRight"
     />
   </div>
 </template>

@@ -5,25 +5,28 @@
         :menu="menu"
         :visibleCircle="circle"
         :visibleConditions="conditions"
-        :visibleOverlay="foo"
+        :visibleOverlay="overlay"
         @clickConditions="clickConditions"
         @clickOverlay="clickOverlay"
       />
     </div>
     <div class="content">
       <gmap
-        @click="clickMap"
+        @clickMap="clickMap"
+        :center="center"
+        :radius="radius"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import MapMenu from '@/components/organisms/map-menu'
-import Gmap from '@/components/atoms/gmap'
-import DropDownVO from '@/value-objects/dropdown'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import MapMenu from '@/components/organisms/map-menu';
+import Gmap from '@/components/atoms/gmap';
+import DropDownVO from '@/value-objects/dropdown';
+import Coordinate from '@/value-objects/coordinate';
 
 const GmapContainerProps = Vue.extend({
 
@@ -47,8 +50,14 @@ export default class GmapContainer extends GmapContainerProps {
   get conditions(): void {
     return this.$store.state.conditions.visibility;
   }
-  get foo(): void {
+  get overlay(): void {
     return this.$store.state.circle.active;
+  }
+  get center(): Coordinate {
+    return this.$store.state.circle.center;
+  }
+  get radius(): number {
+    return this.$store.state.circle.radius;
   }
   clickConditions(): void {
     this.$store.dispatch('conditions/visible');
@@ -56,9 +65,12 @@ export default class GmapContainer extends GmapContainerProps {
   clickOverlay(): void {
     this.$store.dispatch('circle/end');
   }
-  clickMap(v: object): void {
-    console.log(v);
-    this.$store.dispatch('circle/setCenter');
+  clickMap(v: LatLng): void {
+    const coordinate = new Coordinate(v.lat(), v.lng());
+    this.$store.dispatch('circle/setCenter', coordinate).then(() => {
+      this.$store.dispatch('circle/end');
+      this.$store.dispatch('circle/showMordal');
+    });
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Logo @onclick="click" />
+    <Logo @click="click" />
   </div>
 </template>
 

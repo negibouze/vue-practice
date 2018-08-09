@@ -1,6 +1,6 @@
 <template>
   <div class="settings-wrapper">
-    <settings @onclick="click">
+    <settings @click="click">
       <forms />
     </settings>
   </div>

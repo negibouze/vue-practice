@@ -35,13 +35,20 @@
                 </ul>
               </div>
             </div>
+            <div class="">
+              <span class="">総戸数</span>
+              <select-range
+                :options="items.test"
+              />
+              <!-- 以上〜以下/未満 -->
+            </div>
         </fieldset>
       </form>
     </div>
     <div class="button-container flex flex-between">
-      <TButton @onclick="circle">円検索</TButton>
-      <TButton @onclick="rectangle">四角検索</TButton>
-      <TButton @onclick="hide">閉じる</TButton>
+      <TButton @click="circle">円検索</TButton>
+      <TButton @click="rectangle">四角検索</TButton>
+      <TButton @click="hide">閉じる</TButton>
     </div>
   </div>
 </template>
@@ -93,13 +100,13 @@ const MordalSearchConditionProps = Vue.extend({
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   circle(e: MouseEvent): void {
-    this.$emit('onclickcirclesearch', this.$refs.form)
+    this.$emit('clickcirclesearch', this.$refs.form)
   }
   rectangle(e: MouseEvent): void {
-    this.$emit('onclickrectanglesearch', this.$refs.form)
+    this.$emit('clickrectanglesearch', this.$refs.form)
   }
   hide(e: MouseEvent): void {
-    this.$emit('onclickcancel', e)
+    this.$emit('clickcancel', e)
   }
   $refs!: {
     form: HTMLFormElement

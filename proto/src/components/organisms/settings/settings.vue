@@ -3,7 +3,7 @@
     <form ref="form">
       <slot class="menu-container"></slot>
       <div class="button-container flex flex-center">
-        <TButton @onclick="handleClick">設定する</TButton>
+        <TButton @click="handleClick">設定する</TButton>
       </div>
     </form>
   </div>
@@ -22,7 +22,7 @@ const SettingsProps = Vue.extend({})
 })
 export default class Settings extends SettingsProps {
   handleClick (evt: MouseEvent): void {
-    this.$emit('onclick', evt, this.$refs.form)
+    this.$emit('click', evt, this.$refs.form)
     evt.preventDefault()
   }
   $refs!: {

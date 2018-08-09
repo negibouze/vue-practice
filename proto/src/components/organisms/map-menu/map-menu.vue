@@ -4,10 +4,10 @@
       <DropDown
         :trigger="menu.trigger"
         :items="menu.items"
-        @onchange="change"
+        @change="change"
       />
     </div>
-    <t-button type="text" @onclick="clickCond">検索条件</t-button>
+    <t-button type="text" @click="clickCond">検索条件</t-button>
     <circle-search
       :visible.sync="visibleCircle"
     />
@@ -17,7 +17,7 @@
     <overlay
       :visible="visibleOverlay"
       :zIndex="0"
-      @onclick="clickOverlay"
+      @click="clickOverlay"
     >
       <p class="message">円検索の中心を指定してください。</p>
     </overlay>

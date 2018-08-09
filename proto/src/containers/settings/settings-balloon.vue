@@ -1,6 +1,6 @@
 <template>
   <div class="settings-wrapper">
-    <settings @onclick="update">
+    <settings @click="update">
       <balloon
         :items="items"
         :displayKeys="display"

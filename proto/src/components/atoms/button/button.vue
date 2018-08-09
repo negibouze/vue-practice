@@ -42,7 +42,7 @@ const ButtonProps = Vue.extend({
 })
 export default class TButton extends ButtonProps {
   handleClick (e: MouseEvent): void {
-    this.$emit('onclick', e);
+    this.$emit('click', e);
   }
 }
 </script>
