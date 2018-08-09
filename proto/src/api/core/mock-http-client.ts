@@ -1,8 +1,8 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import IHttpClient from './IHttpClient';
+import IHttpClient from './i-http-client';
 import Method from './method';
 import Endpoint from '../endpoint';
-import TRequestConfig from './TRequestConfig';
+import TRequestConfig from './request-config';
 import MockAdapter from 'axios-mock-adapter/types';
 
 export default class MockHttpClient implements IHttpClient {

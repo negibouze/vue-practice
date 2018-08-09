@@ -1,10 +1,10 @@
 import { default as axios } from 'axios';
-import IClient from './IClient';
+import IClient from './i-client';
 import Method from './method';
-import TRequestConfig from './TRequestConfig';
-import TResponse from './TResponse';
+import TRequestConfig from './request-config';
+import TResponse from './response';
 import Endpoint from '../endpoint';
-import MockHttpClient from './mockHttpClient';
+import MockHttpClient from './mock-http-client';
 
 export default class MockTClient implements IClient {
 

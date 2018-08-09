@@ -19,7 +19,7 @@
         </li>
       </ul>
       <div class="button-container flex flex-between">
-        <TButton @click="search">検索</TButton>
+        <TButton @click="search" :disabled="this.currentValue <= 0">検索</TButton>
         <TButton @click="hide">閉じる</TButton>
       </div>
     </div>

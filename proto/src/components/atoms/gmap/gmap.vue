@@ -10,12 +10,12 @@ import Coordinate from '@/value-objects/coordinate';
 
 const drawingColor = '#ff0000';
 const baseDrawingOptions = {
-    strokeColor: drawingColor,
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: drawingColor,
-    fillOpacity: 0.1,
-    clickable: false
+  strokeColor: drawingColor,
+  strokeOpacity: 0.8,
+  strokeWeight: 2,
+  fillColor: drawingColor,
+  fillOpacity: 0.1,
+  clickable: false
 };
 
 const GmapProps = Vue.extend({
@@ -41,7 +41,7 @@ export default class Gmap extends GmapProps {
   drawings: array = [];
 
   // lifecycle hook
-  mounted () {
+  mounted() {
     const map = new google.maps.Map(this.$refs.map, {
       fullscreenControl: false,
       streetViewControl: false,
@@ -64,6 +64,10 @@ export default class Gmap extends GmapProps {
     this.mapObj = map;
     this.addClickListener();
   }
+  destroyed() {
+    this.removeDrawingObject();
+    this.removeClickListener();
+  }
   // method
   addClickListener(): void {
     if (!(!!this.mapObj)) { return }
@@ -73,7 +77,7 @@ export default class Gmap extends GmapProps {
   }
   removeClickListener(): void {
     if (!(!!this.mapObj)) { return }
-    this.maps.event.clearListeners(this.mapObj, 'click');
+    google.maps.event.clearListeners(this.mapObj, 'click');
   }
   // drawMarker(projects): void {
   //   projects.forEach(v => {
@@ -104,12 +108,11 @@ export default class Gmap extends GmapProps {
       this.timerId = null
     }, this.waitTime);
   }
-  // removeDrawingObject(): void {
-  //   if (!(!!this.drawingObj)) { return }
-  //   this.drawingObj.setMap(null)
-  //   this.drawingObj = null
-  //   this.startingPoint = null
-  // }
+  removeDrawingObject(): void {
+    if (!(!!this.drawingObj)) { return }
+    this.drawingObj.setMap(null)
+    this.drawingObj = null
+  }
   // dynamic component
   $refs!: {
     map: HTMLDivElement

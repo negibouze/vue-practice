@@ -1,11 +1,11 @@
 import { default as axios } from 'axios';
-import IClient from './IClient';
+import IClient from './i-client';
 import Method from './method';
-import TRequestConfig from './TRequestConfig';
-import TResponse from './TResponse';
+import TRequestConfig from './request-config';
+import TResponse from './response';
 import Endpoint from '../endpoint';
-import IHttpClient from './IHttpClient';
-import HttpClient from './httpClient';
+import IHttpClient from './i-http-client';
+import HttpClient from './http-client';
 
 export default class TClient implements IClient {
 

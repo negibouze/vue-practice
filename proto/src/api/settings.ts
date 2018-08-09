@@ -1,5 +1,5 @@
-// import TResponse from './core/TResponse';
-import IClient from './core/IClient';
+// import TResponse from './core/response';
+import IClient from './core/client';
 
 export default class Settings {
     private client: IClient;

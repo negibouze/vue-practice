@@ -1,5 +1,5 @@
-import TRequestConfig from './TRequestConfig';
-import TResponse from './TResponse';
+import TRequestConfig from './request-config';
+import TResponse from './response';
 import Endpoint from '../endpoint';
 
 export default interface IClient {

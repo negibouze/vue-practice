@@ -1,6 +1,6 @@
 import { Commit } from 'vuex';
 import * as types from '../mutation-types';
-import api from '../../api';
+import api from '@/api';
 
 export interface BalloonState {
     items: any;

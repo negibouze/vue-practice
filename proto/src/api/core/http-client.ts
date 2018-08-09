@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import IHttpClient from './IHttpClient';
+import IHttpClient from './i-http-client';
 import Method from './method';
 
 export default class HttpClient implements IHttpClient {

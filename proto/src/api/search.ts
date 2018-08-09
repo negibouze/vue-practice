@@ -1,8 +1,8 @@
 import Endpoint from './endpoint';
-import IClient from './core/IClient';
-import TResponse from './core/TResponse';
+import IClient from './core/client';
+import TResponse from './core/response';
 import SearchOptions from './search-options';
-import Project from '../entities/Project';
+import Project from '../entities/project';
 
 export default class Search {
     private client: IClient;

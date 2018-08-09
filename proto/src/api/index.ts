@@ -1,5 +1,5 @@
-import IClient from './core/IClient';
-import TClient from './core/TClient';
+import IClient from './core/client';
+import TClient from './core/client';
 import Search from './search';
 import Settings from './settings';
 
