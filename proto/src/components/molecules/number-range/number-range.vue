@@ -86,18 +86,20 @@ export default class NumberRange extends NumberRangeProps {
   leftValue: number|null = null;
   rightValue: number|null = null;
   get leftOpts(): NumberRangeOptions {
-    if (!this.leftProps) { return defaultOptions; }
-    return Object.assign({}, defaultOptions, this.leftProps);
+    return this._addMissingOptions(this.leftProps);
   }
   get rightOpts(): NumberRangeOptions {
-    if (!this.rightProps) { return defaultOptions; }
-    return Object.assign({}, defaultOptions, this.rightProps);
+    return this._addMissingOptions(this.rightProps);
   }
   changeLeft(val: number): void {
     this.leftValue = val;
   }
   changeRight(val: number): void {
     this.rightValue = val;
+  }
+  _addMissingOptions(props: NumberRangeOptions): NumberRangeOptions {
+    if (!props) { return defaultOptions; }
+    return Object.assign({}, defaultOptions, props);
   }
 }
 </script>
