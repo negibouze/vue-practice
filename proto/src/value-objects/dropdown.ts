@@ -1,11 +1,4 @@
-interface NumberKeyItem {
-  key: number;
-  value: number | string;
-}
-interface StringKeyItem {
-  key: string;
-  value: number | string;
-}
+import { NumberKeyItem, StringKeyItem } from '@/interfaces/dropdown';
 
 enum Trigger {
   CLICK = 'click',
@@ -13,12 +6,10 @@ enum Trigger {
 }
 
 export {
-  NumberKeyItem,
-  StringKeyItem,
   Trigger,
 };
 
-export default class Dropdown {
+export default class DropdownItems {
   public readonly items: NumberKeyItem[] | StringKeyItem[];
   public readonly trigger: Trigger;
 

@@ -1,5 +1,5 @@
-import SearchOptions from '@/api/search-options';
-import Coordinate from '@/value-objects/coordinate';
+import SearchOptions from '@/interfaces/search-options';
+import Coordinate from '@/interfaces/coordinate';
 
 export default class CircleSearchOptions {
   public readonly center: Coordinate;
@@ -14,7 +14,44 @@ export default class CircleSearchOptions {
 
   public translate(): SearchOptions {
     return {
-      center: 0,
+      regionCode: 0,
+      stageStatus: [0],
+      salesAt: null,
+      boardConstructionAt: null,
+      constructionAt: null,
+      completionAt: null,
+      transportation: null,
+      townCodes: [0],
+      name: null,
+      company: null,
+      developer: null,
+      constractor: null,
+      designer: null,
+      seller: null,
+      manager: null,
+      unitCount: null,
+      topFloor: null,
+      parkingCount: null,
+      parkingInstallationRate: null,
+      groundArea: null,
+      buildingArea: null,
+      floorArea: null,
+      saleCount: null,
+      applyCount: null,
+      firstMonthApplyRate: null,
+      priceTotal: null,
+      areaTotal: null,
+      priceMin: null,
+      areaMin: null,
+      tsuboMin: null,
+      priceAverage: null,
+      areaAverage: null,
+      tsuboAverage: null,
+      priceMax: null,
+      areaMax: null,
+      tsuboMax: null,
+      circle: null,
+      rectangle: null,
     };
   }
 }

@@ -25,8 +25,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import MapMenu from '@/components/organisms/map-menu';
 import Gmap from '@/components/atoms/gmap';
-import DropDownVO from '@/value-objects/dropdown';
-import Coordinate from '@/value-objects/coordinate';
+import DropDownItems from '@/value-objects/dropdown';
 
 const GmapContainerProps = Vue.extend({
 
@@ -38,7 +37,7 @@ const GmapContainerProps = Vue.extend({
   }
 })
 export default class GmapContainer extends GmapContainerProps {
-  get menu(): DropDownVO {
+  get menu(): DropDownItems {
     return this.$store.state.map.menu;
   }
   get circle(): void {
@@ -66,8 +65,7 @@ export default class GmapContainer extends GmapContainerProps {
     this.$store.dispatch('circle/end');
   }
   clickMap(v: LatLng): void {
-    const coordinate = new Coordinate(v.lat(), v.lng());
-    this.$store.dispatch('circle/setCenter', coordinate).then(() => {
+    this.$store.dispatch('circle/setCenter', { lat: v.lat(), lng: v.lng() }).then(() => {
       this.$store.dispatch('circle/end');
       this.$store.dispatch('circle/showMordal');
     });

@@ -23,12 +23,12 @@ import Vue from 'vue'
 import { Prop } from 'vue/types/options'
 import Component from 'vue-class-component'
 import TSelect from '@/components/atoms/select'
-import SelectVO from '@/value-objects/select'
+import SelectItem from '@/interfaces/select'
 
 const SelectRangeProps = Vue.extend({
   props: {
     options: {
-      type: Array as Prop<SelectVO[]>,
+      type: Array as Prop<SelectItem[]>,
       required: true
     },
     leftSelectedValue: {

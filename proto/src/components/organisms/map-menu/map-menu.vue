@@ -31,13 +31,13 @@ import Component from 'vue-class-component';
 import TButton from '@/components/atoms/button';
 import DropDown from '@/components/atoms/dropdown';
 import Overlay from '@/components/atoms/overlay'
-import DropDownVO from '@/value-objects/dropdown';
+import DropdownItems from '@/value-objects/dropdown';
 import { CircleSearch, SearchCondition } from '@/containers/mordal';
 
 const MapMenuProps = Vue.extend({
   props: {
     menu: {
-      type: Object as Prop<DropDownVO>,
+      type: Object as Prop<DropdownItems>,
       required: true,
     },
     visibleCircle: {

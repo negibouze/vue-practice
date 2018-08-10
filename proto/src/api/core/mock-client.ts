@@ -1,30 +1,30 @@
 import { default as axios } from 'axios';
+import Endpoint from '../endpoint';
 import IClient from './i-client';
 import Method from './method';
-import TRequestConfig from './request-config';
-import TResponse from './response';
-import Endpoint from '../endpoint';
 import MockHttpClient from './mock-http-client';
+import IRequestConfig from './request-config';
+import IResponse from './response';
 
 export default class MockTClient implements IClient {
 
-    private client: MockHttpClient;
+  private client: MockHttpClient;
 
-    constructor() {
-        const instance = axios.create({
-            baseURL: 'api/',
-            timeout: 10000
-        })
-        this.client = new MockHttpClient(instance)
-    }
+  constructor() {
+    const instance = axios.create({
+      baseURL: 'api/',
+      timeout: 10000,
+    });
+    this.client = new MockHttpClient(instance);
+  }
 
-    async get(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
-        const c = Object.assign(conf, { url: endpoint });
-        return await this.client.fetch<TResponse>(Method.GET, c);
-    }
+  public async get(endpoint: Endpoint, conf: IRequestConfig): Promise<IResponse> {
+    const c = Object.assign(conf, { url: endpoint });
+    return await this.client.fetch<IResponse>(Method.GET, c);
+  }
 
-    async post(endpoint: Endpoint, conf: TRequestConfig): Promise<TResponse> {
-        const c = Object.assign(conf, { url: endpoint });
-        return await this.client.fetch<TResponse>(Method.POST, c);
-    }
+  public async post(endpoint: Endpoint, conf: IRequestConfig): Promise<IResponse> {
+    const c = Object.assign(conf, { url: endpoint });
+    return await this.client.fetch<IResponse>(Method.POST, c);
+  }
 }

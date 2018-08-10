@@ -20,10 +20,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import { Dropdown as ElDropdown, DropdownMenu as ElDropdownMenu, DropdownItem as ElDropdownItem } from 'element-ui'
-import { NumberKeyItem, StringKeyItem, Trigger } from '@/value-objects/dropdown'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Dropdown as ElDropdown, DropdownMenu as ElDropdownMenu, DropdownItem as ElDropdownItem } from 'element-ui';
+import { NumberKeyItem, StringKeyItem } from '@/interfaces/dropdown';
+import { Trigger } from '@/value-objects/dropdown';
 
 const DropdownProps = Vue.extend({
   props: {

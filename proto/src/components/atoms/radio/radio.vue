@@ -17,7 +17,7 @@ import Vue from 'vue'
 import { Prop } from 'vue/types/options'
 import Component from 'vue-class-component'
 import { Radio as ElRadio } from 'element-ui'
-import RadioVO from '@/value-objects/radio'
+import RadioItem from '@/interfaces/radio'
 
 const RadioProps = Vue.extend({
   value: {
@@ -29,7 +29,7 @@ const RadioProps = Vue.extend({
   border: Boolean,
   size: String,
   item: {
-    type: Array as Prop<RadioVO>,
+    type: Array as Prop<RadioItem>,
     required: true
   }
 })

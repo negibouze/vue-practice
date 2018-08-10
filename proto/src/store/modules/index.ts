@@ -6,10 +6,10 @@ import search from './search';
 import settings from './settings';
 
 export default {
-    circle,
-    conditions,
-    map,
-    rectangle,
-    search,
-    settings,
+  circle,
+  conditions,
+  map,
+  rectangle,
+  search,
+  settings,
 };

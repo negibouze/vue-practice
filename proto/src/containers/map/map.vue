@@ -8,6 +8,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import DropDownItems from '@/value-objects/dropdown';
 import TMap from '@/components/templates/map';
 import { MapLayout } from '@/store/modules/map';
 
@@ -15,10 +16,10 @@ const MapContainerProps = Vue.extend({})
 @Component({
   components: {
     TMap,
-  }
+  },
 })
 export default class MapContainer extends MapContainerProps {
-  get projects(): DropDownVO {
+  get projects(): DropDownItems {
     const p = this.$store.state.search.projects;
     return p ? p : [];
   }

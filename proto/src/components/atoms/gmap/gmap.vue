@@ -6,7 +6,7 @@
 import Vue from 'vue';
 import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
-import Coordinate from '@/value-objects/coordinate';
+import Coordinate from '@/interfaces/coordinate';
 
 const drawingColor = '#ff0000';
 const baseDrawingOptions = {

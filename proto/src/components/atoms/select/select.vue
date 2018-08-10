@@ -19,7 +19,7 @@ import Vue from 'vue';
 import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
 import { Select as ElSelect, Option as ElOption } from 'element-ui';
-import SelectVO from '@/value-objects/select';
+import SelectItem from '@/interfaces/select';
 
 const SelectProps = Vue.extend({
   props: {
@@ -28,7 +28,7 @@ const SelectProps = Vue.extend({
       default: 'Select',
     },
     options: {
-      type: Array as Prop<SelectVO[]>,
+      type: Array as Prop<SelectItem[]>,
       required: true,
     },
     selectedValue: {
