@@ -16,23 +16,39 @@
               <date-range />
             </div>
             <div class="">
-              <div>交通</div>
               <div>
-                <ul class="no-bullet">
-                  <li>
-                    <span>路線</span>
-                    <span>開始駅</span>
-                    <span>終了駅</span>
-                  </li>
-                  <li>
-                    <span>駅徒歩分</span>
-                    <span>MIN</span>
-                    <span>MAX</span>
-                    <div>
-                      <t-checkbox>バス乗車時間を含む</t-checkbox>
-                    </div>
-                  </li>
-                </ul>
+                <span>交通</span>
+                <t-button @click="add" round>+</t-button>
+              </div>
+              <div>
+                <div>
+                  <span>路線</span>
+                  <t-select
+                    :options="items.test"
+                  />
+                </div>
+                <div>
+                  <span>開始駅</span>
+                  <t-select
+                    :options="items.test"
+                  />
+                  <span>終了駅</span>
+                  <t-select
+                    :options="items.test"
+                  />
+                </div>
+                <div>
+                  <span>徒歩分数</span>
+                  <number-range
+                    :leftProps="{ currentValue: 5 }"
+                    :rightProps="{ currentValue: 15 }"
+                  />
+                </div>
+                <div>
+                  <span>バス分数</span>
+                  <number-range
+                  />
+                </div>
               </div>
             </div>
             <div class="">
@@ -46,9 +62,9 @@
       </form>
     </div>
     <div class="button-container flex flex-between">
-      <TButton @click="circle">円検索</TButton>
-      <TButton @click="rectangle">四角検索</TButton>
-      <TButton @click="hide">閉じる</TButton>
+      <t-button @click="circle">円検索</t-button>
+      <t-button @click="rectangle">四角検索</t-button>
+      <t-button @click="hide">閉じる</t-button>
     </div>
   </div>
 </template>
@@ -59,9 +75,11 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import TButton from '@/components/atoms/button';
 import TCheckbox from '@/components/atoms/checkbox';
+import { TInput, TInputNumber } from '@/components/atoms/input';
 import TSelect from '@/components/atoms/select';
 import CheckboxGroup from '@/components/molecules/checkbox-group';
 import DateRange from '@/components/molecules/date-range';
+import NumberRange from '@/components/molecules/number-range';
 import SelectRange from '@/components/molecules/select-range';
 
 const MordalSearchConditionProps = Vue.extend({
@@ -92,13 +110,19 @@ const MordalSearchConditionProps = Vue.extend({
   components: {
     TButton,
     TCheckbox,
+    TInput,
+    TInputNumber,
     TSelect,
     CheckboxGroup,
     DateRange,
+    NumberRange,
     SelectRange,
   }
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
+  add(): void {
+
+  }
   circle(e: MouseEvent): void {
     this.$emit('clickcirclesearch', this.$refs.form)
   }
