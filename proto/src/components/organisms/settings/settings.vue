@@ -3,22 +3,22 @@
     <form ref="form">
       <slot class="menu-container"></slot>
       <div class="button-container flex flex-center">
-        <TButton @click="handleClick">設定する</TButton>
+        <t-button @click="handleClick">設定する</t-button>
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import TButton from '@/components/atoms/button'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import TButton from '@/components/atoms/button';
 
 const SettingsProps = Vue.extend({})
 @Component({
   components: {
-    TButton
-  }
+    TButton,
+  },
 })
 export default class Settings extends SettingsProps {
   handleClick (evt: MouseEvent): void {

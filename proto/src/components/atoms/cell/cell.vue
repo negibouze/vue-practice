@@ -1,21 +1,21 @@
 <template>
   <li
-    class="btn"
-    @click="handleClick"
-    :class="[]"
   >
     <slot></slot>
+    <t-switch />
   </li>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import TSwitch from '@/components/atoms/switch';
 
 const TCellProps = Vue.extend({})
 @Component({
   components: {
-  }
+    TSwitch,
+  },
 })
 export default class TCell extends TCellProps {
   // method
