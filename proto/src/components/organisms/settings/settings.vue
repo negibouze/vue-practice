@@ -3,7 +3,7 @@
     <form ref="form">
       <slot class="menu-container"></slot>
       <div class="button-container flex flex-center">
-        <t-button @click="handleClick">設定する</t-button>
+        <t-button @click="handleClick">保存</t-button>
       </div>
     </form>
   </div>

@@ -1,12 +1,8 @@
 <template>
   <div class="wrapper">
-    <ul>
-      <t-cell v-for="(v, i) in items"
-        :key="'items-' + i"
-      >
-      {{ v.label }}
-      </t-cell>
-    </ul>
+    <settings-list
+      :items="items"
+    />
   </div>
 </template>
 
@@ -14,7 +10,7 @@
 import Vue from 'vue';
 import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
-import TCell from '@/components/atoms/cell';
+import { SettingsList } from '@/components/atoms/list';
 import SettingsItem from '@/interfaces/settings-item';
 
 const SettingsBalloonProps = Vue.extend({
@@ -27,7 +23,7 @@ const SettingsBalloonProps = Vue.extend({
 })
 @Component({
   components: {
-    TCell
+    SettingsList
   },
 })
 export default class SettingsBalloon extends SettingsBalloonProps {
