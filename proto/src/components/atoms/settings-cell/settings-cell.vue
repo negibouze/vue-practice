@@ -6,7 +6,17 @@
     <span class="switch-container">
       <t-switch
         :currentValue="active"
-        @change="change"
+        @change="changeSwitch"
+      />
+    </span>
+    <span
+      :v-if="showCheckbox"
+      class="checkbox-container"
+    >
+      <t-checkbox
+        :label="checkboxLabel"
+        :checked="checkboxChecked"
+        @change="changeCheckbox"
       />
     </span>
   </li>
@@ -16,6 +26,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import TSwitch from '@/components/atoms/switch';
+import TCheckbox from '@/components/atoms/checkbox';
 
 const SettingsCellProps = Vue.extend({
   props: {
@@ -23,12 +34,25 @@ const SettingsCellProps = Vue.extend({
     active: {
       type: Boolean,
       default: false,
+    },
+    showCheckbox: {
+      type: Boolean,
+      default: false,
+    },
+    checkboxLabel: {
+      type: String,
+      default: "",
+    },
+    checkboxChecked: {
+      type: Boolean,
+      defalt: false,
     }
   }
 })
 @Component({
   components: {
     TSwitch,
+    TCheckbox,
   },
 })
 export default class SettingsCell extends SettingsCellProps {
@@ -36,9 +60,11 @@ export default class SettingsCell extends SettingsCellProps {
   handleClick(e: Object) {
     this.$emit('click', e);
   }
-  change(value: object) {
-    console.log(value);
-    this.$emit('change', value);
+  changeSwitch(value: object) {
+    this.$emit('changeSwitch', value);
+  }
+  changeCheckbox(value: object) {
+    this.$emit('changeCheckbox', value);
   }
 }
 </script>
@@ -59,7 +85,8 @@ export default class SettingsCell extends SettingsCellProps {
   flex-grow: 1
 
 .switch-container
+.checkbox-container
   flex-grow: 0
-  flex-basis: 50px
+  flex-basis: 64px
   text-align: center
 </style>
