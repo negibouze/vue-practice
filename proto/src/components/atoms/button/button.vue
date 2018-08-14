@@ -48,31 +48,16 @@ export default class TButton extends ButtonProps {
 </script>
 
 <style lang="stylus" scoped>
-.btn
-  width: 120px
-  height: 40px
-  border: 1px solid transparent
-  border-radius: 4px
-  font-size: inherit
-  transition-property: all
-  transition-duration: 200ms
-  transition-timing-function: ease-in-out
-  cursor: pointer
-  &:hover
-    opacity: 0.8
-
-.default
-  background-color: #fcfcfc
-  border-color: #c8c8c8
-  color: #292b2c
-
-.primary
-  background-color: #cce5ff
-  border-color: #b8daff
-  color: #004085
-
-.error
-  background-color: #f8d7da
-  border-color: #f5c6cb
-  color: #721c24
+.el-button--wide
+  padding: 12px 60px
+.el-button--xwide
+  padding: 12px 120px
+.el-button--xxwide
+  padding: 12px 180px
+.el-button--large
+  padding: 16px 60px
+.el-button--xlarge
+  padding: 16px 120px
+.el-button--xxlarge
+  padding: 16px 180px
 </style>

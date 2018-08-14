@@ -1,0 +1,25 @@
+fontSize(n)
+  font-size (n*10)px
+  font-size (n)rem
+
+f(weight = normal, size = 1.2, lheight = 21)
+  line-height (lheight)px
+  font-weight weight
+  fontSize(size)
+
+show()
+  visibility visible
+  opacity 1
+
+hide()
+  visibility hidden
+  opacity 0
+
+icon(top = 6%, right = 10%)
+  z-index 10
+  position fixed
+  width 32px
+  height 32px
+  top top
+  right right
+  cursor pointer

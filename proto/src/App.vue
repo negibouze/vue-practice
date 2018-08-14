@@ -16,10 +16,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import THeader from '@/components/organisms/header'
-import Sidebar from '@/components/organisms/sidebar'
-import TFooter from '@/components/organisms/footer'
+import Vue from 'vue';
+import THeader from '@/components/organisms/header';
+import Sidebar from '@/components/organisms/sidebar';
+import TFooter from '@/components/organisms/footer';
 
 export default Vue.extend({
   name: 'app',
@@ -33,10 +33,6 @@ export default Vue.extend({
 
 <!-- global -->
 <style lang="stylus">
-$base-color = #fff
-$main-color = #003F69
-$accent-color = #CAB27C
-
 .flex
   display: flex
   flex-direction: row

@@ -1,98 +1,119 @@
 <template>
-  <div class="mordal-search-condition scrollable-y">
-    <div class="content">
+  <div class="mordal-search-condition">
+    <div class="content scrollable-y">
+      <span class="content-title-block content-title">検索条件</span>
       <form ref="form">
         <fieldset>
-          <legend>検索条件</legend>
-            <div class="">
-              <span class="">建物種別</span>
-              <checkbox-group
-                :name="'building-type'"
-                :items="items.stage"
-              />
-            </div>
-            <div class="">
-              <span class="">販売年月</span>
-              <date-range />
-            </div>
-            <div class="transportation">
-              <div>
-                <span>交通</span>
-                <t-button
-                  :disabled="maxNumOfTransportations <= transportations.length"
-                  @click="addTransportation"
-                  round
-                >
-                +
-                </t-button>
-              </div>
-              <div v-for="(item, index) in transportations"
-                :key="`transportation-inner-${index}`"
-                :class="{ fadein: 1 <= index }"
-                class="flex transportation-inner"
-                :id="`transportation-inner-${index}`"
-              >
-                <div class="transportation-inner-main">
-                  <div>
-                    <span>路線</span>
+          <legend class="section-title">建物種別</legend>
+          <div class="section-body">
+            <checkbox-group
+              :name="'building-type'"
+              :items="items.stage"
+            />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="section-title">販売年月</legend>
+          <div class="section-body">
+            <date-range />
+          </div>
+        </fieldset>
+        <fieldset class="transportation">
+          <legend class="section-title">交通</legend>
+          <div class="section-body">
+            <div v-for="(item, index) in transportations"
+              :key="`transportation-inner-${index}`"
+              :class="{ fadein: 1 <= index }"
+              class="flex transportation-inner"
+              :id="`transportation-inner-${index}`"
+            >
+              <div class="transportation-inner-main">
+                <div class="item-block flex">
+                  <span class="item-title">路線</span>
+                  <div class="item-body flex-item">
                     <t-select
                       :options="item.lines"
                       :selectedValue="item.currentLineId"
                     />
                   </div>
-                  <div>
-                    <span>開始駅</span>
+                </div>
+                <div class="item-block flex">
+                  <span class="item-title flex-item">開始駅</span>
+                  <div class="item-body flex-item">
                     <t-select
                       :options="item.stations"
                       :selectedValue="item.fromStationId"
                     />
-                    <span>終了駅</span>
+                  </div>
+                  <span class="item-title flex-item">終了駅</span>
+                  <div class="item-body flex-item">
                     <t-select
                       :options="item.stations"
                       :selectedValue="item.toStationId"
                     />
                   </div>
-                  <div>
-                    <span>徒歩分数</span>
+                </div>
+                <div class="item-block flex">
+                  <span class="item-title flex-item">徒歩分数</span>
+                  <div class="item-body flex-item">
                     <number-range
                       :leftProps="{ currentValue: item.walkMin }"
                       :rightProps="{ currentValue: item.walkMax }"
+                      size="xsmall"
                     />
                   </div>
-                  <div>
-                    <span>バス分数</span>
+                  <span class="item-title flex-item">バス分数</span>
+                  <div class="item-body flex-item">
                     <number-range
                       :leftProps="{ currentValue: item.busMin }"
                       :rightProps="{ currentValue: item.busMax }"
+                      size="xsmall"
                     />
                   </div>
                 </div>
-                <div class="transportation-inner-button" v-if="1 <= index">
-                  <t-button @click="deleteTransportation(index)" round>×</t-button>
-                </div>
+              </div>
+              <div class="transportation-inner-button" v-if="1 <= index">
+                <t-button @click="deleteTransportation(index)" circle>×</t-button>
               </div>
             </div>
-            <div class="">
-              <span class="">市区町村</span>
-            </div>
-            <div class="">
-              <span class="">物件名</span>
-              <t-input
-                placeholder="物件名"
+            <div class="button-container center">
+              <t-button
+                :disabled="maxNumOfTransportations <= transportations.length"
+                @click="addTransportation"
+                size="xxwide"
               >
-                <t-select
-                  slot="append"
-                  :options="items.scope"
-                />
-              </t-input>
+                + 路線を追加する
+              </t-button>
             </div>
-            <div class="">
-              <span class="">総戸数</span>
-              <select-range
-                :options="items.test"
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="section-title">市区町村</legend>
+          <div class="section-body">
+
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="section-title">物件名</legend>
+          <div class="section-body">
+            <t-input
+              placeholder="物件名"
+            >
+              <t-select
+                slot="append"
+                :options="items.scope"
               />
-              <!-- 以上〜以下/未満 -->
-            </div>
+            </t-input>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="section-title">総戸数</legend>
+          <div class="section-body">
+            <select-range
+              :options="items.test"
+            />
+          </div>
+          <!-- 以上〜以下/未満 -->
         </fieldset>
       </form>
     </div>
@@ -194,34 +215,76 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
 </script>
 
 <style lang="stylus" scoped>
+@import '~@/styls/colors'
+@import '~@/styls/functions'
+@import '~@/styls/sizes'
+
 animation(name)
   animation-name: name
-  animation-duration: .5s 
+  animation-duration: .6s 
   animation-fill-mode: both
   animation-timing-function: ease-in-out
 
+fieldset
+  border: 0
+
 .mordal-search-condition
-  width: 60%
-  min-width: 640px
-  max-height: 95vh
+  width: 76vw
+  height: 88vh
+  min-width: 768px
   border-radius: 8px
   background-color: #cfcfcf
 
 .content
+  height: calc(100% - 60px)
   padding: 10px
 
 .button-container
   width: 100%
+  height: 60px
   padding: 10px
+  &.center
+    text-align:center
 
 .transportation-inner
   width: 100%
+  margin: 5px 0
 .transportation-inner-main
   flex-grow: 1
 .transportation-inner-button
   flex-grow: 0
   flex-basis: 80px
   min-width: 80px
+
+.content-title-block
+  display: inline-block
+  width: 100%
+  height: 40px
+  line-height: 40px
+  margin-bottom: 10px
+  background-color: #c3c3c3
+.content-title
+  padding: 0 10px
+  fontSize($font-size-large-pc)
+  font-weight: bold
+.section-title
+  padding-left: 5px
+  border-left: solid 3px $color-accent
+  font-weight: bold
+.section-body
+  padding: 10px 5px 5px
+.item-block
+  padding: 5px 0
+.item-title
+  display: inline-block
+  width: 80px
+  fontSize($font-size-medium-pc)
+  &.flex-item
+    flex-grow: 0
+.item-body
+  padding: 0 15px
+  &.flex-item
+    flex-grow: 1
 
 .fadein
   animation(fadein)
@@ -231,12 +294,22 @@ animation(name)
 @keyframes fadein
   0%
     opacity: 0
+    height: 0
+  60%
+    opacity: 0
+    height: 150px
   100%
     opacity: 1
+    height: 150px
 
 @keyframes fadeout
   0%
     opacity: 1
+    height: 150px
+  40%
+    opacity: 0
+    height: 150px
   100%
     opacity: 0
+    height: 0
 </style>

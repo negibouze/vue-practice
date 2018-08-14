@@ -1,0 +1,14 @@
+$width-pc-min = 1024px
+
+$yamato-ratio = 1.414
+$golden-ratio = 1.618
+$coefficient = 1.2
+$ndigits = 3
+
+$font-size-medium-pc = 1.4
+$font-size-small-pc = round($font-size-medium-pc / $coefficient, $ndigits) // 1.167
+$font-size-xsmall-pc = round($font-size-small-pc / $coefficient, $ndigits) // 0.973
+$font-size-xxsmall-pc = round($font-size-xsmall-pc / $coefficient, $ndigits) // 0.811
+$font-size-large-pc = round($font-size-medium-pc * $coefficient, $ndigits) // 1.68
+$font-size-xlarge-pc = round($font-size-large-pc * $coefficient, $ndigits) // 2.016
+$font-size-xxlarge-pc = round($font-size-xlarge-pc * $coefficient, $ndigits) // 2.419

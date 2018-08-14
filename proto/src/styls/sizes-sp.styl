@@ -1,0 +1,23 @@
+$width-sp-max = 374px
+$width-tablet-min = 768px
+
+$yamato-ratio = 1.414
+$golden-ratio = 1.618
+$coefficient = 1.2
+$ndigits = 3
+// font size for smart phone
+$font-size-medium-sp = 1.2
+$font-size-small-sp = round($font-size-medium-sp / $coefficient, $ndigits) // 1.0
+$font-size-xsmall-sp = round($font-size-small-sp / $coefficient, $ndigits) // 0.833
+$font-size-xxsmall-sp = round($font-size-xsmall-sp / $coefficient, $ndigits) // 0.694
+$font-size-large-sp = round($font-size-medium-sp * $coefficient, $ndigits) // 1.44
+$font-size-xlarge-sp = round($font-size-large-sp * $coefficient, $ndigits) // 1.728
+$font-size-xxlarge-sp = round($font-size-xlarge-sp * $coefficient, $ndigits) // 2.074
+// font size for tablet
+$font-size-medium-tab = 1.6
+$font-size-small-tab = round($font-size-medium-tab / $coefficient, $ndigits) // 1.333
+$font-size-xsmall-tab = round($font-size-small-tab / $coefficient, $ndigits) // 1.111
+$font-size-xxsmall-tab = round($font-size-xsmall-tab / $coefficient, $ndigits) // 0.926
+$font-size-large-tab = round($font-size-medium-tab * $coefficient, $ndigits) // 1.92
+$font-size-xlarge-tab = round($font-size-large-tab * $coefficient, $ndigits) // 2.304
+$font-size-xxlarge-tab = round($font-size-xlarge-tab * $coefficient, $ndigits) // 2.764
