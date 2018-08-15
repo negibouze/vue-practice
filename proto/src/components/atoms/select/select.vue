@@ -1,9 +1,29 @@
 <template>
   <el-select
     v-model="selected"
+    :name="name"
+    :id="id"
+    autoComplete="off"
+    :automatic-dropdown="false"
+    :size="size"
+    :disabled="disabled"
+    :clearable="clearable"
+    :filterable="filterable"
+    :allow-create="false"
+    :loading="false"
+    :popper-class="popperClass"
+    :remote="false"
+    :no-match-text="noMatchText"
+    :no-data-text="noDataText"
+    :filter-method="filterMethod"
+    :multiple="false"
     :placeholder="placeholder"
+    :default-first-option="defaultFirstOption"
+    :reserve-keyword="false"
+    :value-key="valueKey"
+    :popper-append-to-body="popperAppendToBody"
     @change="handleChange"
-    clearable
+    :class="{ 'fit-parent' : fitParent }"
   >
     <el-option v-for="item in options"
       :key="item.value"
@@ -23,9 +43,41 @@ import SelectItem from '@/interfaces/select';
 
 const SelectProps = Vue.extend({
   props: {
+    name: String,
+    id: String,
+    automaticDropdown: Boolean,
+    size: String,
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    clearable: {
+      type: Boolean,
+      default: true,
+    },
+    filterable: {
+      type: Boolean,
+      default: false,
+    },
+    popperClass: String,
+    noMatchText: String,
+    noDataText: String,
+    filterMethod: Function,
     placeholder: {
       type: String,
       default: 'Select',
+    },
+    defaultFirstOption: {
+      type: Boolean,
+      default: false,
+    },
+    valueKey: {
+      type: String,
+      default: 'value',
+    },
+    popperAppendToBody: {
+      type: Boolean,
+      default: true,
     },
     options: {
       type: Array as Prop<SelectItem[]>,
@@ -38,6 +90,10 @@ const SelectProps = Vue.extend({
       type: [Boolean, Function],
       default: false,
     },
+    fitParent: {
+      type: Boolean,
+      default: false,
+    }
   },
 })
 @Component({
@@ -61,5 +117,7 @@ export default class TSelect extends SelectProps {
 </script>
 
 <style lang="stylus" scoped>
-
+.fit-parent
+  width: 100%
+  height: 100%
 </style>
