@@ -24,7 +24,7 @@
             <div v-for="(item, index) in transportations"
               :key="`transportation-inner-${index}`"
               :class="{ fadein: 1 <= index }"
-              class="flex transportation-inner"
+              class="transportation-inner"
               :id="`transportation-inner-${index}`"
             >
               <div class="transportation-inner-main">
@@ -34,7 +34,11 @@
                     <t-select
                       :options="item.lines"
                       :selectedValue="item.currentLineId"
+                      :fit-parent="true"
                     />
+                  </div>
+                  <div class="transportation-inner-button">
+                    <t-button @click="deleteTransportation(index)" circle v-if="1 <= index">×</t-button>
                   </div>
                 </div>
                 <div class="item-block flex">
@@ -43,6 +47,7 @@
                     <t-select
                       :options="item.stations"
                       :selectedValue="item.fromStationId"
+                      :fit-parent="true"
                     />
                   </div>
                   <span class="item-title flex-item">終了駅</span>
@@ -50,6 +55,7 @@
                     <t-select
                       :options="item.stations"
                       :selectedValue="item.toStationId"
+                      :fit-parent="true"
                     />
                   </div>
                 </div>
@@ -57,23 +63,20 @@
                   <span class="item-title flex-item">徒歩分数</span>
                   <div class="item-body flex-item">
                     <number-range
-                      :leftProps="{ currentValue: item.walkMin }"
-                      :rightProps="{ currentValue: item.walkMax }"
+                      :leftProps="minutesOption(item.walkMin)"
+                      :rightProps="minutesOption(item.walkMax)"
                       size="xsmall"
                     />
                   </div>
                   <span class="item-title flex-item">バス分数</span>
                   <div class="item-body flex-item">
                     <number-range
-                      :leftProps="{ currentValue: item.busMin }"
-                      :rightProps="{ currentValue: item.busMax }"
+                      :leftProps="minutesOption(item.busMin)"
+                      :rightProps="minutesOption(item.busMax)"
                       size="xsmall"
                     />
                   </div>
                 </div>
-              </div>
-              <div class="transportation-inner-button" v-if="1 <= index">
-                <t-button @click="deleteTransportation(index)" circle>×</t-button>
               </div>
             </div>
             <div class="button-container center">
@@ -90,7 +93,45 @@
         <fieldset>
           <legend class="section-title">市区町村</legend>
           <div class="section-body">
-
+            <div v-for="(item, index) in municipalities"
+              :key="`municipality-inner-${index}`"
+              :class="{ fadein: 1 <= index }"
+              class="municipality-inner"
+              :id="`municipality-inner-${index}`"
+            >
+              <div class="municipality-inner-main">
+                <div class="item-block flex">
+                  <span class="item-title flex-item">都道府県</span>
+                  <div class="item-body flex-item">
+                    <t-select
+                      :options="item.prefectures"
+                      :selectedValue="item.currentPrefectureId"
+                      :fit-parent="true"
+                    />
+                  </div>
+                  <span class="item-title flex-item">市区町村</span>
+                  <div class="item-body flex-item">
+                    <t-select
+                      :options="item.municipalities"
+                      :selectedValue="item.currentMunicipalityId"
+                      :fit-parent="true"
+                    />
+                  </div>
+                  <div class="municipality-inner-button">
+                    <t-button @click="deleteMunicipality(index)" circle v-if="1 <= index">×</t-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="button-container center">
+              <t-button
+                :disabled="maxNumOfMunicipalities <= municipalities.length"
+                @click="addMunicipality"
+                size="xxwide"
+              >
+                + 市区町村を追加する
+              </t-button>
+            </div>
           </div>
         </fieldset>
         <fieldset>
@@ -102,6 +143,7 @@
               <t-select
                 slot="append"
                 :options="items.scope"
+                class="input-append"
               />
             </t-input>
           </div>
@@ -138,6 +180,7 @@ import DateRange from '@/components/molecules/date-range';
 import NumberRange from '@/components/molecules/number-range';
 import SelectRange from '@/components/molecules/select-range';
 import TransportationItem from '@/interfaces/transportation-item';
+import MunicipalityItem from '@/interfaces/municipality-item';
 
 const MordalSearchConditionProps = Vue.extend({
   props: {
@@ -167,6 +210,10 @@ const MordalSearchConditionProps = Vue.extend({
       type: Array as Prop<TransportationItem[]>,
       required: true,
     },
+    municipalities: {
+      type: Array as Prop<MunicipalityItem[]>,
+      required: true,
+    },
   }
 })
 @Component({
@@ -184,20 +231,25 @@ const MordalSearchConditionProps = Vue.extend({
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   maxNumOfTransportations: number = 10;
+  maxNumOfMunicipalities: number = 20;
+  minutesOption(currentValue: number): {[key: string]: number} {
+    return {
+      min: 0,
+      max: 999,
+      currentValue
+    };
+  } 
   addTransportation(): void {
     this.$emit('clickAddTransportation', this.$refs.form);
   }
   deleteTransportation(index: number): void {
-    const obj = document.getElementById(`transportation-inner-${index}`);
-    if (!!obj) {
-      obj.classList.remove('fadein');
-      obj.classList.add('fadeout');
-      // アニメーションが1000msなので1000ms後にemitする（動作保証ができないので'animationend'は使わない）
-      setTimeout(() => {
-        this.$emit('clickDeleteTransportation', index);
-        obj.classList.remove('fadeout');
-      }, 500);
-    }
+    this._deleteObject(`transportation-inner-${index}`, index, 'clickDeleteTransportation');
+  }
+  addMunicipality(): void {
+    this.$emit('clickAddMunicipality', this.$refs.form);
+  }
+  deleteMunicipality(index: number): void {
+    this._deleteObject(`municipality-inner-${index}`, index, 'clickDeleteMunicipality');
   }
   circle(e: MouseEvent): void {
     this.$emit('clickcirclesearch', this.$refs.form);
@@ -207,6 +259,18 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   }
   hide(e: MouseEvent): void {
     this.$emit('clickcancel', e);
+  }
+  _deleteObject(id: string, index: number, emit: string) {
+    const obj = document.getElementById(id);
+    if (!!obj) {
+      obj.classList.remove('fadein');
+      obj.classList.add('fadeout');
+      // アニメーションが600msなので600ms後にemitする（動作保証ができないので'animationend'は使わない）
+      setTimeout(() => {
+        this.$emit(emit, index);
+        obj.classList.remove('fadeout');
+      }, 600);
+    }
   }
   $refs!: {
     form: HTMLFormElement
@@ -223,7 +287,7 @@ animation(name)
   animation-name: name
   animation-duration: .6s 
   animation-fill-mode: both
-  animation-timing-function: ease-in-out
+  animation-timing-function: ease-out
 
 fieldset
   border: 0
@@ -247,14 +311,22 @@ fieldset
     text-align:center
 
 .transportation-inner
+  height: 154px
+.municipality-inner
+  height: 62px
+
+.transportation-inner
+.municipality-inner
   width: 100%
-  margin: 5px 0
-.transportation-inner-main
-  flex-grow: 1
+  padding: 6px 0
+  &:not(:first-child)
+    margin: 3px 0
+    border-top: solid 2px #ddd
+
 .transportation-inner-button
-  flex-grow: 0
-  flex-basis: 80px
-  min-width: 80px
+.municipality-inner-button
+  width: 40px
+  height: 40px
 
 .content-title-block
   display: inline-block
@@ -285,6 +357,9 @@ fieldset
   padding: 0 15px
   &.flex-item
     flex-grow: 1
+.input-append
+  width: 180px
+  min-width: 180px
 
 .fadein
   animation(fadein)
@@ -295,21 +370,25 @@ fieldset
   0%
     opacity: 0
     height: 0
-  60%
-    opacity: 0
-    height: 150px
+  // 60%
+  //   opacity: 0
+  //   height: 100%
   100%
     opacity: 1
-    height: 150px
+    height: 100%
 
 @keyframes fadeout
   0%
     opacity: 1
-    height: 150px
-  40%
-    opacity: 0
-    height: 150px
+    height: 100%
+    margin: 3px 0
+    padding: 6px 0
+  // 40%
+  //   opacity: 0
+  //   height: 100%
   100%
     opacity: 0
     height: 0
+    margin: 0
+    padding: 0
 </style>

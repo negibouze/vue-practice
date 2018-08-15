@@ -2,7 +2,7 @@
   <el-input
     v-model="input"
     :size="size"
-    :resize="resize"
+    resize="none"
     :form="form"
     :disabled="disabled"
     :readonly="readonly"
@@ -39,7 +39,6 @@ import { Input as ElInput } from 'element-ui';
 const InputProps = Vue.extend({
   props: {
     size: String,
-    resize: String,
     form: String,
     disabled: Boolean,
     readonly: Boolean,

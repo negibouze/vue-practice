@@ -5,8 +5,11 @@
   >
     <SearchCondition
       :transportations="transportations"
+      :municipalities="municipalities"
       @clickAddTransportation="addTransportation"
       @clickDeleteTransportation="deleteTransportation"
+      @clickAddMunicipality="addMunicipality"
+      @clickDeleteMunicipality="deleteMunicipality"
       @clickcirclesearch="circle"
       @clickrectanglesearch="rectangle"
       @clickcancel="hide"
@@ -20,6 +23,7 @@ import Component from 'vue-class-component';
 import Dialog from '@/components/molecules/dialog';
 import SearchCondition from '@/components/organisms/search-condition';
 import TransportationItem from '@/interfaces/transportation-item';
+import MunicipalityItem from '@/interfaces/municipality-item';
 
 const MordalSearchConditionProps = Vue.extend({
   props: {
@@ -47,6 +51,12 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
           busMin: 0,
           busMax: 0,
         }];
+  municipalities: MunicipalityItem[] = [{
+          prefectures: [{ value: 0, label: '' }],
+          municipalities: [{ value: 0, label: '' }],
+          currentPrefectureId: 0,
+          currentMunicipalityId: 0,
+        }];
   addTransportation(): void {
     this.transportations.push({
       lines: [{ value: 0, label: '' }],
@@ -63,6 +73,18 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   deleteTransportation(index: number): void {
     if (index < 0 || this.transportations.length <= index) { return; }
     this.transportations.splice(index, 1);
+  }
+  addMunicipality(): void {
+    this.municipalities.push({
+      prefectures: [{ value: 0, label: '' }],
+      municipalities: [{ value: 0, label: '' }],
+      currentPrefectureId: 0,
+      currentMunicipalityId: 0,
+    });
+  }
+  deleteMunicipality(index: number): void {
+    if (index < 0 || this.municipalities.length <= index) { return; }
+    this.municipalities.splice(index, 1);
   }
   circle(form: HTMLFormElement): void {
     this.$store.dispatch('conditions/update', {}).then(() => {
