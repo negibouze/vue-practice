@@ -34,7 +34,7 @@ const AreaProps = Vue.extend({
 export default class AreaContainer extends AreaProps {
   item_: AreaItem = this.item ? this.item : {
     prefectures: this.prefectures,
-    municipalities: this.municipalities,
+    municipalities: [{ value: 0, label: '' }],
     currentPrefectureId: 0,
     currentMunicipalityId: 0,
   };
@@ -42,12 +42,10 @@ export default class AreaContainer extends AreaProps {
     const v = this.$store.state.conditions.prefectures;
     return v ? v : [{ value: 0, label: '' }];
   }
-  get municipalities(): SelectItem[] {
-    const v = this.$store.state.conditions.municipalities;
-    return v ? v : [{ value: 0, label: '' }];
-  }
-  changePrefecture(lineId: number): void {
-    this.$store.dispatch('conditions/stations', lineId);
+  changePrefecture(prefectureId: number): void {
+    this.$store.dispatch('conditions/municipalities', prefectureId).then((municipalities) => {
+      this.item_.municipalities = municipalities;
+    });
   }
   clickDelete(): void {
     this.$emit('clickDelete', this.index);

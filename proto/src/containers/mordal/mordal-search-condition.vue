@@ -13,8 +13,6 @@
       @clickcirclesearch="circle"
       @clickrectanglesearch="rectangle"
       @clickcancel="hide"
-      @changeLine="changeLine"
-      @changePrefecture="changePrefecture"
     />
   </Dialog>
 </template>
@@ -45,7 +43,7 @@ const MordalSearchConditionProps = Vue.extend({
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   transportations: TransportationItem[] = [{
           lines: this.lines,
-          stations: this.stations,
+          stations: [{ value: 0, label: '' }],
           currentLineId: 0,
           fromStationId: 0,
           toStationId: 0,
@@ -56,7 +54,7 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
         }];
   areas: AreaItem[] = [{
           prefectures: this.prefectures,
-          municipalities: this.municipalities,
+          municipalities: [{ value: 0, label: '' }],
           currentPrefectureId: 0,
           currentMunicipalityId: 0,
         }];
@@ -64,23 +62,9 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     const v = this.$store.state.conditions.lines;
     return v ? v : [{ value: 0, label: '' }];
   }
-  get stations(): SelectItem[] {
-    const v = this.$store.state.conditions.stations;
-    return v ? v : [{ value: 0, label: '' }];
-  }
   get prefectures(): SelectItem[] {
     const v = this.$store.state.conditions.prefectures;
     return v ? v : [{ value: 0, label: '' }];
-  }
-  get municipalities(): SelectItem[] {
-    const v = this.$store.state.conditions.municipalities;
-    return v ? v : [{ value: 0, label: '' }];
-  }
-  changeLine(lineId: number): void {
-    this.$store.dispatch('conditions/stations', lineId);
-  }
-  changePrefecture(prefectureId: number): void {
-    this.$store.dispatch('conditions/municipalities', prefectureId);
   }
   addTransportation(): void {
     this.transportations.push({

@@ -27,7 +27,6 @@
               name="transportation-inner"
               :index="index"
               :item="item"
-              @changeLine="changeLine"
               @clickDelete="deleteTransportation"
             />
             <div class="button-container center">
@@ -50,7 +49,6 @@
               name="area-inner"
               :index="index"
               :item="item"
-              @changePrefecture="changePrefecture"
               @clickDelete="deleteArea"
             />
             <div class="button-container center">
@@ -183,12 +181,6 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   }
   hide(e: MouseEvent): void {
     this.$emit('clickcancel', e);
-  }
-  changeLine(id: Number): void {
-    this.$emit('changeLine', id);
-  }
-  changePrefecture(id: Number): void {
-    this.$emit('changePrefecture', id);
   }
   $refs!: {
     form: HTMLFormElement

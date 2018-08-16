@@ -19,7 +19,7 @@
         <span class="item-title flex-item">開始駅</span>
         <div class="item-body flex-item">
           <t-select
-            :options="stations_"
+            :options="stations"
             :selectedValue="from_"
             :fit-parent="true"
           />
@@ -27,7 +27,7 @@
         <span class="item-title flex-item">終了駅</span>
         <div class="item-body flex-item">
           <t-select
-            :options="stations_"
+            :options="stations"
             :selectedValue="to_"
             :fit-parent="true"
           />
@@ -115,7 +115,6 @@ const TransportationProps = Vue.extend({
 })
 export default class Transportation extends TransportationProps {
   lines_: SelectItem[] = this.lines;
-  stations_: SelectItem[] = this.stations;
   line_: number = this.currentLine;
   from_: number = this.fromStation;
   to_: number = this.toStation;

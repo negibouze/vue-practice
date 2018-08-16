@@ -39,7 +39,7 @@ const TransportationProps = Vue.extend({
 export default class TransportationContainer extends TransportationProps {
   item_: TransportationItem = this.item ? this.item : {
     lines: this.lines,
-    stations: this.stations,
+    stations: [{ value: 0, label: '' }],
     currentLineId: 0,
     fromStationId: 0,
     toStationId: 0,
@@ -52,12 +52,10 @@ export default class TransportationContainer extends TransportationProps {
     const v = this.$store.state.conditions.lines;
     return v ? v : [{ value: 0, label: '' }];
   }
-  get stations(): SelectItem[] {
-    const v = this.$store.state.conditions.stations;
-    return v ? v : [{ value: 0, label: '' }];
-  }
   changeLine(lineId: number): void {
-    this.$store.dispatch('conditions/stations', lineId);
+    this.$store.dispatch('conditions/stations', lineId).then((stations) => {
+      this.item_.stations = stations;
+    });
   }
   clickDelete(): void {
     this.$emit('clickDelete', this.index);

@@ -1,12 +1,15 @@
 import { Commit } from 'vuex';
 import * as types from '../mutation-types';
+import api from '@/api';
 
+interface KeyValue {
+  value: number;
+  label: string;
+}
 export interface ConditionsState {
   visibility: boolean;
-  lines: [{}];
-  prefectures: [{}];
-  stations: [{}];
-  municipalities: [{}];
+  lines: KeyValue[];
+  prefectures: KeyValue[];
   conditions: {};
 }
 
@@ -15,28 +18,18 @@ const conditions = {
   state: {
     visibility: false,
     lines: [
-      { value: 1, label: 'JR山手線' },
+      { value: 1, label: 'JR中央線' },
+      { value: 2, label: 'JR山手線' },
     ],
     prefectures: [
       { value: 1, label: '東京都' },
-    ],
-    stations: [
-      { value: 2, label: '品川' },
-    ],
-    municipalities: [
-      { value: 2, label: '渋谷区' },
+      { value: 2, label: '神奈川県' },
     ],
     conditions: {},
   } as ConditionsState,
   mutations: {
     [types.VISIBLE_SEARCH_CONDITIONS](state: ConditionsState, value: boolean): void {
       state.visibility = value;
-    },
-    [types.UPDATE_STATIONS](state: ConditionsState, value: [{}]) {
-      state.stations = value;
-    },
-    [types.UPDATE_MUNICIPALITIES](state: ConditionsState, value: [{}]) {
-      state.municipalities = value;
     },
     [types.UPDATE_SEARCH_CONDITIONS](state: ConditionsState, value: object) {
       state.conditions = value;
@@ -49,15 +42,21 @@ const conditions = {
     invisible({ commit }: { commit: Commit }): void {
       commit(types.VISIBLE_SEARCH_CONDITIONS, false);
     },
-    stations({ commit }: { commit: Commit }, lineId: number): void {
-      commit(types.UPDATE_STATIONS, [
-        { value: 1, label: '渋谷' },
-      ]);
+    async stations({}, lineId: number): Promise<void|[{}]> {
+      try {
+        const stations = await api.searchCondition().getStations(lineId);
+        return stations;
+      } catch (e) {
+        return e;
+      }
     },
-    municipalities({ commit }: { commit: Commit }, prefectureId: number): void {
-      commit(types.UPDATE_MUNICIPALITIES, [
-        { value: 1, label: '新宿区' },
-      ]);
+    async municipalities({}, prefectureId: number): Promise<void|[{}]> {
+      try {
+        const municipalities = api.searchCondition().getMunicipalities(prefectureId);
+        return municipalities;
+      } catch (e) {
+        return e;
+      }
     },
     update({ commit }: { commit: Commit }, value: object): Promise<{}> {
       return new Promise((resolve) => {
