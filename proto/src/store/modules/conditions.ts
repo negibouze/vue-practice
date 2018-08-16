@@ -45,15 +45,25 @@ const conditions = {
     async stations({}, lineId: number): Promise<void|[{}]> {
       try {
         const stations = await api.searchCondition().getStations(lineId);
-        return stations;
+        return stations.map((v: { id: number, label: string }) => {
+          return {
+            value : v.id,
+            label: v.label,
+          };
+        });
       } catch (e) {
         return e;
       }
     },
     async municipalities({}, prefectureId: number): Promise<void|[{}]> {
       try {
-        const municipalities = api.searchCondition().getMunicipalities(prefectureId);
-        return municipalities;
+        const municipalities = await api.searchCondition().getMunicipalities(prefectureId);
+        return municipalities.map((v: { id: number, label: string }) => {
+          return {
+            value : v.id,
+            label: v.label,
+          };
+        });
       } catch (e) {
         return e;
       }

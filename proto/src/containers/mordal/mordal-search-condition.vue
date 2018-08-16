@@ -43,12 +43,6 @@ const MordalSearchConditionProps = Vue.extend({
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   transportations: TransportationItem[] = [{}];
   areas: AreaItem[] = [{}];
-  get lines(): SelectItem[] {
-    return this.$store.state.conditions.lines;
-  }
-  get prefectures(): SelectItem[] {
-    return this.$store.state.conditions.prefectures;
-  }
   addTransportation(): void {
     this.transportations.push({});
   }
@@ -64,6 +58,7 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     this.areas.splice(index, 1);
   }
   circle(form: HTMLFormElement): void {
+    console.log(form)
     this.$store.dispatch('conditions/update', {}).then(() => {
       this.hide();
       this.$store.dispatch('circle/begin');
@@ -76,17 +71,12 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   }
   hide(): void {
     this.$store.dispatch('conditions/invisible');
+    this._discard(this.transportations);
+    this._discard(this.areas);
+  }
+  _discard(obj) {
+    obj.splice(0, obj.length);
+    obj.push({});
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-.mordal-search
-  width: 270px
-  border-radius: 8px
-  background-color: #cfcfcf
-
-.button-container
-  width: 100%
-  padding: 10px
-</style>

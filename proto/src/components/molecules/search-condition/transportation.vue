@@ -144,6 +144,7 @@ export default class Transportation extends TransportationProps {
       }, 600);
     }
   }
+  // dynamic component
   $refs!: {
     outside: HTMLFormElement
   }

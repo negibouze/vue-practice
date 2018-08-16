@@ -49,8 +49,7 @@ export default class TransportationContainer extends TransportationProps {
     busMax: 0,
   };
   get lines(): SelectItem[] {
-    const v = this.$store.state.conditions.lines;
-    return v ? v : [{ value: 0, label: '' }];
+    return this.$store.state.conditions.lines;
   }
   changeLine(lineId: number): void {
     this.$store.dispatch('conditions/stations', lineId).then((stations) => {
@@ -65,6 +64,3 @@ export default class TransportationContainer extends TransportationProps {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-</style>

@@ -82,6 +82,7 @@ export default class Area extends AreaProps {
       }, 600);
     }
   }
+  // dynamic component
   $refs!: {
     outside: HTMLFormElement
   }

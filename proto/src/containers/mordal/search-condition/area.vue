@@ -39,8 +39,7 @@ export default class AreaContainer extends AreaProps {
     currentMunicipalityId: 0,
   };
   get prefectures(): SelectItem[] {
-    const v = this.$store.state.conditions.prefectures;
-    return v ? v : [{ value: 0, label: '' }];
+    return this.$store.state.conditions.prefectures;
   }
   changePrefecture(prefectureId: number): void {
     this.$store.dispatch('conditions/municipalities', prefectureId).then((municipalities) => {
@@ -55,6 +54,3 @@ export default class AreaContainer extends AreaProps {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-</style>

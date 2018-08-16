@@ -182,6 +182,7 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   hide(e: MouseEvent): void {
     this.$emit('clickcancel', e);
   }
+  // dynamic component
   $refs!: {
     form: HTMLFormElement
   }
