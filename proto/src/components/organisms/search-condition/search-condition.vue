@@ -21,64 +21,15 @@
         <fieldset class="transportation">
           <legend class="section-title">交通</legend>
           <div class="section-body">
-            <div v-for="(item, index) in transportations"
+            <transportation-container v-for="(item, index) in transportations"
               :key="`transportation-inner-${index}`"
               :class="{ fadein: 1 <= index }"
-              class="transportation-inner"
-              :id="`transportation-inner-${index}`"
-            >
-              <div class="transportation-inner-main">
-                <div class="item-block flex">
-                  <span class="item-title">路線</span>
-                  <div class="item-body flex-item">
-                    <t-select
-                      :options="item.lines"
-                      :selectedValue="item.currentLineId"
-                      :fit-parent="true"
-                    />
-                  </div>
-                  <div class="transportation-inner-button">
-                    <t-button @click="deleteTransportation(index)" circle v-if="1 <= index">×</t-button>
-                  </div>
-                </div>
-                <div class="item-block flex">
-                  <span class="item-title flex-item">開始駅</span>
-                  <div class="item-body flex-item">
-                    <t-select
-                      :options="item.stations"
-                      :selectedValue="item.fromStationId"
-                      :fit-parent="true"
-                    />
-                  </div>
-                  <span class="item-title flex-item">終了駅</span>
-                  <div class="item-body flex-item">
-                    <t-select
-                      :options="item.stations"
-                      :selectedValue="item.toStationId"
-                      :fit-parent="true"
-                    />
-                  </div>
-                </div>
-                <div class="item-block flex">
-                  <span class="item-title flex-item">徒歩分数</span>
-                  <div class="item-body flex-item">
-                    <number-range
-                      :leftProps="minutesOption(item.walkMin)"
-                      :rightProps="minutesOption(item.walkMax)"
-                      size="xsmall"
-                    />
-                  </div>
-                  <span class="item-title flex-item">バス分数</span>
-                  <div class="item-body flex-item">
-                    <number-range
-                      :leftProps="minutesOption(item.busMin)"
-                      :rightProps="minutesOption(item.busMax)"
-                      size="xsmall"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+              name="transportation-inner"
+              :index="index"
+              :item="item"
+              @changeLine="changeLine"
+              @clickDelete="deleteTransportation"
+            />
             <div class="button-container center">
               <t-button
                 :disabled="maxNumOfTransportations <= transportations.length"
@@ -93,40 +44,19 @@
         <fieldset>
           <legend class="section-title">市区町村</legend>
           <div class="section-body">
-            <div v-for="(item, index) in municipalities"
-              :key="`municipality-inner-${index}`"
+            <area-container v-for="(item, index) in areas"
+              :key="`area-inner-${index}`"
               :class="{ fadein: 1 <= index }"
-              class="municipality-inner"
-              :id="`municipality-inner-${index}`"
-            >
-              <div class="municipality-inner-main">
-                <div class="item-block flex">
-                  <span class="item-title flex-item">都道府県</span>
-                  <div class="item-body flex-item">
-                    <t-select
-                      :options="item.prefectures"
-                      :selectedValue="item.currentPrefectureId"
-                      :fit-parent="true"
-                    />
-                  </div>
-                  <span class="item-title flex-item">市区町村</span>
-                  <div class="item-body flex-item">
-                    <t-select
-                      :options="item.municipalities"
-                      :selectedValue="item.currentMunicipalityId"
-                      :fit-parent="true"
-                    />
-                  </div>
-                  <div class="municipality-inner-button">
-                    <t-button @click="deleteMunicipality(index)" circle v-if="1 <= index">×</t-button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              name="area-inner"
+              :index="index"
+              :item="item"
+              @changePrefecture="changePrefecture"
+              @clickDelete="deleteArea"
+            />
             <div class="button-container center">
               <t-button
-                :disabled="maxNumOfMunicipalities <= municipalities.length"
-                @click="addMunicipality"
+                :disabled="maxNumOfAreas <= areas.length"
+                @click="addArea"
                 size="xxwide"
               >
                 + 市区町村を追加する
@@ -177,10 +107,10 @@ import { TInput, TInputNumber } from '@/components/atoms/input';
 import TSelect from '@/components/atoms/select';
 import CheckboxGroup from '@/components/molecules/checkbox-group';
 import DateRange from '@/components/molecules/date-range';
-import NumberRange from '@/components/molecules/number-range';
 import SelectRange from '@/components/molecules/select-range';
+import { TransportationContainer, AreaContainer } from '@/containers/mordal/search-condition';
 import TransportationItem from '@/interfaces/transportation-item';
-import MunicipalityItem from '@/interfaces/municipality-item';
+import AreaItem from '@/interfaces/area-item';
 
 const MordalSearchConditionProps = Vue.extend({
   props: {
@@ -210,8 +140,8 @@ const MordalSearchConditionProps = Vue.extend({
       type: Array as Prop<TransportationItem[]>,
       required: true,
     },
-    municipalities: {
-      type: Array as Prop<MunicipalityItem[]>,
+    areas: {
+      type: Array as Prop<AreaItem[]>,
       required: true,
     },
   }
@@ -225,31 +155,25 @@ const MordalSearchConditionProps = Vue.extend({
     TSelect,
     CheckboxGroup,
     DateRange,
-    NumberRange,
     SelectRange,
+    AreaContainer,
+    TransportationContainer,
   }
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   maxNumOfTransportations: number = 10;
-  maxNumOfMunicipalities: number = 20;
-  minutesOption(currentValue: number): {[key: string]: number} {
-    return {
-      min: 0,
-      max: 999,
-      currentValue
-    };
-  } 
+  maxNumOfAreas: number = 20;
   addTransportation(): void {
     this.$emit('clickAddTransportation', this.$refs.form);
   }
   deleteTransportation(index: number): void {
-    this._deleteObject(`transportation-inner-${index}`, index, 'clickDeleteTransportation');
+    this.$emit('clickDeleteTransportation', index);
   }
-  addMunicipality(): void {
-    this.$emit('clickAddMunicipality', this.$refs.form);
+  addArea(): void {
+    this.$emit('clickAddArea', this.$refs.form);
   }
-  deleteMunicipality(index: number): void {
-    this._deleteObject(`municipality-inner-${index}`, index, 'clickDeleteMunicipality');
+  deleteArea(index: number): void {
+    this.$emit('clickDeleteArea', index);
   }
   circle(e: MouseEvent): void {
     this.$emit('clickcirclesearch', this.$refs.form);
@@ -260,17 +184,11 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   hide(e: MouseEvent): void {
     this.$emit('clickcancel', e);
   }
-  _deleteObject(id: string, index: number, emit: string) {
-    const obj = document.getElementById(id);
-    if (!!obj) {
-      obj.classList.remove('fadein');
-      obj.classList.add('fadeout');
-      // アニメーションが600msなので600ms後にemitする（動作保証ができないので'animationend'は使わない）
-      setTimeout(() => {
-        this.$emit(emit, index);
-        obj.classList.remove('fadeout');
-      }, 600);
-    }
+  changeLine(id: Number): void {
+    this.$emit('changeLine', id);
+  }
+  changePrefecture(id: Number): void {
+    this.$emit('changePrefecture', id);
   }
   $refs!: {
     form: HTMLFormElement
@@ -280,14 +198,7 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
 
 <style lang="stylus" scoped>
 @import '~@/styls/colors'
-@import '~@/styls/functions'
 @import '~@/styls/sizes'
-
-animation(name)
-  animation-name: name
-  animation-duration: .6s 
-  animation-fill-mode: both
-  animation-timing-function: ease-out
 
 fieldset
   border: 0
@@ -310,24 +221,6 @@ fieldset
   &.center
     text-align:center
 
-.transportation-inner
-  height: 154px
-.municipality-inner
-  height: 62px
-
-.transportation-inner
-.municipality-inner
-  width: 100%
-  padding: 6px 0
-  &:not(:first-child)
-    margin: 3px 0
-    border-top: solid 2px #ddd
-
-.transportation-inner-button
-.municipality-inner-button
-  width: 40px
-  height: 40px
-
 .content-title-block
   display: inline-block
   width: 100%
@@ -345,50 +238,7 @@ fieldset
   font-weight: bold
 .section-body
   padding: 10px 5px 5px
-.item-block
-  padding: 5px 0
-.item-title
-  display: inline-block
-  width: 80px
-  fontSize($font-size-medium-pc)
-  &.flex-item
-    flex-grow: 0
-.item-body
-  padding: 0 15px
-  &.flex-item
-    flex-grow: 1
 .input-append
   width: 180px
   min-width: 180px
-
-.fadein
-  animation(fadein)
-.fadeout
-  animation(fadeout)
-
-@keyframes fadein
-  0%
-    opacity: 0
-    height: 0
-  // 60%
-  //   opacity: 0
-  //   height: 100%
-  100%
-    opacity: 1
-    height: 100%
-
-@keyframes fadeout
-  0%
-    opacity: 1
-    height: 100%
-    margin: 3px 0
-    padding: 6px 0
-  // 40%
-  //   opacity: 0
-  //   height: 100%
-  100%
-    opacity: 0
-    height: 0
-    margin: 0
-    padding: 0
 </style>
