@@ -41,55 +41,23 @@ const MordalSearchConditionProps = Vue.extend({
   },
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
-  transportations: TransportationItem[] = [{
-          lines: this.lines,
-          stations: [{ value: 0, label: '' }],
-          currentLineId: 0,
-          fromStationId: 0,
-          toStationId: 0,
-          walkMin: 0,
-          walkMax: 0,
-          busMin: 0,
-          busMax: 0,
-        }];
-  areas: AreaItem[] = [{
-          prefectures: this.prefectures,
-          municipalities: [{ value: 0, label: '' }],
-          currentPrefectureId: 0,
-          currentMunicipalityId: 0,
-        }];
+  transportations: TransportationItem[] = [{}];
+  areas: AreaItem[] = [{}];
   get lines(): SelectItem[] {
-    const v = this.$store.state.conditions.lines;
-    return v ? v : [{ value: 0, label: '' }];
+    return this.$store.state.conditions.lines;
   }
   get prefectures(): SelectItem[] {
-    const v = this.$store.state.conditions.prefectures;
-    return v ? v : [{ value: 0, label: '' }];
+    return this.$store.state.conditions.prefectures;
   }
   addTransportation(): void {
-    this.transportations.push({
-      lines: this.lines,
-      stations: [{ value: 0, label: '' }],
-      currentLineId: 0,
-      fromStationId: 0,
-      toStationId: 0,
-      walkMin: 0,
-      walkMax: 0,
-      busMin: 0,
-      busMax: 0,
-    });
+    this.transportations.push({});
   }
   deleteTransportation(index: number): void {
     if (index < 0 || this.transportations.length <= index) { return; }
     this.transportations.splice(index, 1);
   }
   addArea(): void {
-    this.areas.push({
-      prefectures: this.prefectures,
-      municipalities: [{ value: 0, label: '' }],
-      currentPrefectureId: 0,
-      currentMunicipalityId: 0,
-    });
+    this.areas.push({});
   }
   deleteArea(index: number): void {
     if (index < 0 || this.areas.length <= index) { return; }

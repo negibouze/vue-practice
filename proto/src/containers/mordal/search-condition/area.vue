@@ -32,7 +32,7 @@ const AreaProps = Vue.extend({
   },
 })
 export default class AreaContainer extends AreaProps {
-  item_: AreaItem = this.item ? this.item : {
+  item_: AreaItem =  !this._isEmptyObject(this.item) ? this.item : {
     prefectures: this.prefectures,
     municipalities: [{ value: 0, label: '' }],
     currentPrefectureId: 0,
@@ -49,6 +49,9 @@ export default class AreaContainer extends AreaProps {
   }
   clickDelete(): void {
     this.$emit('clickDelete', this.index);
+  }
+  _isEmptyObject(obj: Object) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
   }
 }
 </script>

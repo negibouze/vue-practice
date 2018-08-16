@@ -37,7 +37,7 @@ const TransportationProps = Vue.extend({
   },
 })
 export default class TransportationContainer extends TransportationProps {
-  item_: TransportationItem = this.item ? this.item : {
+  item_: TransportationItem = !this._isEmptyObject(this.item) ? this.item : {
     lines: this.lines,
     stations: [{ value: 0, label: '' }],
     currentLineId: 0,
@@ -59,6 +59,9 @@ export default class TransportationContainer extends TransportationProps {
   }
   clickDelete(): void {
     this.$emit('clickDelete', this.index);
+  }
+  _isEmptyObject(obj: Object) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
   }
 }
 </script>
