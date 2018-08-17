@@ -69,6 +69,7 @@ const DialogProps = Vue.extend({
 })
 
 export default class Dialog extends DialogProps {
+  // inital data
   dragging: boolean = false
   initialX: number = 0
   initialY: number = 0
@@ -76,10 +77,22 @@ export default class Dialog extends DialogProps {
   currentY: number = 0
   offsetX: number = 0
   offsetY: number = 0
-
+  // lifecycle hook
+  mounted() {
+    if (this.draggable) {
+      this._addListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
+    }
+  }
+  destroyed() {
+    if (this.draggable && !!this.$refs.item) {
+      this._removeListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
+    }
+  }
+  // computed
   get overlay (): boolean {
     return this.visible && this.background
   }
+  // method
   dragStart(e: Event): void {
     this.dragging = true
     if (e instanceof TouchEvent) {
@@ -135,17 +148,6 @@ export default class Dialog extends DialogProps {
   }
   _removeListenerMulti(el: HTMLElement, eventName: string[], fn: (e: Event) => void) {
     eventName.forEach(e => el.removeEventListener(e, fn, false));
-  }
-  // lifecycle hook
-  mounted() {
-    if (this.draggable) {
-      this._addListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
-    }
-  }
-  destroyed() {
-    if (this.draggable && !!this.$refs.item) {
-      this._removeListenerMulti(this.$refs.item, ['touchstart', 'mousedown'], this.dragStart)
-    }
   }
   // dynamic component
   $refs!: {

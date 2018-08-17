@@ -15,7 +15,8 @@
         <fieldset>
           <legend class="section-title">販売年月</legend>
           <div class="section-body">
-            <date-range />
+            <date-range
+            />
           </div>
         </fieldset>
         <fieldset class="transportation">
@@ -67,11 +68,13 @@
           <div class="section-body">
             <t-input
               placeholder="物件名"
+              :current-value="name.searchWord"
             >
               <t-select
                 slot="append"
                 :options="items.scope"
                 class="input-append"
+                :selected-value="name.searchType"
               />
             </t-input>
           </div>
@@ -81,6 +84,8 @@
           <div class="section-body">
             <select-range
               :options="items.test"
+              :left-selected-value="unitCount.from"
+              :right-selected-value="unitCount.to"
             />
           </div>
           <!-- 以上〜以下/未満 -->
@@ -91,6 +96,7 @@
       <t-button @click="circle">円検索</t-button>
       <t-button @click="rectangle">四角検索</t-button>
       <t-button @click="hide">閉じる</t-button>
+      <t-button @click="load">テスト</t-button>
     </div>
   </div>
 </template>
@@ -107,8 +113,12 @@ import CheckboxGroup from '@/components/molecules/checkbox-group';
 import DateRange from '@/components/molecules/date-range';
 import SelectRange from '@/components/molecules/select-range';
 import { TransportationContainer, AreaContainer } from '@/containers/mordal/search-condition';
-import TransportationItem from '@/interfaces/transportation-item';
-import AreaItem from '@/interfaces/area-item';
+import SearchCondition from '@/interfaces/user-settings/search-condition';
+import Transportation from '@/interfaces/user-settings/transportation';
+import Area from '@/interfaces/user-settings/area';
+import IDateRange from '@/interfaces/date-range';
+import IFreeWord from '@/interfaces/free-word';
+import INumberRange from '@/interfaces/number-range';
 
 const MordalSearchConditionProps = Vue.extend({
   props: {
@@ -134,13 +144,9 @@ const MordalSearchConditionProps = Vue.extend({
         }
       }
     },
-    transportations: {
-      type: Array as Prop<TransportationItem[]>,
-      required: true,
-    },
-    areas: {
-      type: Array as Prop<AreaItem[]>,
-      required: true,
+    condition: {
+      type: Object as Prop<SearchCondition>,
+      required: true
     },
   }
 })
@@ -161,6 +167,23 @@ const MordalSearchConditionProps = Vue.extend({
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   maxNumOfTransportations: number = 10;
   maxNumOfAreas: number = 20;
+  // computed
+  get transportations(): Transportation[] {
+    return this.condition.hasOwnProperty('transportations') ? this.condition.transportations : [{}];
+  }
+  get areas(): Area[] {
+    return this.condition.hasOwnProperty('areas') ? this.condition.areas : [{}];
+  }
+  get salesAt(): IDateRange {
+    return this.condition.hasOwnProperty('salesAt') ? this.condition.salesAt : { from: null, to: null };
+  }
+  get name(): IFreeWord {
+    return this.condition.hasOwnProperty('name') ? this.condition.name : { searchWord: null, searchType: 0 };
+  }
+  get unitCount(): INumberRange {
+    return this.condition.hasOwnProperty('unitCount') ? this.condition.unitCount : { from: null, to: null, searchType: 0 };
+  }
+  // method
   addTransportation(): void {
     this.$emit('clickAddTransportation', this.$refs.form);
   }
@@ -174,13 +197,16 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     this.$emit('clickDeleteArea', index);
   }
   circle(e: MouseEvent): void {
-    this.$emit('clickcirclesearch', this.$refs.form);
+    this.$emit('clickCircleSearch', this.$refs.form);
   }
   rectangle(e: MouseEvent): void {
-    this.$emit('clickrectanglesearch', this.$refs.form);
+    this.$emit('clickRectangleSearch', this.$refs.form);
   }
   hide(e: MouseEvent): void {
-    this.$emit('clickcancel', e);
+    this.$emit('clickCancel', e);
+  }
+  load(e: MouseEvent) : void {
+    this.$emit('clickLoad', e);
   }
   // dynamic component
   $refs!: {

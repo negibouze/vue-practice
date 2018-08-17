@@ -2,7 +2,7 @@ import Endpoint from './endpoint';
 import IClient from './core/i-client';
 import TResponse from './core/response';
 import Project from '../entities/project';
-import SearchOptions from '@/interfaces/search-options';
+import SearchOptions from '@/interfaces/user-settings/search-options';
 
 export default class Search {
   private client: IClient;

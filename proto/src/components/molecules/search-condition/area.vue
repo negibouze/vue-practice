@@ -5,8 +5,8 @@
         <span class="item-title flex-item">都道府県</span>
         <div class="item-body flex-item">
           <t-select
-            :options="prefectures_"
-            :selectedValue="prefecture_"
+            :options="prefectures"
+            :selectedValue="currentPrefecture"
             :fit-parent="true"
             @change="changePrefecture"
           />
@@ -15,7 +15,7 @@
         <div class="item-body flex-item">
           <t-select
             :options="municipalities"
-            :selectedValue="municipality_"
+            :selectedValue="currentMunicipality"
             :fit-parent="true"
           />
         </div>
@@ -64,9 +64,6 @@ const AreaProps = Vue.extend({
   }
 })
 export default class Area extends AreaProps {
-  prefectures_: SelectItem[] = this.prefectures;
-  prefecture_: number = this.currentPrefecture;
-  municipality_: number = this.currentMunicipality;
   changePrefecture(prefectureId: number): void {
     this.$emit('changePrefecture', prefectureId);
   }

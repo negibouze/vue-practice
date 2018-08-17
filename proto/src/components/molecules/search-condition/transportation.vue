@@ -5,8 +5,8 @@
         <span class="item-title">路線</span>
         <div class="item-body flex-item">
           <t-select
-            :options="lines_"
-            :selectedValue="line_"
+            :options="lines"
+            :selectedValue="currentLine"
             :fit-parent="true"
             @change="changeLine"
           />
@@ -20,7 +20,7 @@
         <div class="item-body flex-item">
           <t-select
             :options="stations"
-            :selectedValue="from_"
+            :selectedValue="fromStation"
             :fit-parent="true"
           />
         </div>
@@ -28,7 +28,7 @@
         <div class="item-body flex-item">
           <t-select
             :options="stations"
-            :selectedValue="to_"
+            :selectedValue="toStation"
             :fit-parent="true"
           />
         </div>
@@ -37,16 +37,16 @@
         <span class="item-title flex-item">徒歩分数</span>
         <div class="item-body flex-item">
           <number-range
-            :leftProps="minutesOption(walkMin_)"
-            :rightProps="minutesOption(walkMax_)"
+            :leftProps="minutesOption(walkMin)"
+            :rightProps="minutesOption(walkMax)"
             size="xsmall"
           />
         </div>
         <span class="item-title flex-item">バス分数</span>
         <div class="item-body flex-item">
           <number-range
-            :leftProps="minutesOption(busMin_)"
-            :rightProps="minutesOption(busMax_)"
+            :leftProps="minutesOption(busMin)"
+            :rightProps="minutesOption(busMax)"
             size="xsmall"
           />
         </div>
@@ -114,19 +114,12 @@ const TransportationProps = Vue.extend({
   }
 })
 export default class Transportation extends TransportationProps {
-  lines_: SelectItem[] = this.lines;
-  line_: number = this.currentLine;
-  from_: number = this.fromStation;
-  to_: number = this.toStation;
-  walkMin_: number = this.walkMin;
-  walkMax_: number = this.walkMax;
-  busMin_: number = this.busMin;
-  busMax_: number = this.busMax;
+  // method
   minutesOption(currentValue: number): {[key: string]: number} {
     return {
       min: 0,
       max: 999,
-      currentValue
+      currentValue,
     };
   }
   changeLine(lineId: number): void {

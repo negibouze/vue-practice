@@ -12,7 +12,7 @@
       :visible.sync="visibleCircle"
     />
     <search-condition
-      :visible.sync="visibleConditions"
+      :visible.sync="visibleCondition"
     />
     <overlay
       :visible="visibleOverlay"
@@ -44,7 +44,7 @@ const MapMenuProps = Vue.extend({
       type: Boolean,
       default: false,
     },
-    visibleConditions: {
+    visibleCondition: {
       type: Boolean,
       default: false,
     },
@@ -65,7 +65,7 @@ const MapMenuProps = Vue.extend({
 })
 export default class MapMenu extends MapMenuProps {
   clickCond (e: MouseEvent): void {
-    this.$emit('clickConditions', e);
+    this.$emit('clickCondition', e);
   }
   clickOverlay (e: MouseEvent): void {
     this.$emit('clickOverlay', e);

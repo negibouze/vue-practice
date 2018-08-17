@@ -41,7 +41,7 @@ export default class MordalCircleSearch extends MordalCircleSearchProps {
     const translater = new CircleSearchOptions(
       this.$store.state.circle.center,
       this.$store.state.circle.radius,
-      this.$store.state.conditions.conditions
+      this.$store.state.condition.condition
     );
     this.$store.dispatch('search/execute', translater.translate()).then(() => {
       this.hide();

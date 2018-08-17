@@ -4,9 +4,9 @@
       <map-menu
         :menu="menu"
         :visibleCircle="circle"
-        :visibleConditions="conditions"
+        :visibleCondition="condition"
         :visibleOverlay="overlay"
-        @clickConditions="clickConditions"
+        @clickCondition="clickCondition"
         @clickOverlay="clickOverlay"
       />
     </div>
@@ -46,8 +46,8 @@ export default class GmapContainer extends GmapContainerProps {
   get rectangle(): void {
     return this.$store.state.rectangle.visibility;
   }
-  get conditions(): void {
-    return this.$store.state.conditions.visibility;
+  get condition(): void {
+    return this.$store.state.condition.visibility;
   }
   get overlay(): void {
     return this.$store.state.circle.active;
@@ -58,8 +58,8 @@ export default class GmapContainer extends GmapContainerProps {
   get radius(): number {
     return this.$store.state.circle.radius;
   }
-  clickConditions(): void {
-    this.$store.dispatch('conditions/visible');
+  clickCondition(): void {
+    this.$store.dispatch('condition/visible');
   }
   clickOverlay(): void {
     this.$store.dispatch('circle/end');

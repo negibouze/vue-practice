@@ -34,12 +34,12 @@ const GmapProps = Vue.extend({
   }
 })
 export default class Gmap extends GmapProps {
+  // inital data
   mapObj: google.maps.Map|null = null;
   timerId: number = 0;
   waitTime: number = 500;
   drawingObj: object|null = null;
   drawings: array = [];
-
   // lifecycle hook
   mounted() {
     const map = new google.maps.Map(this.$refs.map, {

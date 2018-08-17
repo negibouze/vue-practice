@@ -4,15 +4,15 @@
     @clickbackground="hide"
   >
     <SearchCondition
-      :transportations="transportations"
-      :areas="areas"
+      :condition="condition"
       @clickAddTransportation="addTransportation"
       @clickDeleteTransportation="deleteTransportation"
       @clickAddArea="addArea"
       @clickDeleteArea="deleteArea"
-      @clickcirclesearch="circle"
-      @clickrectanglesearch="rectangle"
-      @clickcancel="hide"
+      @clickCircleSearch="circle"
+      @clickRectangleSearch="rectangle"
+      @clickCancel="hide"
+      @clickLoad="load"
     />
   </Dialog>
 </template>
@@ -22,9 +22,8 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import Dialog from '@/components/molecules/dialog';
 import SearchCondition from '@/components/organisms/search-condition';
-import AreaItem from '@/interfaces/area-item';
 import SelectItem from '@/interfaces/select';
-import TransportationItem from '@/interfaces/transportation-item';
+import SearchCondition from '@/interfaces/user-settings/search-condition';
 
 const MordalSearchConditionProps = Vue.extend({
   props: {
@@ -41,8 +40,12 @@ const MordalSearchConditionProps = Vue.extend({
   },
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
-  transportations: TransportationItem[] = [{}];
-  areas: AreaItem[] = [{}];
+  // computed
+  get condition(): SearchCondition {
+    const c = this.$store.state.condition.condition;
+    return c ? c : {};
+  }
+  // method
   addTransportation(): void {
     this.transportations.push({});
   }
@@ -59,24 +62,27 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   }
   circle(form: HTMLFormElement): void {
     console.log(form)
-    this.$store.dispatch('conditions/update', {}).then(() => {
+    this.$store.dispatch('condition/update', {}).then(() => {
       this.hide();
       this.$store.dispatch('circle/begin');
     });
   }
   rectangle(form: HTMLFormElement): void {
-    this.$store.dispatch('conditions/update', {}).then(() => {
+    this.$store.dispatch('condition/update', {}).then(() => {
       this.hide();
     });
   }
   hide(): void {
-    this.$store.dispatch('conditions/invisible');
+    this.$store.dispatch('condition/invisible');
     this._discard(this.transportations);
     this._discard(this.areas);
   }
   _discard(obj) {
     obj.splice(0, obj.length);
     obj.push({});
+  }
+  load(): void {
+    this.$store.dispatch('condition/load');
   }
 }
 </script>

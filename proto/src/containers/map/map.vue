@@ -19,6 +19,18 @@ const MapContainerProps = Vue.extend({})
   },
 })
 export default class MapContainer extends MapContainerProps {
+  // lifecycle hook
+  mounted() {
+    const lines = this.$store.state.condition.lines
+    if (!lines || lines.length === 0) {
+      this.$store.dispatch('condition/lines', 1);
+    }
+    const prefectures = this.$store.state.condition.prefectures
+    if (!prefectures || prefectures.length === 0) {
+      this.$store.dispatch('condition/prefectures', 1);
+    }
+  }
+  // computed
   get projects(): DropDownItems {
     const p = this.$store.state.search.projects;
     return p ? p : [];

@@ -2,15 +2,15 @@
   <transportation
     :id="`${name}-${index}`"
     :is-delete="1 <= index"
-    :lines="item_.lines"
-    :stations="item_.stations"
-    :current-line="item_.currentLineId"
-    :from-station="item_.fromStationId"
-    :to-station="item_.toStationId"
-    :walk-min="item_.walkMin"
-    :walk-max="item_.walkMax"
-    :bus-min="item_.busMin"
-    :bus-max="item_.busMax"
+    :lines="lines"
+    :stations="stations"
+    :current-line="line"
+    :from-station="fromStation"
+    :to-station="toStation"
+    :walk-min="walkMin"
+    :walk-max="walkMax"
+    :bus-min="busMin"
+    :bus-max="busMax"
     @changeLine="changeLine"
     @clickDelete="clickDelete"
   />
@@ -22,13 +22,13 @@ import Prop from 'vue/types/options';
 import Component from 'vue-class-component';
 import { Transportation } from '@/components/molecules/search-condition';
 import SelectItem from '@/interfaces/select';
-import TransportationItem from '@/interfaces/transportation-item';
+import Transportation from '@/interfaces/user-settings/transportation';
 
 const TransportationProps = Vue.extend({
   props: {
     name: String,
     index: Number,
-    item: Object as Prop<TransportationItem>,
+    item: Object as Prop<Transportation>,
   },
 })
 @Component({
@@ -37,23 +37,37 @@ const TransportationProps = Vue.extend({
   },
 })
 export default class TransportationContainer extends TransportationProps {
-  item_: TransportationItem = !this._isEmptyObject(this.item) ? this.item : {
-    lines: this.lines,
-    stations: [{ value: 0, label: '' }],
-    currentLineId: 0,
-    fromStationId: 0,
-    toStationId: 0,
-    walkMin: 0,
-    walkMax: 0,
-    busMin: 0,
-    busMax: 0,
-  };
+  // initial data
+  stations: SelectItem[] = [{ value: 0, label: '' }];
+  // computed
   get lines(): SelectItem[] {
-    return this.$store.state.conditions.lines;
+    return this.$store.state.condition.lines;
   }
+  get line(): Number {
+    return this.item.lineId ? this.item.lineId : 0;
+  }
+  get fromStation(): Number {
+    return this.item.fromStationId ? this.item.fromStationId : 0;
+  }
+  get toStation(): Number {
+    return this.item.toStationId ? this.item.toStationId : 0;
+  }
+  get walkMin(): Number {
+    return this.item.walkMin ? this.item.walkMin : 0;
+  }
+  get walkMax(): Number {
+    return this.item.walkMax ? this.item.walkMax : 0;
+  }
+  get busMin(): Number {
+    return this.item.busMin ? this.item.busMin : 0;
+  }
+  get busMax(): Number {
+    return this.item.busMax ? this.item.busMax : 0;
+  }
+  // method
   changeLine(lineId: number): void {
-    this.$store.dispatch('conditions/stations', lineId).then((stations) => {
-      this.item_.stations = stations;
+    this.$store.dispatch('condition/stations', lineId).then((stations) => {
+      this.stations = stations;
     });
   }
   clickDelete(): void {

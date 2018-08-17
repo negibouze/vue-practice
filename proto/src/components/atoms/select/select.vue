@@ -103,8 +103,13 @@ const SelectProps = Vue.extend({
   },
 })
 export default class TSelect extends SelectProps {
-  selected: string|number|null = this.selectedValue ? this.selectedValue : null;
-  isDisabled (val: object): boolean {
+  get selected(): string|number|null {
+    return this.selectedValue ? this.selectedValue : null;
+  }
+  set selected(val: object): void {
+    this.$emit('input', val);
+  }
+  isDisabled(val: object): boolean {
     if (typeof this.disabledOptions === 'boolean') {
       return this.disabledOptions;
     }

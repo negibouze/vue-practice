@@ -3,13 +3,13 @@ interface DateRange {
   to: string|null;
 }
 interface Transportation {
-  lineId: number;
-  fromStation: number;
-  toStation: number;
-  walkMin: number;
-  walkMax: number;
-  busMin: number;
-  busMax: number;
+  readonly lineId: number;
+  readonly fromStation: number;
+  readonly toStation: number;
+  readonly walkMin: number;
+  readonly walkMax: number;
+  readonly busMin: number;
+  readonly busMax: number;
 }
 interface FreeWord {
   searchWord: string;
@@ -21,14 +21,14 @@ interface NumberRange {
   searchType: number;
 }
 
-export default interface SearchConditions {
+export default interface SearchCondition {
   readonly regionCode: number;
   readonly stageStatus: number[];
   readonly salesAt: DateRange|null;
   readonly boardConstructionAt: DateRange|null;
   readonly constructionAt: DateRange|null;
   readonly completionAt: DateRange|null;
-  readonly transportation: Transportation|null;
+  readonly transportation: Transportation[]|null;
   readonly townCodes: number[];
   readonly name: FreeWord|null;
   readonly company: FreeWord|null;

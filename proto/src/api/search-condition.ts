@@ -8,9 +8,19 @@ export default class SearchCondition {
     this.client = client;
   }
 
-  public async getStations(lineId: number): Promise<any> {
+  public async getLines(areaCode: number): Promise<any> {
     const items: {[key: number]: object[]} = {
       1: [
+        { id: 101, label: 'JR中央' },
+        { id: 102, label: 'JR山手' },
+      ],
+    };
+    return items[areaCode];
+  }
+
+  public async getStations(lineId: number): Promise<any> {
+    const items: {[key: number]: object[]} = {
+      101: [
         { id: 101, label: '東京' },
         { id: 102, label: '神田' },
         { id: 103, label: '御茶ノ水' },
@@ -44,7 +54,7 @@ export default class SearchCondition {
         { id: 131, label: '西八王子' },
         { id: 132, label: '高尾' },
       ],
-      2: [
+      102: [
         { id: 201, label: '大崎' },
         { id: 202, label: '五反田' },
         { id: 203, label: '目黒' },
@@ -70,9 +80,19 @@ export default class SearchCondition {
     return items[lineId];
   }
 
-  public async getMunicipalities(prefectureId: number): Promise<any> {
+  public async getPrefectures(areaCode: number): Promise<any> {
     const items: {[key: number]: object[]} = {
       1: [
+        { id: 101, label: '東京都' },
+        { id: 102, label: '神奈川県' },
+      ],
+    };
+    return items[areaCode];
+  }
+
+  public async getMunicipalities(prefectureId: number): Promise<any> {
+    const items: {[key: number]: object[]} = {
+      101: [
         { id: 101, label: '千代田区' },
         { id: 102, label: '中央区' },
         { id: 103, label: '港区' },
@@ -97,7 +117,7 @@ export default class SearchCondition {
         { id: 122, label: '葛飾区' },
         { id: 123, label: '江戸川区' },
       ],
-      2: [
+      102: [
         { id: 201, label: '横浜市' },
         { id: 202, label: '川崎市' },
         { id: 203, label: '横須賀市' },

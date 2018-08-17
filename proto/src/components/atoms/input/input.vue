@@ -74,7 +74,12 @@ const InputProps = Vue.extend({
   },
 })
 export default class TInput extends InputProps {
-  input: string = this.currentValue ? this.currentValue : ''
+  get input(): string {
+    return this.currentValue ? this.currentValue : ''
+  }
+  set input(val: string) {
+    this.$emit('input', val);
+  }
   handleBlur(e: FocusEvent) {
     this.$emit('blur', e);
   }

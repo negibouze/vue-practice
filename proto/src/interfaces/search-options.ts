@@ -1,5 +1,5 @@
 import Coordinate from './coordinate';
-import SearchConditions from './search-conditions';
+import SearchCondition from './search-condition';
 
 interface Circle {
   center: Coordinate;
@@ -10,7 +10,7 @@ interface Rectangle {
   sw: Coordinate;
 }
 
-export default interface SearchOptions extends SearchConditions {
+export default interface SearchOptions extends SearchCondition {
   readonly circle: Circle|null;
   readonly rectangle: Rectangle|null;
 }
