@@ -1,6 +1,6 @@
 // import TResponse from './core/response';
 import IClient from './core/i-client';
-import SearchCondition from '@/interfaces/user-settings/search-condition';
+import ISearchCondition from '@/interfaces/user-settings/search-condition';
 
 export default class User {
   private client: IClient;
@@ -9,7 +9,7 @@ export default class User {
     this.client = client;
   }
 
-  public async getSearchCondition(): Promise<SearchCondition> {
+  public async getSearchCondition(): Promise<ISearchCondition> {
     const item = {
       stageStatus: [1, 3],
       salesAt: {

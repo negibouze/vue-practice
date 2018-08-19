@@ -1,5 +1,5 @@
-import SearchOptions from '@/interfaces//user-settings/search-options';
 import Coordinate from '@/interfaces/coordinate';
+import SearchOptions from '@/interfaces/search-options';
 
 export default class CircleSearchOptions {
   public readonly center: Coordinate;

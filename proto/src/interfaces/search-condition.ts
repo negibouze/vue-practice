@@ -21,7 +21,7 @@ interface NumberRange {
   searchType: number;
 }
 
-export default interface SearchCondition {
+export default interface ISearchCondition {
   readonly regionCode: number;
   readonly stageStatus: number[];
   readonly salesAt: DateRange|null;

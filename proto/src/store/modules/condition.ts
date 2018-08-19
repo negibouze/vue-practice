@@ -1,7 +1,7 @@
 import { Commit } from 'vuex';
 import * as types from '../mutation-types';
 import api from '@/api';
-import SearchCondition from '@/interfaces/user-settings/search-condition';
+import ISearchCondition from '@/interfaces/user-settings/search-condition';
 
 interface KeyValue {
   value: number;
@@ -11,7 +11,7 @@ export interface ConditionState {
   visibility: boolean;
   lines: KeyValue[];
   prefectures: KeyValue[];
-  condition: SearchCondition|null;
+  condition: ISearchCondition|null;
 }
 
 const convert = (array: Array<{ id: number, label: string }>): KeyValue[] => {
@@ -20,7 +20,7 @@ const convert = (array: Array<{ id: number, label: string }>): KeyValue[] => {
   });
 };
 
-const condition = {
+const cond = {
   namespaced: true,
   state: {
     visibility: false,
@@ -32,10 +32,10 @@ const condition = {
     [types.VISIBLE_SEARCH_CONDITION](state: ConditionState, value: boolean): void {
       state.visibility = value;
     },
-    [types.LOAD_SEARCH_CONDITION](state: ConditionState, value: SearchCondition) {
+    [types.LOAD_SEARCH_CONDITION](state: ConditionState, value: ISearchCondition) {
       state.condition = value;
     },
-    [types.UPDATE_SEARCH_CONDITION](state: ConditionState, value: SearchCondition) {
+    [types.UPDATE_SEARCH_CONDITION](state: ConditionState, value: ISearchCondition) {
       state.condition = value;
     },
     [types.UPDATE_LINES](state: ConditionState, value: KeyValue[]) {
@@ -53,11 +53,11 @@ const condition = {
       commit(types.VISIBLE_SEARCH_CONDITION, false);
     },
     load({ commit }: { commit: Commit }): void {
-      api.user().getSearchCondition().then((condition: SearchCondition) => {
-        commit(types.LOAD_SEARCH_CONDITION, condition);
+      api.user().getSearchCondition().then((value: ISearchCondition) => {
+        commit(types.LOAD_SEARCH_CONDITION, value);
       });
     },
-    update({ commit }: { commit: Commit }, value: object): Promise<{}> {
+    update({ commit }: { commit: Commit }, value: ISearchCondition): Promise<{}> {
       return new Promise((resolve) => {
         commit(types.UPDATE_SEARCH_CONDITION, value);
         resolve();
@@ -92,4 +92,4 @@ const condition = {
   },
 };
 
-export default condition;
+export default cond;

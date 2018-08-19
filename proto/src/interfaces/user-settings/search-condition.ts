@@ -4,7 +4,7 @@ import NumberRange from '../number-range';
 import Area from './area';
 import Transportation from './transportation';
 
-export default interface SearchCondition {
+export default interface ISearchCondition {
   readonly stageStatus: number[];
   readonly salesAt: DateRange|null;
   // readonly boardConstructionAt: DateRange|null;

@@ -1,4 +1,4 @@
 export default interface IFreeWord {
-  readonly word: string|null;
-  readonly type: number;
+  readonly searchWord: string|null;
+  readonly searchType: number;
 }

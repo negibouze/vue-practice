@@ -1,5 +1,5 @@
 export default interface INumberRange {
-  readonly from: string|null;
-  readonly to: string|null;
+  readonly from: number;
+  readonly to: number;
   readonly searchType: number;
 }
