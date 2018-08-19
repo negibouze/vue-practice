@@ -20,6 +20,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import cloneDeep from 'lodash.clonedeep';
 import Dialog from '@/components/molecules/dialog';
 import SearchCondition from '@/components/organisms/search-condition';
 import SelectItem from '@/interfaces/select';
@@ -48,7 +49,10 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
       return this.currentCondition;
     }
     const c = this.$store.state.condition.condition;
-    return c ? c : this.currentCondition;
+    if (c) {
+      this.currentCondition = cloneDeep(c);
+    }
+    return this.currentCondition;
   }
   // method
   addTransportation(): void {

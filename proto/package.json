@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.6",
+    "lodash.clonedeep": "^4.5.0",
     "vue": "^2.5.17",
     "vue-class-component": "^6.2.0",
     "vue-router": "^3.0.1",
