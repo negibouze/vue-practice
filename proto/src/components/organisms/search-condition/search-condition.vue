@@ -69,6 +69,7 @@
             <t-input
               placeholder="物件名"
               :current-value="name.searchWord"
+              id="propertyName"
             >
               <t-select
                 slot="append"
@@ -114,8 +115,8 @@ import DateRange from '@/components/molecules/date-range';
 import SelectRange from '@/components/molecules/select-range';
 import { TransportationContainer, AreaContainer } from '@/containers/mordal/search-condition';
 import SearchCondition from '@/interfaces/user-settings/search-condition';
-import Transportation from '@/interfaces/user-settings/transportation';
-import Area from '@/interfaces/user-settings/area';
+import ITransportation from '@/interfaces/transportation';
+import IArea from '@/interfaces/user-settings/area';
 import IDateRange from '@/interfaces/date-range';
 import IFreeWord from '@/interfaces/free-word';
 import INumberRange from '@/interfaces/number-range';
@@ -168,10 +169,10 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   maxNumOfTransportations: number = 10;
   maxNumOfAreas: number = 20;
   // computed
-  get transportations(): Transportation[] {
+  get transportations(): ITransportation[] {
     return this.condition.hasOwnProperty('transportations') ? this.condition.transportations : [{}];
   }
-  get areas(): Area[] {
+  get areas(): IArea[] {
     return this.condition.hasOwnProperty('areas') ? this.condition.areas : [{}];
   }
   get salesAt(): IDateRange {

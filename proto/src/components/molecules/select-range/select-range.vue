@@ -4,16 +4,18 @@
       :options="options"
       :placeholder="leftPlaceholder"
       :disabled-options="disabledLeft"
-      :selected-value="leftSelectedValue"
+      :selected-value.sync="leftValue"
       @change="changeLeft"
+      @clear="clearLeft"
     />
     <span>〜</span>
     <t-select
       :options="options"
       :placeholder="rightPlaceholder"
       :disabled-options="disabledRight"
-      :selected-value="rightSelectedValue"
+      :selected-value.sync="rightValue"
       @change="changeRight"
+      @clear="clearLeft"
     />
   </div>
 </template>
@@ -42,13 +44,21 @@ const SelectRangeProps = Vue.extend({
 @Component({
   components: {
     TSelect
-  }
+  },
+  watch: {
+    leftSelectedValue: function(newValue) {
+      this.leftValue = newValue;
+    },
+    rightSelectedValue: function(newValue) {
+      this.rightValue = newValue;
+    },
+  },
 })
 export default class SelectRange extends SelectRangeProps {
   leftPlaceholder: string = 'Select start';
   rightPlaceholder: string = 'Select end';
-  leftValue: string|number|null = null;
-  rightValue: string|number|null = null;
+  leftValue: string|number|null = this.leftSelectedValue ? this.leftSelectedValue : null;
+  rightValue: string|number|null = this.rightSelectedValue ? this.rightSelectedValue : null;
   get disabledLeft () {
     const rightValue = this.rightValue
     return function (val: string|number): boolean {
@@ -63,9 +73,19 @@ export default class SelectRange extends SelectRangeProps {
   }
   changeLeft(val: string|number): void {
     this.leftValue = val;
+    this.$emit('changeLeft');
   }
   changeRight(val: string|number): void {
     this.rightValue = val;
+    this.$emit('changeRight');
+  }
+  clearLeft(): void {
+    this.$emit('update:leftSelectedValue', '');
+    this.$emit('clearLeft');
+  }
+  clearRight(): void {
+    this.$emit('update:rightSelectedValue', '');
+    this.$emit('clearRight');
   }
 }
 </script>

@@ -11,16 +11,16 @@
       @clickDeleteArea="deleteArea"
       @clickCircleSearch="circle"
       @clickRectangleSearch="rectangle"
-      @clickCancel="hide"
+      @clickCancel="cancel"
       @clickLoad="load"
     />
   </Dialog>
 </template>
 
 <script lang="ts">
+import cloneDeep from 'lodash.clonedeep';
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import cloneDeep from 'lodash.clonedeep';
 import Dialog from '@/components/molecules/dialog';
 import SearchCondition from '@/components/organisms/search-condition';
 import SelectItem from '@/interfaces/select';
@@ -41,64 +41,50 @@ const MordalSearchConditionProps = Vue.extend({
   },
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
-  currentCondition: ISearchCondition = {};
-  isReset: boolean = false;
   // computed
   get condition(): ISearchCondition {
-    if (!this.isReset) {
-      return this.currentCondition;
-    }
-    const c = this.$store.state.condition.condition;
-    if (c) {
-      this.currentCondition = cloneDeep(c);
-    }
-    return this.currentCondition;
+    return this.$store.state.condition.currentCondition;
   }
   // method
   addTransportation(): void {
-    if (!this.currentCondition.transportations) {
-      this.$set(this.currentCondition, 'transportations', []);
-    }
-    this.currentCondition.transportations.push({});
+    const value = this.condition.hasOwnProperty('transportations') ? cloneDeep(this.condition.transportations) : [{}];
+    value.push({});
+    this.$store.dispatch('condition/update', { key: 'transportations', value });
   }
   deleteTransportation(index: number): void {
-    if (index < 0 || this.currentCondition.transportations.length <= index) { return; }
-    this.currentCondition.transportations.splice(index, 1);
+    // assert(!this.condition.hasOwnProperty('transportations'), '');
+    const value = cloneDeep(this.condition.transportations);
+    // assert(value.length < 2, '');
+    value.splice(index, 1);
+    this.$store.dispatch('condition/update', { key: 'transportations', value });
   }
   addArea(): void {
-    if (!this.currentCondition.areas) {
-      this.$set(this.currentCondition, 'areas', []);
-    }
-    this.currentCondition.areas.push({});
+    const value = this.condition.hasOwnProperty('areas') ? cloneDeep(this.condition.areas) : [{}];
+    value.push({});
+    this.$store.dispatch('condition/update', { key: 'areas', value });
   }
   deleteArea(index: number): void {
-    if (index < 0 || this.currentCondition.areas.length <= index) { return; }
-    this.currentCondition.areas.splice(index, 1);
+    // assert(!this.condition.hasOwnProperty('areas'), '');
+    const value = cloneDeep(this.condition.areas);
+    // assert(value.length < 2, '');
+    value.splice(index, 1);
+    this.$store.dispatch('condition/update', { key: 'areas', value });
   }
   circle(form: HTMLFormElement): void {
-    console.log(form)
-    this.$store.dispatch('condition/update', this.currentCondition).then(() => {
-      this.hide();
-      this.$store.dispatch('circle/begin');
-    });
+    this.hide();
+    this.$store.dispatch('circle/begin');
   }
   rectangle(form: HTMLFormElement): void {
-    this.$store.dispatch('condition/update', this.currentCondition).then(() => {
-      this.hide();
-    });
+    this.hide();
+  }
+  cancel(): void {
+    this.$store.dispatch('condition/restore');
+    this.hide();
   }
   hide(): void {
     this.$store.dispatch('condition/invisible');
-    this._discard(this.currentCondition.transportations);
-    this._discard(this.currentCondition.areas);
-  }
-  _discard(obj) {
-    if (!obj) { return; } 
-    obj.splice(0, obj.length);
-    obj.push({});
   }
   load(): void {
-    this.isReset = true;
     this.$store.dispatch('condition/load');
   }
 }

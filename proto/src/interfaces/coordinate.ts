@@ -1,4 +1,4 @@
 export default interface Coordinate {
-  readonly lat: number;
-  readonly lng: number;
+  readonly latitude: number;
+  readonly longitude: number;
 }

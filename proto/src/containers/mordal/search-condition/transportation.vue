@@ -22,7 +22,7 @@ import Prop from 'vue/types/options';
 import Component from 'vue-class-component';
 import { Transportation } from '@/components/molecules/search-condition';
 import SelectItem from '@/interfaces/select';
-import Transportation from '@/interfaces/user-settings/transportation';
+import ITransportation from '@/interfaces/transportation';
 
 const TransportationProps = Vue.extend({
   props: {

@@ -9,6 +9,7 @@
             :selectedValue="currentLine"
             :fit-parent="true"
             @change="changeLine"
+            @clear="clearLine"
           />
         </div>
         <div class="transportation-button">
@@ -22,6 +23,8 @@
             :options="stations"
             :selectedValue="fromStation"
             :fit-parent="true"
+            @change="changeFromStation"
+            @clear="clearFromStation"
           />
         </div>
         <span class="item-title flex-item">終了駅</span>
@@ -30,6 +33,8 @@
             :options="stations"
             :selectedValue="toStation"
             :fit-parent="true"
+            @change="changeToStation"
+            @clear="clearToStation"
           />
         </div>
       </div>
@@ -124,6 +129,21 @@ export default class Transportation extends TransportationProps {
   }
   changeLine(lineId: number): void {
     this.$emit('changeLine', lineId);
+  }
+  clearLine(): void {
+    this.$emit('clearLine');
+  }
+  changeFromStation(stationId: number): void {
+    this.$emit('changeFromStation', stationId);
+  }
+  clearFromStation(): void {
+    this.$emit('clearFromStation');
+  }
+  changeToStation(stationId: number): void {
+    this.$emit('changeToStation', stationId);
+  }
+  clearToStation(): void {
+    this.$emit('clearToStation');
   }
   clickDelete(e: MouseEvent): void {
     const obj = this.$refs.outside;

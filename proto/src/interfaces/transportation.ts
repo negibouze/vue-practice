@@ -1,4 +1,4 @@
-export default interface Transportation {
+export default interface ITransportation {
   readonly lineId: number;
   readonly fromStationId: number;
   readonly toStationId: number;

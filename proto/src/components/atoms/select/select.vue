@@ -23,6 +23,7 @@
     :value-key="valueKey"
     :popper-append-to-body="popperAppendToBody"
     @change="handleChange"
+    @clear="handleClear"
     :class="{ 'fit-parent' : fitParent }"
   >
     <el-option v-for="item in options"
@@ -101,22 +102,26 @@ const SelectProps = Vue.extend({
     ElSelect,
     ElOption,
   },
+  watch: {
+    selectedValue: function(newValue) {
+      this.selected = newValue;
+    },
+  },
 })
 export default class TSelect extends SelectProps {
-  get selected(): string|number|null {
-    return this.selectedValue ? this.selectedValue : null;
-  }
-  set selected(val: object): void {
-    this.$emit('input', val);
-  }
+  selected: string|number|null = this.selectedValue ? this.selectedValue : null;
   isDisabled(val: object): boolean {
     if (typeof this.disabledOptions === 'boolean') {
       return this.disabledOptions;
     }
     return this.disabledOptions(val);
   }
-  handleChange (val: string|number): void {
+  handleChange(val: string|number): void {
     this.$emit('change', val);
+  }
+  handleClear() {
+    this.$emit('update:selectedValue', '');
+    this.$emit('clear');
   }
 }
 </script>

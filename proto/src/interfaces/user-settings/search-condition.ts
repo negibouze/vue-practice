@@ -1,25 +1,25 @@
 import DateRange from '../date-range';
 import FreeWord from '../free-word';
 import NumberRange from '../number-range';
-import Area from './area';
-import Transportation from './transportation';
+import ITransportation from '../transportation';
+import IArea from './area';
 
 export default interface ISearchCondition {
   readonly stageStatus: number[];
-  readonly salesAt: DateRange|null;
+  readonly salesAt?: DateRange|null;
   // readonly boardConstructionAt: DateRange|null;
   // readonly constructionAt: DateRange|null;
   // readonly completionAt: DateRange|null;
-  readonly transportations: Transportation[]|null;
-  readonly areas: Area[]|null;
-  readonly name: FreeWord|null;
+  readonly transportations?: ITransportation[]|null;
+  readonly areas?: IArea[]|null;
+  readonly name?: FreeWord|null;
   // readonly company: FreeWord|null;
   // readonly developer: FreeWord|null;
   // readonly constractor: FreeWord|null;
   // readonly designer: FreeWord|null;
   // readonly seller: FreeWord|null;
   // readonly manager: FreeWord|null;
-  readonly unitCount: NumberRange|null;
+  readonly unitCount?: NumberRange|null;
   // readonly topFloor: NumberRange|null;
   // readonly parkingCount: NumberRange|null;
   // readonly parkingInstallationRate: NumberRange|null;
@@ -40,4 +40,5 @@ export default interface ISearchCondition {
   // readonly priceMax: NumberRange|null;
   // readonly areaMax: NumberRange|null;
   // readonly tsuboMax: NumberRange|null;
+  [key: string]: any;
 }

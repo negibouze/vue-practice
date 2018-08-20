@@ -17,13 +17,13 @@ import Prop from 'vue/types/options';
 import Component from 'vue-class-component';
 import { Area } from '@/components/molecules/search-condition';
 import SelectItem from '@/interfaces/select';
-import Area from '@/interfaces/user-settings/area';
+import IArea from '@/interfaces/user-settings/area';
 
 const AreaProps = Vue.extend({
   props: {
     name: String,
     index: Number,
-    item: Object as Prop<AreaItem>,
+    item: Object as Prop<IArea>,
   },
 })
 @Component({
@@ -44,7 +44,6 @@ export default class AreaContainer extends AreaProps {
   get municipality(): Number {
     return this.item.municipalityId ? this.item.municipalityId : 0;
   }
-
   // method
   changePrefecture(prefectureId: number): void {
     this.$store.dispatch('condition/municipalities', prefectureId).then((municipalities) => {

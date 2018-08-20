@@ -18,11 +18,13 @@
     @focus="handleFocus"
     @input="handleInput"
     @change="handleChange"
+    @clear="handleClear"
     :placeholder="placeholder"
     :name="name"
     :maxlength="maxlength"
     :minlength="minlength"
     :autofocus="autofocus"
+    :id="id"
   >
     <slot name="prefix" slot="prefix" />
     <slot name="suffix" slot="suffix" />
@@ -65,21 +67,22 @@ const InputProps = Vue.extend({
     autofocus: {
       type: Boolean,
       default: false,
-    }
+    },
+    id: String,
   },
 })
 @Component({
   components: {
     ElInput,
   },
+  watch: {
+    currentValue(newValue) {
+      this.input = newValue;
+    },
+  },
 })
 export default class TInput extends InputProps {
-  get input(): string {
-    return this.currentValue ? this.currentValue : ''
-  }
-  set input(val: string) {
-    this.$emit('input', val);
-  }
+  input: string = this.currentValue ? this.currentValue : '';
   handleBlur(e: FocusEvent) {
     this.$emit('blur', e);
   }
@@ -91,6 +94,10 @@ export default class TInput extends InputProps {
   }
   handleChange(v: string) {
     this.$emit('change', v);
+  }
+  handleClear() {
+    this.$emit('update:currentValue', '');
+    this.$emit('clear');
   }
 }
 </script>

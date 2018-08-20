@@ -62,15 +62,14 @@ const InputNumberProps = Vue.extend({
   components: {
     ElInputNumber,
   },
+  watch: {
+    currentValue(newValue) {
+      this.num = newValue;
+    },
+  }
 })
 export default class TInputNumber extends InputNumberProps {
-  // computed
-  get num(): number {
-      return this.currentValue ? this.currentValue : this.min;
-  }
-  set num(val: number): void {
-    this.$emit('input', val);
-  }
+  num: number = this.currentValue ? this.currentValue : this.min;
   // method
   handleChange(value: object) {
     this.$emit('change', value);
