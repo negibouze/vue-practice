@@ -15,6 +15,7 @@
         <div class="item-body flex-item">
           <t-select
             :options="municipalities"
+            :disabled="disabled"
             :selectedValue="currentMunicipality"
             :fit-parent="true"
             @change="changeMunicipality"
@@ -59,6 +60,11 @@ const AreaProps = Vue.extend({
   }
 })
 export default class Area extends AreaProps {
+  // computed
+  get disabled() {
+    return !this.municipalities || this.municipalities.length <= 0
+  }
+  // method
   changePrefecture(prefectureId: number): void {
     this.$emit('changePrefecture', prefectureId);
   }

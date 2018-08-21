@@ -15,7 +15,7 @@
 <script lang="ts">
 import cloneDeep from 'lodash.clonedeep';
 import Vue from 'vue';
-import Prop from 'vue/types/options';
+import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
 import { Area } from '@/components/molecules/search-condition';
 import SelectItem from '@/interfaces/select';
@@ -65,10 +65,7 @@ export default class AreaContainer extends AreaProps {
   clickDelete(): void {
     this.$emit('clickDelete', this.index);
   }
-  _getAreas(): IArea[] {
-    const c = cloneDeep(this.$store.state.condition.currentCondition);
-    return c.hasOwnProperty('areas') ? c.areas : [{}];
-  }
+  // convenience method
   _updateMunicipalities(prefectureId: number) {
     if (!prefectureId) {
       this.municipalities = [];
@@ -77,6 +74,10 @@ export default class AreaContainer extends AreaProps {
     this.$store.dispatch('condition/municipalities', prefectureId).then((municipalities) => {
       this.municipalities = municipalities;
     });
+  }
+  _getAreas(): IArea[] {
+    const c = cloneDeep(this.$store.state.condition.currentCondition);
+    return c.hasOwnProperty('areas') ? c.areas : [{}];
   }
   _updateCondition(k: string, v: string|number): void {
     if (v) {

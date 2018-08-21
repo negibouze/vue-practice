@@ -16,6 +16,10 @@
           <legend class="section-title">販売年月</legend>
           <div class="section-body">
             <date-range
+              :current-left-value="salesAt.from"
+              :current-right-value="salesAt.to"
+              @changeLeft="(v) => { changeFrom('salesAt', v) }"
+              @changeRight="(v) => { changeTo('salesAt', v) }"
             />
           </div>
         </fieldset>
@@ -76,7 +80,7 @@
                 :options="items.scope"
                 class="input-append"
                 :selected-value="name.searchType"
-                @change="(v) => { change('foo', v) }"
+                @change="(v) => { changeType('name', v) }"
               />
             </t-input>
           </div>
@@ -88,8 +92,8 @@
               :options="items.test"
               :left-selected-value="unitCount.from"
               :right-selected-value="unitCount.to"
-              @changeLeft="(v) => { change('foo', v) }"
-              @changeRight="(v) => { change('foo', v) }"
+              @changeLeft="(v) => { changeFrom('unitCount', v) }"
+              @changeRight="(v) => { changeTo('unitCount', v) }"
             />
           </div>
           <!-- 以上〜以下/未満 -->
@@ -99,7 +103,7 @@
     <div class="button-container flex flex-between">
       <t-button @click="circle">円検索</t-button>
       <t-button @click="rectangle">四角検索</t-button>
-      <t-button @click="hide">閉じる</t-button>
+      <t-button @click="cancel">閉じる</t-button>
       <t-button @click="load">テスト</t-button>
     </div>
   </div>
@@ -117,7 +121,7 @@ import CheckboxGroup from '@/components/molecules/checkbox-group';
 import DateRange from '@/components/molecules/date-range';
 import SelectRange from '@/components/molecules/select-range';
 import { TransportationContainer, AreaContainer } from '@/containers/mordal/search-condition';
-import SearchCondition from '@/interfaces/user-settings/search-condition';
+import ISearchCondition from '@/interfaces/user-settings/search-condition';
 import ITransportation from '@/interfaces/transportation';
 import IArea from '@/interfaces/user-settings/area';
 import IDateRange from '@/interfaces/date-range';
@@ -131,9 +135,9 @@ const MordalSearchConditionProps = Vue.extend({
       default: () => {
         return {
           stage: [
-            { value: 0, id: 'development', label: '開発段階', checked: true },
-            { value: 1, id: 'plans', label: '予定段階' },
-            { value: 2, id: 'sale', label: '分譲段階', checked: false },
+            { value: 1, id: 'development', label: '開発段階', checked: true },
+            { value: 2, id: 'plans', label: '予定段階' },
+            { value: 3, id: 'sale', label: '分譲段階', checked: false },
           ],
           test: [
             { value: 50, label: '50' },
@@ -141,15 +145,15 @@ const MordalSearchConditionProps = Vue.extend({
             { value: 200, label: '200' },
           ],
           scope: [
-            { value: 0, label: '全ての語を含む' },
-            { value: 1, label: '何れかの語を含む' },
-            { value: 2, label: '何れの語も含まない' },
+            { value: 1, label: '全ての語を含む' },
+            { value: 2, label: '何れかの語を含む' },
+            { value: 3, label: '何れの語も含まない' },
           ],
         }
       }
     },
     condition: {
-      type: Object as Prop<SearchCondition>,
+      type: Object as Prop<ISearchCondition>,
       required: true
     },
   }
@@ -173,32 +177,41 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   maxNumOfAreas: number = 20;
   // computed
   get transportations(): ITransportation[] {
-    return this.condition.hasOwnProperty('transportations') ? this.condition.transportations : [{}];
+    return this._hasProperty('transportations') ? this.condition.transportations : [{}];
   }
   get areas(): IArea[] {
-    return this.condition.hasOwnProperty('areas') ? this.condition.areas : [{}];
+    return this._hasProperty('areas') ? this.condition.areas : [{}];
   }
   get salesAt(): IDateRange {
-    return this.condition.hasOwnProperty('salesAt') ? this.condition.salesAt : { from: null, to: null };
+    return this._hasProperty('salesAt') ? this.condition.salesAt : { from: null, to: null };
   }
   get name(): IFreeWord {
-    return this.condition.hasOwnProperty('name') ? this.condition.name : { searchWord: null, searchType: 0 };
+    return this._hasProperty('name') ? this.condition.name : { searchWord: null, searchType: 0 };
   }
   get unitCount(): INumberRange {
-    return this.condition.hasOwnProperty('unitCount') ? this.condition.unitCount : { from: null, to: null, searchType: 0 };
+    return this._hasProperty('unitCount') ? this.condition.unitCount : { from: null, to: null };
   }
   // method
+  changeFrom(key: string, value: string|number): void {
+    this.$emit('changeFrom', key, value);
+  }
+  changeTo(key: string, value: string|number): void {
+    this.$emit('changeTo', key, value);
+  }
+  changeType(key: string, value: number): void {
+    this.$emit('changeType', key, value);
+  }
   change(key: string, value: string|number|object): void {
     this.$emit('changeCondition', key, value);
   }
   addTransportation(): void {
-    this.$emit('clickAddTransportation', this.$refs.form);
+    this.$emit('clickAddTransportation');
   }
   deleteTransportation(index: number): void {
     this.$emit('clickDeleteTransportation', index);
   }
   addArea(): void {
-    this.$emit('clickAddArea', this.$refs.form);
+    this.$emit('clickAddArea');
   }
   deleteArea(index: number): void {
     this.$emit('clickDeleteArea', index);
@@ -209,11 +222,15 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   rectangle(e: MouseEvent): void {
     this.$emit('clickRectangleSearch', this.$refs.form);
   }
-  hide(e: MouseEvent): void {
+  cancel(e: MouseEvent): void {
     this.$emit('clickCancel', e);
   }
   load(e: MouseEvent) : void {
     this.$emit('clickLoad', e);
+  }
+  // convenience method
+  _hasProperty(name: string): boolean {
+    return this.condition.hasOwnProperty(name);
   }
   // dynamic component
   $refs!: {

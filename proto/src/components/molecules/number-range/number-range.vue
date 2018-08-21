@@ -4,14 +4,14 @@
       :step="step"
       :size="size"
       :controls="controls"
-      :controlsPosition="controlsPosition"
+      :controls-position="controlsPosition"
       :name="leftOpts.name"
       :label="leftOpts.label"
       :min="leftOpts.min"
       :max="leftOpts.max"
       :disabled="leftOpts.disabled"
       :precision="leftOpts.precision"
-      :currentValue="leftOpts.currentValue"
+      :current-value="leftOpts.currentValue"
       @change="changeLeft"
     />
     <span>〜</span>
@@ -19,14 +19,14 @@
       :step="step"
       :size="size"
       :controls="controls"
-      :controlsPosition="controlsPosition"
+      :controls-position="controlsPosition"
       :name="rightOpts.name"
       :label="rightOpts.label"
       :min="rightOpts.min"
       :max="rightOpts.max"
       :disabled="rightOpts.disabled"
       :precision="rightOpts.precision"
-      :currentValue="rightOpts.currentValue"
+      :current-value="rightOpts.currentValue"
       @change="changeRight"
     />
   </div>

@@ -3,12 +3,14 @@
     <date-picker
       :placeholder="leftPlaceholder"
       :picker-options="leftPickerOptions"
+      :current-value="currentLeftValue"
       @change="changeLeft"
     />
     <span>〜</span>
     <date-picker
       :placeholder="rightPlaceholder"
       :picker-options="rightPickerOptions"
+      :current-value="currentRightValue"
       @change="changeRight"
     />
   </div>
@@ -19,7 +21,12 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import DatePicker from '@/components/atoms/date-picker'
 
-const DateRangeProps = Vue.extend({})
+const DateRangeProps = Vue.extend({
+  props: {
+    currentLeftValue: String,
+    currentRightValue: String,
+  }
+})
 @Component({
   components: {
     DatePicker
@@ -46,11 +53,21 @@ export default class DateRange extends DateRangeProps {
       }
     }
   }
-  changeLeft(val: object): void {
-    this.leftValue = val;
+  changeLeft(v: object): void {
+    this.leftValue = v;
+    this.$emit('changeLeft', this._format(v));
   }
-  changeRight(val: object): void {
-    this.rightValue = val;
+  changeRight(v: object): void {
+    this.rightValue = v;
+    this.$emit('changeRight', this._format(v));
+  }
+  // convenience method
+  _format(date): string {
+    if (!date) { return ''; }
+    const y = date.getFullYear();
+    const m = `0${date.getMonth() + 1}`.slice(-2);
+    const d = `0${date.getDate()}`.slice(-2);
+    return [y, m, d].join('-');
   }
 }
 </script>

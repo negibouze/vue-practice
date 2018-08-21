@@ -12,11 +12,8 @@
     :bus-min="item.busMin"
     :bus-max="item.busMax"
     @changeLine="changeLine"
-    @clearLine="clearLine"
     @changeFromStation="changeFromStation"
-    @clearFromStation="clearFromStation"
     @changeToStation="changeToStation"
-    @clearToStation="clearToStation"
     @changeCondition="changeCondition"
     @clickDelete="clickDelete"
   />
@@ -25,7 +22,7 @@
 <script lang="ts">
 import cloneDeep from 'lodash.clonedeep';
 import Vue from 'vue';
-import Prop from 'vue/types/options';
+import { Prop } from 'vue/types/options';
 import Component from 'vue-class-component';
 import { Transportation } from '@/components/molecules/search-condition';
 import SelectItem from '@/interfaces/select';
@@ -35,7 +32,7 @@ const TransportationProps = Vue.extend({
   props: {
     name: String,
     index: Number,
-    item: Object as Prop<Transportation>,
+    item: Object as Prop<ITransportation>,
   },
   watch: {
     line(newVal) {
@@ -70,20 +67,11 @@ export default class TransportationContainer extends TransportationProps {
     this._deleteCondition('fromStationId');
     this._deleteCondition('toStationId');
   }
-  clearLine(): void {
-    this._deleteCondition('lineId');
-  }
   changeFromStation(v: number): void {
     this._updateCondition('fromStationId', v);
   }
-  clearFromStation(): void {
-    this._deleteCondition('fromStationId');
-  }
   changeToStation(v: number): void {
     this._updateCondition('toStationId', v);
-  }
-  clearToStation(): void {
-    this._deleteCondition('toStationId');
   }
   changeCondition(k: string, v: string|number): void {
     this._updateCondition(k, v);
@@ -91,10 +79,7 @@ export default class TransportationContainer extends TransportationProps {
   clickDelete(): void {
     this.$emit('clickDelete', this.index);
   }
-  _getTransportations(): ITransportation[] {
-    const c = cloneDeep(this.$store.state.condition.currentCondition);
-    return c.hasOwnProperty('transportations') ? c.transportations : [{}];
-  }
+  // convenience method
   _updateStations(lineId: number): void {
     if (!lineId) {
       this.stations = [];
@@ -103,6 +88,10 @@ export default class TransportationContainer extends TransportationProps {
     this.$store.dispatch('condition/stations', lineId).then((stations) => {
       this.stations = stations;
     });
+  }
+  _getTransportations(): ITransportation[] {
+    const c = cloneDeep(this.$store.state.condition.currentCondition);
+    return c.hasOwnProperty('transportations') ? c.transportations : [{}];
   }
   _updateCondition(k: string, v: string|number): void {
     if (v) {

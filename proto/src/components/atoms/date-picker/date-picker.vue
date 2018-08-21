@@ -1,6 +1,6 @@
 <template>
   <el-date-picker
-    v-model="value"
+    v-model="date"
     type="date"
     :size="size"
     :format="format"
@@ -64,15 +64,25 @@ const DatePickerProps = Vue.extend({
     pickerOptions: {
       type: Object,
     },
+    currentValue: String,
   }
 })
 @Component({
   components: {
     ElDatePicker
+  },
+  watch: {
+    currentValue(newValue) {
+      if (newValue) {
+        this.date = new Date(newValue);
+        return;      
+      }
+      this.date = newValue;
+    },
   }
 })
 export default class DatePicker extends DatePickerProps {
-  value: object = '';
+  date: object|null = null;
   handleChange(val: object): void {
     this.$emit('change', val);
   }

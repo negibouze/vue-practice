@@ -7,6 +7,7 @@
       :selected-value.sync="leftValue"
       @change="changeLeft"
       @clear="clearLeft"
+      :disabled="!options || options.length <= 0"
     />
     <span>〜</span>
     <t-select
@@ -16,6 +17,7 @@
       :selected-value.sync="rightValue"
       @change="changeRight"
       @clear="clearLeft"
+      :disabled="!options || options.length <= 0"
     />
   </div>
 </template>

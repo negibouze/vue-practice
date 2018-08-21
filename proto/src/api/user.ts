@@ -13,8 +13,8 @@ export default class User {
     const item = {
       stageStatus: [1, 3],
       salesAt: {
-        from: '',
-        to: '',
+        from: '2018-05-13',
+        to: '2018-05-31',
       },
       transportations: [
         {

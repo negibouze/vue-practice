@@ -56,7 +56,6 @@ const InputProps = Vue.extend({
       default: true,
     },
     tabindex: String,
-    currentValue: String,
     placeholder: {
       type: String,
       default: 'Please input',
@@ -69,6 +68,7 @@ const InputProps = Vue.extend({
       default: false,
     },
     id: String,
+    currentValue: String,
   },
 })
 @Component({
@@ -82,7 +82,7 @@ const InputProps = Vue.extend({
   },
 })
 export default class TInput extends InputProps {
-  input: string = this.currentValue ? this.currentValue : '';
+  input: string|null = null;
   handleBlur(e: FocusEvent) {
     this.$emit('blur', e);
   }
