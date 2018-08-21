@@ -67,17 +67,17 @@ export default class SelectRange extends SelectRangeProps {
   }
   get disabledRight () {
     const leftValue = this.leftValue
-    return function(val: string|number): boolean {
-      return !!leftValue && leftValue >= val;
+    return function(v: string|number): boolean {
+      return !!leftValue && leftValue >= v;
     }
   }
-  changeLeft(val: string|number): void {
-    this.leftValue = val;
-    this.$emit('changeLeft');
+  changeLeft(v: string|number): void {
+    this.leftValue = v;
+    this.$emit('changeLeft', v);
   }
-  changeRight(val: string|number): void {
-    this.rightValue = val;
-    this.$emit('changeRight');
+  changeRight(v: string|number): void {
+    this.rightValue = v;
+    this.$emit('changeRight', v);
   }
   clearLeft(): void {
     this.$emit('update:leftSelectedValue', '');

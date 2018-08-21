@@ -110,14 +110,14 @@ const SelectProps = Vue.extend({
 })
 export default class TSelect extends SelectProps {
   selected: string|number|null = this.selectedValue ? this.selectedValue : null;
-  isDisabled(val: object): boolean {
+  isDisabled(v: object): boolean {
     if (typeof this.disabledOptions === 'boolean') {
       return this.disabledOptions;
     }
-    return this.disabledOptions(val);
+    return this.disabledOptions(v);
   }
-  handleChange(val: string|number): void {
-    this.$emit('change', val);
+  handleChange(v: string|number): void {
+    this.$emit('change', v);
   }
   handleClear() {
     this.$emit('update:selectedValue', '');

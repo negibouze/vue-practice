@@ -91,11 +91,13 @@ export default class NumberRange extends NumberRangeProps {
   get rightOpts(): NumberRangeOptions {
     return this._addMissingOptions(this.rightProps);
   }
-  changeLeft(val: number): void {
-    this.leftValue = val;
+  changeLeft(v: number): void {
+    this.leftValue = v;
+    this.$emit('changeLeft', v);
   }
-  changeRight(val: number): void {
-    this.rightValue = val;
+  changeRight(v: number): void {
+    this.rightValue = v;
+    this.$emit('changeRight', v);
   }
   _addMissingOptions(props: NumberRangeOptions): NumberRangeOptions {
     if (!props) { return defaultOptions; }

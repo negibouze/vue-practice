@@ -5,18 +5,25 @@
     :lines="lines"
     :stations="stations"
     :current-line="line"
-    :from-station="fromStation"
-    :to-station="toStation"
-    :walk-min="walkMin"
-    :walk-max="walkMax"
-    :bus-min="busMin"
-    :bus-max="busMax"
+    :from-station="item.fromStationId"
+    :to-station="item.toStationId"
+    :walk-min="item.walkMin"
+    :walk-max="item.walkMax"
+    :bus-min="item.busMin"
+    :bus-max="item.busMax"
     @changeLine="changeLine"
+    @clearLine="clearLine"
+    @changeFromStation="changeFromStation"
+    @clearFromStation="clearFromStation"
+    @changeToStation="changeToStation"
+    @clearToStation="clearToStation"
+    @changeCondition="changeCondition"
     @clickDelete="clickDelete"
   />
 </template>
 
 <script lang="ts">
+import cloneDeep from 'lodash.clonedeep';
 import Vue from 'vue';
 import Prop from 'vue/types/options';
 import Component from 'vue-class-component';
@@ -30,6 +37,11 @@ const TransportationProps = Vue.extend({
     index: Number,
     item: Object as Prop<Transportation>,
   },
+  watch: {
+    line(newVal) {
+      this._updateStations(newVal);
+    }
+  },
 })
 @Component({
   components: {
@@ -38,43 +50,76 @@ const TransportationProps = Vue.extend({
 })
 export default class TransportationContainer extends TransportationProps {
   // initial data
-  stations: SelectItem[] = [{ value: 0, label: '' }];
+  stations: SelectItem[] = [];
+  // lifecycle hook
+  mounted() {
+    if (this.item.lineId) {
+      this._updateStations(this.item.lineId);
+    }
+  }
   // computed
   get lines(): SelectItem[] {
     return this.$store.state.condition.lines;
   }
   get line(): Number {
-    return this.item.lineId ? this.item.lineId : 0;
-  }
-  get fromStation(): Number {
-    return this.item.fromStationId ? this.item.fromStationId : 0;
-  }
-  get toStation(): Number {
-    return this.item.toStationId ? this.item.toStationId : 0;
-  }
-  get walkMin(): Number {
-    return this.item.walkMin ? this.item.walkMin : 0;
-  }
-  get walkMax(): Number {
-    return this.item.walkMax ? this.item.walkMax : 0;
-  }
-  get busMin(): Number {
-    return this.item.busMin ? this.item.busMin : 0;
-  }
-  get busMax(): Number {
-    return this.item.busMax ? this.item.busMax : 0;
+    return this.item.lineId;
   }
   // method
-  changeLine(lineId: number): void {
-    this.$store.dispatch('condition/stations', lineId).then((stations) => {
-      this.stations = stations;
-    });
+  changeLine(v: number): void {
+    this._updateCondition('lineId', v);
+    this._deleteCondition('fromStationId');
+    this._deleteCondition('toStationId');
+  }
+  clearLine(): void {
+    this._deleteCondition('lineId');
+  }
+  changeFromStation(v: number): void {
+    this._updateCondition('fromStationId', v);
+  }
+  clearFromStation(): void {
+    this._deleteCondition('fromStationId');
+  }
+  changeToStation(v: number): void {
+    this._updateCondition('toStationId', v);
+  }
+  clearToStation(): void {
+    this._deleteCondition('toStationId');
+  }
+  changeCondition(k: string, v: string|number): void {
+    this._updateCondition(k, v);
   }
   clickDelete(): void {
     this.$emit('clickDelete', this.index);
   }
-  _isEmptyObject(obj: Object) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  _getTransportations(): ITransportation[] {
+    const c = cloneDeep(this.$store.state.condition.currentCondition);
+    return c.hasOwnProperty('transportations') ? c.transportations : [{}];
+  }
+  _updateStations(lineId: number): void {
+    if (!lineId) {
+      this.stations = [];
+      return;
+    }
+    this.$store.dispatch('condition/stations', lineId).then((stations) => {
+      this.stations = stations;
+    });
+  }
+  _updateCondition(k: string, v: string|number): void {
+    if (v) {
+      this._setCondition(k, v);
+    } else {
+      this._deleteCondition(k);
+    }
+  }
+  _setCondition(k: string, v: string|number): void {
+    const value = this._getTransportations();
+    this.$set(value[this.index], k, v);
+    this.$store.dispatch('condition/update', { key: 'transportations', value });
+  }
+  _deleteCondition(k: string): void {
+    const value = this._getTransportations();
+    this.$delete(value[this.index], k);
+    this.$store.dispatch('condition/update', { key: 'transportations', value });
   }
 }
 </script>

@@ -17,6 +17,7 @@
             :options="municipalities"
             :selectedValue="currentMunicipality"
             :fit-parent="true"
+            @change="changeMunicipality"
           />
         </div>
         <div class="area-button">
@@ -47,14 +48,8 @@ const AreaProps = Vue.extend({
       type: Array as Prop<SelectItem[]>,
       required: true
     },
-    currentPrefecture: {
-      type: Number,
-      required: true
-    },
-    currentMunicipality: {
-      type: Number,
-      required: true
-    },
+    currentPrefecture: [Number, String],
+    currentMunicipality: [Number, String],
   }
 })
 @Component({
@@ -66,6 +61,9 @@ const AreaProps = Vue.extend({
 export default class Area extends AreaProps {
   changePrefecture(prefectureId: number): void {
     this.$emit('changePrefecture', prefectureId);
+  }
+  changeMunicipality(municipalityId: number): void {
+    this.$emit('changeMunicipality', municipalityId);
   }
   clickDelete(e: MouseEvent): void {
     const obj = this.$refs.outside;

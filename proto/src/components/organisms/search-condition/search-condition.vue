@@ -76,6 +76,7 @@
                 :options="items.scope"
                 class="input-append"
                 :selected-value="name.searchType"
+                @change="(v) => { change('foo', v) }"
               />
             </t-input>
           </div>
@@ -87,6 +88,8 @@
               :options="items.test"
               :left-selected-value="unitCount.from"
               :right-selected-value="unitCount.to"
+              @changeLeft="(v) => { change('foo', v) }"
+              @changeRight="(v) => { change('foo', v) }"
             />
           </div>
           <!-- 以上〜以下/未満 -->
@@ -185,6 +188,9 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     return this.condition.hasOwnProperty('unitCount') ? this.condition.unitCount : { from: null, to: null, searchType: 0 };
   }
   // method
+  change(key: string, value: string|number|object): void {
+    this.$emit('changeCondition', key, value);
+  }
   addTransportation(): void {
     this.$emit('clickAddTransportation', this.$refs.form);
   }

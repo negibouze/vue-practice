@@ -45,6 +45,8 @@
             :leftProps="minutesOption(walkMin)"
             :rightProps="minutesOption(walkMax)"
             size="xsmall"
+            @changeLeft="(v) => { change('walkMin', v) }"
+            @changeRight="(v) => { change('walkMax', v) }"
           />
         </div>
         <span class="item-title flex-item">バス分数</span>
@@ -53,6 +55,8 @@
             :leftProps="minutesOption(busMin)"
             :rightProps="minutesOption(busMax)"
             size="xsmall"
+            @changeLeft="(v) => { change('busMin', v) }"
+            @changeRight="(v) => { change('busMax', v) }"
           />
         </div>
       </div>
@@ -81,33 +85,24 @@ const TransportationProps = Vue.extend({
       type: Array as Prop<SelectItem[]>,
       required: true
     },
-    currentLine: {
-      type: Number,
-      required: true
-    },
-    fromStation: {
-      type: Number,
-      required: true
-    },
-    toStation: {
-      type: Number,
-      required: true
-    },
+    currentLine: [Number, String],
+    fromStation: [Number, String],
+    toStation: [Number, String],
     walkMin: {
       type: Number,
-      required: true
+      default: 0
     },
     walkMax: {
       type: Number,
-      required: true
+      default: 0
     },
     busMin: {
       type: Number,
-      required: true
+      default: 0
     },
     busMax: {
       type: Number,
-      required: true
+      default: 0
     },
   }
 })
@@ -144,6 +139,9 @@ export default class Transportation extends TransportationProps {
   }
   clearToStation(): void {
     this.$emit('clearToStation');
+  }
+  change(name: string, value: string|number): void {
+    this.$emit('changeCondition', name, value);
   }
   clickDelete(e: MouseEvent): void {
     const obj = this.$refs.outside;

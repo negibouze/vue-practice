@@ -1,4 +1,4 @@
 export default interface IDateRange {
-  readonly from: string|null;
-  readonly to: string|null;
+  readonly from?: string|null;
+  readonly to?: string|null;
 }

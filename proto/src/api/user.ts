@@ -1,6 +1,6 @@
 // import TResponse from './core/response';
-import IClient from './core/i-client';
 import ISearchCondition from '@/interfaces/user-settings/search-condition';
+import IClient from './core/i-client';
 
 export default class User {
   private client: IClient;
@@ -23,14 +23,12 @@ export default class User {
           toStationId: 108,
           walkMin: 5,
           walkMax: 10,
-          busMin: 0,
-          busMax: 3,
+          busMin: 3,
         },
         {
           lineId: 102,
-          fromStationId: 110,
-          toStationId: 112,
-          walkMin: 10,
+          fromStationId: 210,
+          toStationId: 212,
           walkMax: 20,
           busMin: 0,
           busMax: 5,
@@ -38,7 +36,7 @@ export default class User {
       ],
       areas: [
         { prefectureId: 101, municipalityId: 102 },
-        { prefectureId: 102, municipalityId: 106 },
+        { prefectureId: 102, municipalityId: 206 },
         { prefectureId: 101, municipalityId: 104 },
       ],
       name: {
@@ -48,7 +46,6 @@ export default class User {
       unitCount: {
         from: 50,
         to: 100,
-        searchType: 1,
       },
     };
     return item;
