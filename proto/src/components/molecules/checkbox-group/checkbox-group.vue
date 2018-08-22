@@ -1,4 +1,4 @@
-6<template>
+<template>
   <div :class="{ flex: isFlat }">
     <t-checkbox
       v-if="hasAll"
@@ -9,7 +9,7 @@
       <slot name="allcheck-label"></slot>
       <template v-if="!$slots['allcheck-label']">全てチェック</template>
     </t-checkbox>
-    <div class="separator" v-if="isFlat"></div>
+    <div class="separator" v-if="isFlat" :class="{ active: checkAll || isIndeterminate }"></div>
     <el-checkbox-group
       v-model="checkedVals"
       @change="handleCheckedValuesChange"
@@ -108,5 +108,7 @@ export default class CheckboxGroup extends CheckboxGroupProps {
   margin: 0 5px 0 15px
   width: 10px
   min-height: 21px
-  border-left: 1px solid #409EFF
+  border-left: 1px solid #606266
+  &.active
+    border-color: #409EFF
 </style>
