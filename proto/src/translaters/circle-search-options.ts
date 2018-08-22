@@ -1,18 +1,19 @@
 import Coordinate from '@/interfaces/coordinate';
-import SearchOptions from '@/interfaces/search-options';
+import ISearchOptions from '@/interfaces/search-options';
+import ISearchCondition from '@/interfaces/user-settings/search-condition';
 
 export default class CircleSearchOptions {
   public readonly center: Coordinate;
   public readonly radius: number;
-  public readonly condition: object;
+  public readonly condition: ISearchCondition;
 
-  constructor(center: Coordinate, radius: number, condition: object) {
+  constructor(center: Coordinate, radius: number, condition: ISearchCondition) {
     this.center = center;
     this.radius = radius;
     this.condition = condition;
   }
 
-  public translate(): SearchOptions {
+  public translate(): ISearchOptions {
     return {
       regionCode: 0,
       stageStatus: [0],

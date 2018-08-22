@@ -7,8 +7,11 @@
           <legend class="section-title">建物種別</legend>
           <div class="section-body">
             <checkbox-group
-              :name="'building-type'"
+              :name="'stageStatus'"
               :items="items.stage"
+              :is-flat="true"
+              :checked-values="stageStatus"
+              @change="(v, checked) => { changeCheckTypeCondition('stageStatus', v, checked) }"
             />
           </div>
         </fieldset>
@@ -70,19 +73,23 @@
         <fieldset>
           <legend class="section-title">物件名</legend>
           <div class="section-body">
-            <t-input
+            <free-word-container
+              name="name"
               placeholder="物件名"
-              :current-value="name.searchWord"
-              id="propertyName"
-            >
-              <t-select
-                slot="append"
-                :options="items.scope"
-                class="input-append"
-                :selected-value="name.searchType"
-                @change="(v) => { changeType('name', v) }"
-              />
-            </t-input>
+              :current-input-value="name.searchWord"
+              :current-selected-value="name.searchType"
+            />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="section-title">会社</legend>
+          <div class="section-body">
+            <free-word-container
+              name="company"
+              placeholder="会社"
+              :current-input-value="company.searchWord"
+              :current-selected-value="company.searchType"
+            />
           </div>
         </fieldset>
         <fieldset>
@@ -101,8 +108,9 @@
       </form>
     </div>
     <div class="button-container flex flex-between">
-      <t-button @click="circle">円検索</t-button>
-      <t-button @click="rectangle">四角検索</t-button>
+      <t-button @click="circle" :disabled="!enableSearch">円検索</t-button>
+      <t-button @click="rectangle" :disabled="!enableSearch">四角検索</t-button>
+      <t-button @click="clear">条件クリア</t-button>
       <t-button @click="cancel">閉じる</t-button>
       <t-button @click="load">テスト</t-button>
     </div>
@@ -116,11 +124,10 @@ import Component from 'vue-class-component';
 import TButton from '@/components/atoms/button';
 import TCheckbox from '@/components/atoms/checkbox';
 import { TInput, TInputNumber } from '@/components/atoms/input';
-import TSelect from '@/components/atoms/select';
 import CheckboxGroup from '@/components/molecules/checkbox-group';
 import DateRange from '@/components/molecules/date-range';
 import SelectRange from '@/components/molecules/select-range';
-import { TransportationContainer, AreaContainer } from '@/containers/mordal/search-condition';
+import { AreaContainer, FreeWordContainer, TransportationContainer } from '@/containers/mordal/search-condition';
 import ISearchCondition from '@/interfaces/user-settings/search-condition';
 import ITransportation from '@/interfaces/transportation';
 import IArea from '@/interfaces/user-settings/area';
@@ -135,19 +142,14 @@ const MordalSearchConditionProps = Vue.extend({
       default: () => {
         return {
           stage: [
-            { value: 1, id: 'development', label: '開発段階', checked: true },
+            { value: 1, id: 'development', label: '開発段階' },
             { value: 2, id: 'plans', label: '予定段階' },
-            { value: 3, id: 'sale', label: '分譲段階', checked: false },
+            { value: 3, id: 'sale', label: '分譲段階' },
           ],
           test: [
             { value: 50, label: '50' },
             { value: 100, label: '100' },
             { value: 200, label: '200' },
-          ],
-          scope: [
-            { value: 1, label: '全ての語を含む' },
-            { value: 2, label: '何れかの語を含む' },
-            { value: 3, label: '何れの語も含まない' },
           ],
         }
       }
@@ -164,18 +166,22 @@ const MordalSearchConditionProps = Vue.extend({
     TCheckbox,
     TInput,
     TInputNumber,
-    TSelect,
     CheckboxGroup,
     DateRange,
     SelectRange,
     AreaContainer,
+    FreeWordContainer,
     TransportationContainer,
-  }
+  },
 })
 export default class MordalSearchCondition extends MordalSearchConditionProps {
+  // initial data
   maxNumOfTransportations: number = 10;
   maxNumOfAreas: number = 20;
   // computed
+  get stageStatus(): number[] {
+    return this._hasProperty('stageStatus') ? this.condition.stageStatus : [];
+  }
   get transportations(): ITransportation[] {
     return this._hasProperty('transportations') ? this.condition.transportations : [{}];
   }
@@ -186,10 +192,16 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     return this._hasProperty('salesAt') ? this.condition.salesAt : { from: null, to: null };
   }
   get name(): IFreeWord {
-    return this._hasProperty('name') ? this.condition.name : { searchWord: null, searchType: 0 };
+    return this._hasProperty('name') ? this.condition.name : { searchWord: '', searchType: 1 };
+  }
+  get company(): IFreeWord {
+    return this._hasProperty('company') ? this.condition.company : { searchWord: '', searchType: 1 };
   }
   get unitCount(): INumberRange {
     return this._hasProperty('unitCount') ? this.condition.unitCount : { from: null, to: null };
+  }
+  get enableSearch(): boolean {
+    return this.stageStatus && 1 <= this.stageStatus.length;
   }
   // method
   changeFrom(key: string, value: string|number): void {
@@ -198,11 +210,11 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   changeTo(key: string, value: string|number): void {
     this.$emit('changeTo', key, value);
   }
-  changeType(key: string, value: number): void {
-    this.$emit('changeType', key, value);
+  changeSearchType(key: string, value: number): void {
+    this.$emit('changeSearchType', key, value);
   }
-  change(key: string, value: string|number|object): void {
-    this.$emit('changeCondition', key, value);
+  changeCheckTypeCondition(key: string, value: string|number, checked: boolean): void {
+    this.$emit('changeCheckTypeCondition', key, value, checked);
   }
   addTransportation(): void {
     this.$emit('clickAddTransportation');
@@ -221,6 +233,9 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   }
   rectangle(e: MouseEvent): void {
     this.$emit('clickRectangleSearch', this.$refs.form);
+  }
+  clear(e: MouseEvent): void {
+    this.$emit('clickClearCondition', e);
   }
   cancel(e: MouseEvent): void {
     this.$emit('clickCancel', e);
@@ -281,7 +296,4 @@ fieldset
   font-weight: bold
 .section-body
   padding: 10px 5px 5px
-.input-append
-  width: 180px
-  min-width: 180px
 </style>

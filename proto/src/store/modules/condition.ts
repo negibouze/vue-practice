@@ -39,7 +39,7 @@ const cond = {
     prefectures: [],
     lastCondition: { stageStatus: [1, 2, 3] },
     currentCondition: { stageStatus: [1, 2, 3] },
-    } as ConditionState,
+  } as ConditionState,
   mutations: {
     [types.VISIBLE_SEARCH_CONDITION](state: ConditionState, value: boolean): void {
       state.visibility = value;
@@ -51,10 +51,13 @@ const cond = {
       Vue.set(state.currentCondition, key, value);
     },
     [types.DETERMINE_SEARCH_CONDITION](state: ConditionState) {
-      state.lastCondition = state.currentCondition;
+      state.lastCondition = cloneDeep(state.currentCondition);
     },
     [types.RESTORE_SEARCH_CONDITION](state: ConditionState) {
       state.currentCondition = cloneDeep(state.lastCondition);
+    },
+    [types.CLEAR_SEARCH_CONDITION](state: ConditionState) {
+      state.currentCondition = { stageStatus: [1, 2, 3] };
     },
     [types.UPDATE_LINES](state: ConditionState, value: ValueLabel[]) {
       state.lines = value;
@@ -83,6 +86,9 @@ const cond = {
     },
     restore({ commit }: { commit: Commit }): void {
       commit(types.RESTORE_SEARCH_CONDITION);
+    },
+    clear({ commit }: { commit: Commit }): void {
+      commit(types.CLEAR_SEARCH_CONDITION);
     },
     lines({ commit }: { commit: Commit }, areaCode: number): void {
       api.searchCondition().getLines(areaCode).then((lines: IdLabel[]) => {

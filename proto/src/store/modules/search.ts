@@ -2,7 +2,7 @@ import { Commit } from 'vuex';
 import * as types from '../mutation-types';
 import api from '@/api';
 import Project from '@/entities/Project';
-import SearchOptions from '@/interfaces/search-options';
+import ISearchOptions from '@/interfaces/search-options';
 
 export interface SearchState {
   projects: Project[];
@@ -24,7 +24,7 @@ const search = {
     },
   },
   actions: {
-    execute({ commit }: { commit: Commit }, options: SearchOptions): Promise<{}> {
+    execute({ commit }: { commit: Commit }, options: ISearchOptions): Promise<{}> {
       return new Promise((resolve) => {
         commit(types.BEFORE_EXECUTE_SEARCH);
         api.search().execute(options).then((projects: Project[]) => {

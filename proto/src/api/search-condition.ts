@@ -11,6 +11,7 @@ export default class SearchCondition {
   public async getLines(areaCode: number): Promise<any> {
     const items: {[key: number]: object[]} = {
       1: [
+        { id: 0, label: '全路線' },
         { id: 101, label: 'JR中央' },
         { id: 102, label: 'JR山手' },
       ],

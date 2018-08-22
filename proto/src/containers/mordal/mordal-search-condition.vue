@@ -12,12 +12,13 @@
       @clickDeleteArea="deleteArea"
       @clickCircleSearch="circle"
       @clickRectangleSearch="rectangle"
+      @clickClearCondition="clearCondition"
       @clickCancel="cancel"
       @clickLoad="load"
       @changeFrom="changeFrom"
       @changeTo="changeTo"
-      @changeType="changeType"
-      @changeCondition="changeCondition"
+      @changeSearchType="changeSearchType"
+      @changeCheckTypeCondition="changeCheckTypeCondition"
     />
   </Dialog>
 </template>
@@ -56,19 +57,31 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   // method
   changeFrom(k: string, v: string|number): void {
     const w = 'from';
-    this._updateProperty(k, w, v);
+    this._updateChildProperty(k, w, v);
   }
   changeTo(k: string, v: string|number): void {
     const w = 'to';
-    this._updateProperty(k, w, v);
+    this._updateChildProperty(k, w, v);
   }
-  changeType(k: string, v: number): void {
+  changeSearchType(k: string, v: number): void {
     const w = 'searchType';
-    this._updateProperty(k, w, v);
+    this._updateChildProperty(k, w, v);
   }
-  changeCondition(key: string, value: string|number|object): void {
-    console.log(`${key}: ${value}`);
-    // this.$store.dispatch('condition/update', { key, value });
+  changeCheckTypeCondition(k: string, v: string|number, checked: boolean): void {
+    const p = this._hasProperty(k) ? cloneDeep(this.condition[k]) : [];
+    // assert(!Array.isArray(p), '');
+    const i = p.indexOf(v);
+    if (checked) {
+      if (i === -1) {
+        p.push(v);
+      }
+    } else {
+      if (i > -1) {
+        p.splice(i, 1);
+      }
+    }
+    this.$set(p, k, v);
+    this._dispatch(k, p);
   }
   addTransportation(): void {
     this._addBlock('transportations');
@@ -83,11 +96,16 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     this._deleteBlock('areas', index);
   }
   circle(form: HTMLFormElement): void {
+    this.$store.dispatch('condition/determine');
     this.hide();
     this.$store.dispatch('circle/begin');
   }
   rectangle(form: HTMLFormElement): void {
+    this.$store.dispatch('condition/determine');
     this.hide();
+  }
+  clearCondition(): void {
+    this.$store.dispatch('condition/clear');
   }
   cancel(): void {
     this.$store.dispatch('condition/restore');
@@ -101,7 +119,7 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
   }
   // convenience method
   _addBlock(key: string): void {
-    const value = this.condition.hasOwnProperty(key) ? cloneDeep(this.condition[key]) : [{}];
+    const value = this._hasProperty(key) ? cloneDeep(this.condition[key]) : [{}];
     value.push({});
     this.$store.dispatch('condition/update', { key, value });
   }
@@ -112,25 +130,28 @@ export default class MordalSearchCondition extends MordalSearchConditionProps {
     value.splice(index, 1);
     this.$store.dispatch('condition/update', { key, value });
   }
-  _getProperty(k: string): IDateRange|INumberRange {
-    return this.condition.hasOwnProperty(k) ? cloneDeep(this.condition[k]) : {};
+  _hasProperty(k: string): boolean {
+    return this.condition.hasOwnProperty(k);
   }
-  _updateProperty(parentKey: string, k: string, v: string|number): void {
+  _getRangeTypeProperty(k: string): IDateRange|INumberRange {
+    return this._hasProperty(k) ? cloneDeep(this.condition[k]) : {};
+  }
+  _updateChildProperty(parentKey: string, k: string, v: string|number): void {
     if (v) {
-      this._setProperty(parentKey, k, v);
+      this._setChildProperty(parentKey, k, v);
     } else {
-      this._deleteProperty(parentKey, k);
+      this._deleteChildProperty(parentKey, k);
     }
   }
-  _setProperty(parentKey: string, k: string, v: string|number): void {
-    const value = this._getProperty(parentKey);
-    this.$set(value, k, v);
-    this._dispatch(parentKey, value);
+  _setChildProperty(parentKey: string, k: string, v: string|number): void {
+    const p = this._getRangeTypeProperty(parentKey);
+    this.$set(p, k, v);
+    this._dispatch(parentKey, p);
   }
-  _deleteProperty(parentKey: string, key: string): void {
-    const value = this._getProperty(parentKey);
-    this.$delete(value, key);
-    this._dispatch(parentKey, value);
+  _deleteChildProperty(parentKey: string, k: string): void {
+    const p = this._getRangeTypeProperty(parentKey);
+    this.$delete(p, k);
+    this._dispatch(parentKey, p);
   }
   _dispatch(key: string, value: string|number): void {
     this.$store.dispatch('condition/update', { key, value });

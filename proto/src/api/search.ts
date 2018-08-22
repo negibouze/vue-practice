@@ -2,7 +2,7 @@ import Endpoint from './endpoint';
 import IClient from './core/i-client';
 import TResponse from './core/response';
 import Project from '../entities/project';
-import SearchOptions from '@/interfaces/user-settings/search-options';
+import ISearchOptions from '@/interfaces/user-settings/search-options';
 
 export default class Search {
   private client: IClient;
@@ -11,7 +11,7 @@ export default class Search {
     this.client = client;
   }
 
-  public async execute(options: SearchOptions): Promise<Project[]> {
+  public async execute(options: ISearchOptions): Promise<Project[]> {
     return await this.client.get(Endpoint.PROJECT, {
       headers: {},
       params: options,

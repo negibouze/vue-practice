@@ -43,6 +43,10 @@ export default class User {
         searchWord: '検索したい言葉を入力する。',
         searchType: 1,
       },
+      company: {
+        searchWord: 'おやつカンパニー',
+        searchType: 2,
+      },
       unitCount: {
         from: 50,
         to: 100,

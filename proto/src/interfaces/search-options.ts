@@ -17,7 +17,7 @@ interface SummarizeCondition {
   readonly base: number;
 }
 
-export default interface SearchOptions {
+export default interface ISearchOptions {
   readonly regionCode?: number;
   readonly summarizeCondition?: SummarizeCondition|null;
   readonly circle?: Circle|null;
