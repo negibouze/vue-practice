@@ -52,7 +52,7 @@ const MordalSearchConditionProps = Vue.extend({
 export default class MordalSearchCondition extends MordalSearchConditionProps {
   // computed
   get condition(): ISearchCondition {
-    return this.$store.state.condition.currentCondition;
+    return this.$store.state.condition.condition;
   }
   // method
   changeFrom(k: string, v: string|number): void {

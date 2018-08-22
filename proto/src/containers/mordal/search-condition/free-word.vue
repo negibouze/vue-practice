@@ -43,7 +43,7 @@ export default class FreeWordContainer extends FreeWordProps {
   }
   // convenience method
   _getProperty(k: string): IDateRange|INumberRange {
-    const c = this.$store.state.condition.currentCondition;
+    const c = this.$store.state.condition.condition;
     return c.hasOwnProperty(k) ? cloneDeep(c[k]) : {};
   }
   _updateProperty(parentKey: string, k: string, v: string|number): void {

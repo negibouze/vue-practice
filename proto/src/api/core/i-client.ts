@@ -1,6 +1,6 @@
+import Endpoint from '../endpoint';
 import IRequestConfig from './request-config';
 import TResponse from './response';
-import Endpoint from '../endpoint';
 
 export default interface IClient {
   get(endpoint: Endpoint, conf: IRequestConfig): Promise<TResponse>;

@@ -76,7 +76,7 @@ export default class AreaContainer extends AreaProps {
     });
   }
   _getAreas(): IArea[] {
-    const c = cloneDeep(this.$store.state.condition.currentCondition);
+    const c = cloneDeep(this.$store.state.condition.condition);
     return c.hasOwnProperty('areas') ? c.areas : [{}];
   }
   _updateCondition(k: string, v: string|number): void {

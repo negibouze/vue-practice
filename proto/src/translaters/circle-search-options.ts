@@ -14,45 +14,45 @@ export default class CircleSearchOptions {
   }
 
   public translate(): ISearchOptions {
-    return {
-      regionCode: 0,
-      stageStatus: [0],
-      salesAt: null,
-      boardConstructionAt: null,
-      constructionAt: null,
-      completionAt: null,
-      transportation: null,
-      townCodes: [0],
-      name: null,
-      company: null,
-      developer: null,
-      constractor: null,
-      designer: null,
-      seller: null,
-      manager: null,
-      unitCount: null,
-      topFloor: null,
-      parkingCount: null,
-      parkingInstallationRate: null,
-      groundArea: null,
-      buildingArea: null,
-      floorArea: null,
-      saleCount: null,
-      applyCount: null,
-      firstMonthApplyRate: null,
-      priceTotal: null,
-      areaTotal: null,
-      priceMin: null,
-      areaMin: null,
-      tsuboMin: null,
-      priceAverage: null,
-      areaAverage: null,
-      tsuboAverage: null,
-      priceMax: null,
-      areaMax: null,
-      tsuboMax: null,
-      circle: null,
-      rectangle: null,
+    const required = {
+      regionCode: 1,
+      circle: {
+        center: {
+          latitude: this.center.latitude,
+          longitude: this.center.longitude,
+        },
+        radius: this.radius,
+      },
     };
+    const condition = this.removeEmptyParams(this.condition);
+    return Object.assign({}, required, condition);
+  }
+
+  private removeEmptyParams(condition: ISearchCondition): ISearchCondition {
+    const c: ISearchCondition = { stageStatus: [] };
+    for (const key in condition) {
+      if (!condition.hasOwnProperty(key)) {
+        continue;
+      }
+      const v = condition[key];
+      if (!this.isEmpty(v)) {
+        c[key] = v;
+      }
+    }
+    return c;
+  }
+
+  private isEmpty(obj: any): boolean {
+    return false;
+    // if () {
+    //   return obj === '';
+    // }
+    // if () {
+
+    // }
+    // if () {
+
+    // }
+    // return true;
   }
 }

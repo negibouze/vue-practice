@@ -22,7 +22,7 @@ export interface ConditionState {
   lines: ValueLabel[];
   prefectures: ValueLabel[];
   lastCondition: ISearchCondition;
-  currentCondition: ISearchCondition;
+  condition: ISearchCondition;
 }
 
 const convert = (array: Array<{ id: number, label: string }>): ValueLabel[] => {
@@ -38,26 +38,26 @@ const cond = {
     lines: [],
     prefectures: [],
     lastCondition: { stageStatus: [1, 2, 3] },
-    currentCondition: { stageStatus: [1, 2, 3] },
+    condition: { stageStatus: [1, 2, 3] },
   } as ConditionState,
   mutations: {
     [types.VISIBLE_SEARCH_CONDITION](state: ConditionState, value: boolean): void {
       state.visibility = value;
     },
     [types.LOAD_SEARCH_CONDITION](state: ConditionState, value: ISearchCondition) {
-      state.currentCondition = value;
+      state.condition = value;
     },
     [types.UPDATE_SEARCH_CONDITION](state: ConditionState, { key, value }: { key: string, value: ConditionValue }) {
-      Vue.set(state.currentCondition, key, value);
+      Vue.set(state.condition, key, value);
     },
     [types.DETERMINE_SEARCH_CONDITION](state: ConditionState) {
-      state.lastCondition = cloneDeep(state.currentCondition);
+      state.lastCondition = cloneDeep(state.condition);
     },
     [types.RESTORE_SEARCH_CONDITION](state: ConditionState) {
-      state.currentCondition = cloneDeep(state.lastCondition);
+      state.condition = cloneDeep(state.lastCondition);
     },
     [types.CLEAR_SEARCH_CONDITION](state: ConditionState) {
-      state.currentCondition = { stageStatus: [1, 2, 3] };
+      state.condition = { stageStatus: [1, 2, 3] };
     },
     [types.UPDATE_LINES](state: ConditionState, value: ValueLabel[]) {
       state.lines = value;

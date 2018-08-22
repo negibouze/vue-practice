@@ -90,7 +90,7 @@ export default class TransportationContainer extends TransportationProps {
     });
   }
   _getTransportations(): ITransportation[] {
-    const c = cloneDeep(this.$store.state.condition.currentCondition);
+    const c = cloneDeep(this.$store.state.condition.condition);
     return c.hasOwnProperty('transportations') ? c.transportations : [{}];
   }
   _updateCondition(k: string, v: string|number): void {

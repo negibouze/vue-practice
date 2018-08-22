@@ -88,7 +88,7 @@ export default class CheckboxGroup extends CheckboxGroupProps {
   handleCheckAllChange(checked: boolean): void {
     this.checkedVals = checked ? this.allValues : [];
     this.isIndeterminate = false;
-    for (let item of this.items) {
+    for (const item of this.items) {
       this.$emit('change', item.value, checked);
     }
   }
